@@ -6,8 +6,11 @@ import com.nrd3v.mygamelist.services.GameService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.servlet.ModelAndView;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Controller
 public class IndexController {
@@ -22,8 +25,11 @@ public class IndexController {
     }
 
     @RequestMapping(value = "/")
-    public List<Game> index() {
-        return gameRepository.findAll();
+    public ModelAndView index() {
+        HashMap<String, Object> model = new HashMap<>();
+        List<Game> games = gameRepository.findAll();
+        model.put("games", games);
+        return new ModelAndView("index", model);
     }
 
     @RequestMapping(value = "/test")
