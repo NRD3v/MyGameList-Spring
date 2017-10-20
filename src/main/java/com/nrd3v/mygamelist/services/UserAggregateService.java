@@ -1,6 +1,5 @@
 //package com.nrd3v.mygamelist.services;
 //
-//import com.nrd3v.mygamelist.entities.User;
 //import com.nrd3v.mygamelist.entities.UserAggregate;
 //
 //import java.util.ArrayList;
@@ -10,26 +9,26 @@
 //
 //    private ArrayList<Class> getEntities() {
 //        ArrayList<Class> entityClasses = new ArrayList<>();
-//        entityClasses.add(User.class);
 //        entityClasses.add(UserAggregate.class);
 //        return entityClasses;
 //    }
 //
-//    public void create(User user) {
-//        if (user != null) {
-//            this.create(this.getEntities(), user);
+//    public void create(UserAggregate userAggregate) {
+//        if (userAggregate != null) {
+//            this.create(this.getEntities(), userAggregate);
 //        }
 //    }
 //
-//    public void update(User user, Map<String,String> values) {
-//        if (user != null && values != null) {
-//            this.update(this.getEntities(), user, values);
+//    public void update(UserAggregate userAggregate, Map<String,String> values) {
+//        if (userAggregate != null && values != null) {
+//            this.update(this.getEntities(), userAggregate, values);
 //        }
 //    }
 //
-//    public void delete(User user) {
-//        if (user != null) {
-//            this.delete(this.getEntities(), user);
+//    public void delete(UserAggregate userAggregate) {
+//        if (userAggregate != null) {
+//            userAggregate.getUser().setUserAggregate(null);
+//            this.delete(this.getEntities(), userAggregate);
 //        }
 //    }
 //}

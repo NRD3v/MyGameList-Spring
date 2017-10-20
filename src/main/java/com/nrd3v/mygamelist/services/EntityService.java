@@ -44,6 +44,7 @@
 //                this.applySetters(object, values);
 //                Method setUpdatedAt = ReflectionUtils.findMethod(object.getClass(),"setUpdatedAt");
 //                setUpdatedAt.invoke(object, Date.from(Instant.now()));
+//                session.save(object);
 //                session.getTransaction().commit();
 //            }
 //            catch(Exception e){
