@@ -1,9 +1,7 @@
 package com.nrd3v.mygamelist;
 
-import com.nrd3v.mygamelist.entities.Developer;
-import com.nrd3v.mygamelist.entities.Game;
-import com.nrd3v.mygamelist.entities.User;
-import com.nrd3v.mygamelist.entities.UserAggregate;
+import com.nrd3v.mygamelist.entities.*;
+import com.nrd3v.mygamelist.services.ToolService;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
@@ -12,7 +10,8 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
-import java.util.List;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
 @SpringBootApplication
 public class MygamelistApplication {
@@ -27,10 +26,14 @@ public class MygamelistApplication {
 				.buildSessionFactory();
 		Session session = factory.getCurrentSession();
 
-
 		try {
-			System.out.println("START");
+			System.out.println("STARTED AT: " + ToolService.getCurrentDateTime());
 			session.beginTransaction();
+
+
+			TestEntity test = new TestEntity();
+			test.setName("Test");
+			session.save(test);
 
 
 			/**************************\
@@ -73,16 +76,16 @@ public class MygamelistApplication {
 		/******************\
 		 * Connection test *
 		\******************/
-		String jdbcUrl = "jdbc:mysql://localhost:3306/mygamelist?useSSL=false";
-		String jdbcUser = "root";
-		String jdbcPass = "root";
-		try {
-			System.out.println("Connecting to DB...");
-			Connection connection = DriverManager.getConnection(jdbcUrl, jdbcUser, jdbcPass);
-			System.out.println(connection);
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
+//		String jdbcUrl = "jdbc:mysql://localhost:3306/mygamelist?useSSL=false";
+//		String jdbcUser = "root";
+//		String jdbcPass = "root";
+//		try {
+//			System.out.println("Connecting to DB...");
+//			Connection connection = DriverManager.getConnection(jdbcUrl, jdbcUser, jdbcPass);
+//			System.out.println(connection);
+//		} catch (Exception e) {
+//			e.printStackTrace();
+//		}
 
 
 		/*************\
