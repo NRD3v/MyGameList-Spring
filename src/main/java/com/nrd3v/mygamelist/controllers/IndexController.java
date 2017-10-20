@@ -11,15 +11,26 @@ import java.util.List;
 @RestController
 public class IndexController {
 
-    private IGameRepository iGameRepository;
+    private IGameRepository gameRepository;
+//    private GameService gameService;
 
     @Autowired
-    public IndexController(IGameRepository iGameRepository) {
-        this.iGameRepository = iGameRepository;
+    public IndexController(
+            IGameRepository gameRepository
+//            GameService gameService
+    ) {
+        this.gameRepository = gameRepository;
+//        this.gameService = gameService;
     }
 
     @RequestMapping(name = "/")
     public List<Game> index() {
-        return iGameRepository.findAll();
+        return gameRepository.findAll();
     }
+
+//    @RequestMapping(name = "/test")
+//    public void test() {
+//        Game game = new Game("SessionService");
+//        gameService.create(game);
+//    }
 }
