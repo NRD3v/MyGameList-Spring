@@ -53,7 +53,7 @@ public class Developer {
         this.games = games;
     }
 
-    public void add(Game game) {
+    public void addGame(Game game) {
         if (games == null) {
             games = new ArrayList<>();
         }

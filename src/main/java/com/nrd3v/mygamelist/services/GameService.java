@@ -10,8 +10,8 @@
 //
 //    private ArrayList<Class> getEntities() {
 //        ArrayList<Class> entityClasses = new ArrayList<>();
-//        entityClasses.add(Developer.class);
-//        entityClasses.add(Game.class);
+//        entityClasses.addGame(Developer.class);
+//        entityClasses.addGame(Game.class);
 //        return entityClasses;
 //    }
 //

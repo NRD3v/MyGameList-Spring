@@ -11,7 +11,7 @@
 //
 //    private ArrayList<Class> getEntities() {
 //        ArrayList<Class> entityClasses = new ArrayList<>();
-//        entityClasses.add(User.class);
+//        entityClasses.addGame(User.class);
 //        return entityClasses;
 //    }
 //

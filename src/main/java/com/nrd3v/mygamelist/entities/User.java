@@ -1,6 +1,8 @@
 package com.nrd3v.mygamelist.entities;
 
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Table(name = "user")
@@ -16,6 +18,16 @@ public class User {
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "user_aggregate_id")
     private UserAggregate userAggregate;
+
+    @ManyToMany(
+            fetch = FetchType.LAZY,
+            cascade = {CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH})
+    @JoinTable(
+            name = "user_game",
+            joinColumns = @JoinColumn(name = "user_id"),
+            inverseJoinColumns = @JoinColumn(name = "game_id")
+    )
+    private List<Game> games;
 
     public User() {
     }
@@ -48,12 +60,26 @@ public class User {
         this.userAggregate = userAggregate;
     }
 
+    public List<Game> getGames() {
+        return games;
+    }
+
+    public void setGames(List<Game> games) {
+        this.games = games;
+    }
+
+    public void addGame(Game game) {
+        if (games == null) {
+            games = new ArrayList<>();
+        }
+        games.add(game);
+    }
+
     @Override
     public String toString() {
         return "User{" +
                 "id=" + id +
                 ", email='" + email + '\'' +
-                ", userAggregate=" + userAggregate +
                 '}';
     }
 }

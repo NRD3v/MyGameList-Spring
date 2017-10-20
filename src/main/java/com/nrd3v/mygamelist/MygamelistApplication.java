@@ -29,16 +29,32 @@ public class MygamelistApplication {
 
 		try {
 			System.out.println("START");
+			session.beginTransaction();
+
+
+			/**************************\
+			 * ManyToMany test mapping *
+			\**************************/
+			User user = new User("gears@war.com");
+			session.save(user);
+			Developer developer = new Developer("Epic");
+			session.save(developer);
+			Game game = new Game("Gears of War");
+			developer.addGame(game);
+			user.addGame(game);
+			session.save(game);
+
 
 			/*************************\
 			 * OneToMany test mapping *
 			\*************************/
-//			session.beginTransaction();
 //			Developer developer = session.get(Developer.class, 11);
 //			Game game = new Game("Portal");
-//			developer.add(game);
+//			developer.addGame(game);
 //			session.save(game);
-//			session.getTransaction().commit();
+
+
+			session.getTransaction().commit();
 		}
 		catch (Exception e) {
 			e.getStackTrace();

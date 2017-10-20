@@ -1,6 +1,7 @@
 package com.nrd3v.mygamelist.entities;
 
 import javax.persistence.*;
+import java.util.List;
 
 @Entity
 @Table(name = "game")
@@ -16,6 +17,15 @@ public class Game {
     @ManyToOne(cascade = {CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH})
     @JoinColumn(name = "developer_id")
     private Developer developer;
+
+    @ManyToMany(
+            fetch = FetchType.LAZY,
+            cascade = {CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH})
+    @JoinTable(
+            name = "user_game",
+            joinColumns = @JoinColumn(name = "game_id"),
+            inverseJoinColumns = @JoinColumn(name = "user_id"))
+    private List<User> users;
 
     public Game() {
     }
@@ -46,6 +56,14 @@ public class Game {
 
     public void setDeveloper(Developer developer) {
         this.developer = developer;
+    }
+
+    public List<User> getUsers() {
+        return users;
+    }
+
+    public void setUsers(List<User> users) {
+        this.users = users;
     }
 
     @Override
