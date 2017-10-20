@@ -2,10 +2,12 @@
 //
 //import com.nrd3v.mygamelist.entities.Developer;
 //import com.nrd3v.mygamelist.entities.Game;
+//import org.springframework.stereotype.Service;
 //
 //import java.util.ArrayList;
 //import java.util.Map;
 //
+//@Service
 //public class DeveloperService extends EntityService {
 //
 //    private ArrayList<Class> getEntities() {

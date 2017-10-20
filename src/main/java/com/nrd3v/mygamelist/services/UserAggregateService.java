@@ -1,10 +1,12 @@
 //package com.nrd3v.mygamelist.services;
 //
 //import com.nrd3v.mygamelist.entities.UserAggregate;
+//import org.springframework.stereotype.Service;
 //
 //import java.util.ArrayList;
 //import java.util.Map;
 //
+//@Service
 //public class UserAggregateService extends EntityService {
 //
 //    private ArrayList<Class> getEntities() {

@@ -1,6 +1,7 @@
 //package com.nrd3v.mygamelist.services;
 //
 //import org.hibernate.Session;
+//import org.springframework.stereotype.Service;
 //import org.springframework.util.ReflectionUtils;
 //import org.springframework.util.StringUtils;
 //
@@ -11,10 +12,8 @@
 //import java.util.Date;
 //import java.util.Map;
 //
+//@Service
 //abstract class EntityService extends SessionService {
-//
-//    public EntityService() {
-//    }
 //
 //    public void create(ArrayList<Class> entityClasses, Object object) {
 //        if (object != null) {
@@ -44,7 +43,6 @@
 //                this.applySetters(object, values);
 //                Method setUpdatedAt = ReflectionUtils.findMethod(object.getClass(),"setUpdatedAt");
 //                setUpdatedAt.invoke(object, Date.from(Instant.now()));
-//                session.save(object);
 //                session.getTransaction().commit();
 //            }
 //            catch(Exception e){
