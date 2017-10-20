@@ -2,6 +2,8 @@ package com.nrd3v.mygamelist.repositories;
 
 import com.nrd3v.mygamelist.entities.Developer;
 import com.nrd3v.mygamelist.entities.Game;
+import com.nrd3v.mygamelist.entities.User;
+import com.nrd3v.mygamelist.entities.UserAggregate;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
@@ -16,8 +18,10 @@ public class GameRepository implements IGameRepository {
     public List<Game> findAll() {
         SessionFactory factory = new Configuration()
                 .configure()
-                .addAnnotatedClass(Game.class)
                 .addAnnotatedClass(Developer.class)
+                .addAnnotatedClass(Game.class)
+                .addAnnotatedClass(User.class)
+                .addAnnotatedClass(UserAggregate.class)
                 .buildSessionFactory();
         Session session = factory.getCurrentSession();
         List<Game> games = null;

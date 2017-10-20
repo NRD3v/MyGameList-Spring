@@ -12,6 +12,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.util.List;
 
 @SpringBootApplication
 public class MygamelistApplication {
@@ -35,15 +36,18 @@ public class MygamelistApplication {
 			/**************************\
 			 * ManyToMany test mapping *
 			\**************************/
-			User user = new User("gears@war.com");
-			session.save(user);
-			Developer developer = new Developer("Epic");
-			session.save(developer);
-			Game game = new Game("Gears of War");
-			developer.addGame(game);
-			user.addGame(game);
-			session.save(game);
-
+//			User user = new User("gears@war.com");
+//			session.save(user);
+//			Developer developer = new Developer("Epic");
+//			session.save(developer);
+//			Game game = new Game("Gears of War");
+//			developer.addGame(game);
+//			user.addGame(game);
+//			session.save(game);
+//			Game game = session.get(Game.class, 4);
+//			System.out.println(game.getUsers());
+//			User user = session.get(User.class, 4);
+//			System.out.println(user.getGames());
 
 			/*************************\
 			 * OneToMany test mapping *
