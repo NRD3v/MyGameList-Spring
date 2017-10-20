@@ -8,11 +8,6 @@ import org.hibernate.cfg.Configuration;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
-
 @SpringBootApplication
 public class MygamelistApplication {
 
@@ -27,7 +22,6 @@ public class MygamelistApplication {
 		Session session = factory.getCurrentSession();
 
 		try {
-			System.out.println("STARTED AT: " + ToolService.getCurrentDateTime());
 			session.beginTransaction();
 
 
@@ -91,6 +85,7 @@ public class MygamelistApplication {
 		/*************\
 		 * App launch *
 		\*************/
+		System.out.println(ToolService.ANSI_RED + "STARTED AT: " + ToolService.getTime());
 		SpringApplication.run(MygamelistApplication.class, args);
 	}
 }

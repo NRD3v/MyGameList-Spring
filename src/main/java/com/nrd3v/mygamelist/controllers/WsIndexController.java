@@ -4,19 +4,20 @@ import com.nrd3v.mygamelist.entities.Game;
 import com.nrd3v.mygamelist.repositories.IGameRepository;
 import com.nrd3v.mygamelist.services.GameService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
 
-@Controller
-public class IndexController {
+@RestController
+@RequestMapping("/api")
+public class WsIndexController {
 
     private GameService gameService;
     private IGameRepository gameRepository;
 
     @Autowired
-    public IndexController(GameService gameService, IGameRepository gameRepository) {
+    public WsIndexController(GameService gameService, IGameRepository gameRepository) {
         this.gameService = gameService;
         this.gameRepository = gameRepository;
     }
