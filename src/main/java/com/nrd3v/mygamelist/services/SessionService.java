@@ -6,7 +6,7 @@
 //
 //import java.util.ArrayList;
 //
-//public class SessionService {
+//abstract class SessionService {
 //
 //    public SessionFactory getFactory(ArrayList<Class> entityClasses) {
 //        Configuration configuration = new Configuration().configure();
