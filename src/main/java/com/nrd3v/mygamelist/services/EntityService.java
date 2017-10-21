@@ -1,18 +1,12 @@
 package com.nrd3v.mygamelist.services;
 
-import com.nrd3v.mygamelist.entities.Game;
 import org.hibernate.Session;
 import org.springframework.stereotype.Service;
-import org.springframework.util.ReflectionUtils;
 import org.springframework.util.StringUtils;
 
-import java.lang.reflect.Array;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
-import java.time.Instant;
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Date;
 import java.util.Map;
 
 @Service
