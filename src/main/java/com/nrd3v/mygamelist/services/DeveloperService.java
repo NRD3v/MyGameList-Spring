@@ -23,9 +23,9 @@ public class DeveloperService extends EntityService {
         }
     }
 
-    public void update(Developer developer, Map<String,String> values) {
-        if (developer != null && values != null) {
-            this.update(this.getEntities(), developer, values);
+    public void update(Developer developer, Map<String,String> params) {
+        if (developer != null && params != null) {
+            this.update(this.getEntities(), developer, params);
         }
     }
 

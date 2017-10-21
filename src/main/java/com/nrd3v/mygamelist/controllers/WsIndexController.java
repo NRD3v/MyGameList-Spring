@@ -4,9 +4,14 @@ import com.nrd3v.mygamelist.entities.Game;
 import com.nrd3v.mygamelist.repositories.IGameRepository;
 import com.nrd3v.mygamelist.services.GameService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.util.HashMap;
 import java.util.List;
 
 @RestController
@@ -27,9 +32,11 @@ public class WsIndexController {
         return gameRepository.findAll();
     }
 
-    @RequestMapping(value = "/test")
-    public Game test() {
-        Game game = new Game("SessionService");
-        return gameService.create(game);
+    @RequestMapping(value = "/update/{id}")
+    public Game test(@PathVariable(name = "id") int gameId) {
+        Game game = gameRepository.findById(gameId);
+        HashMap<String, String> params = new HashMap<>();
+        params.put("name", "Team Fortress");
+        return gameService.update(game, params);
     }
 }

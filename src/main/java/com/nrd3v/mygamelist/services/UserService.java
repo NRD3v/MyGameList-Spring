@@ -21,9 +21,9 @@ public class UserService extends EntityService {
         }
     }
 
-    public void update(User user, Map<String,String> values) {
-        if (user != null && values != null) {
-            this.update(this.getEntities(), user, values);
+    public void update(User user, Map<String,String> params) {
+        if (user != null && params != null) {
+            this.update(this.getEntities(), user, params);
         }
     }
 

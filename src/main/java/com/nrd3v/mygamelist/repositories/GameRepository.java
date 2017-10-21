@@ -14,6 +14,33 @@ import java.util.List;
 @Repository
 public class GameRepository implements IGameRepository {
 
+    public Game findById(int id) {
+        SessionFactory factory = new Configuration()
+                .configure()
+                .addAnnotatedClass(Developer.class)
+                .addAnnotatedClass(Game.class)
+                .addAnnotatedClass(User.class)
+                .addAnnotatedClass(UserAggregate.class)
+                .buildSessionFactory();
+        Session session = factory.getCurrentSession();
+        Game game = null;
+        try {
+            session.beginTransaction();
+            game = session.get(Game.class, id);
+            session.getTransaction().commit();
+        }
+        catch (Exception e) {
+            e.getStackTrace();
+        }
+        finally {
+            if (session.isOpen()) {
+                session.close();
+            }
+            factory.close();
+        }
+        return game;
+    }
+
     @Override
     public List<Game> findAll() {
         SessionFactory factory = new Configuration()

@@ -8,9 +8,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 @Controller
 public class IndexController {
@@ -26,10 +24,13 @@ public class IndexController {
 
     @RequestMapping(value = "/")
     public ModelAndView index() {
-        HashMap<String, Object> model = new HashMap<>();
+        ModelAndView model = new ModelAndView();
         List<Game> games = gameRepository.findAll();
-        model.put("games", games);
-        return new ModelAndView("index", model);
+        System.out.println(games);
+        model.setViewName("index");
+        model.addObject("games", games);
+        model.addObject("resources", "..");
+        return model;
     }
 
     @RequestMapping(value = "/test")

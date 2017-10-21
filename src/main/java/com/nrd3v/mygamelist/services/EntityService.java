@@ -1,14 +1,17 @@
 package com.nrd3v.mygamelist.services;
 
+import com.nrd3v.mygamelist.entities.Game;
 import org.hibernate.Session;
 import org.springframework.stereotype.Service;
 import org.springframework.util.ReflectionUtils;
 import org.springframework.util.StringUtils;
 
+import java.lang.reflect.Array;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.time.Instant;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Date;
 import java.util.Map;
 
@@ -36,16 +39,12 @@ abstract class EntityService extends SessionService {
         return object;
     }
 
-    public void update(ArrayList<Class> entityClasses, Object object, Map<String,String> values) {
-        if (object != null && values != null) {
+    public Object update(ArrayList<Class> entityClasses, Object object, Map<String,String> params) {
+        if (object != null && params != null) {
             Session session = this.getSession(entityClasses);
             try {
                 session.beginTransaction();
-                this.applySetters(object, values);
-                Method setUpdatedAt = ReflectionUtils.findMethod(object.getClass(),"setUpdatedAt");
-                if (setUpdatedAt != null) {
-                    setUpdatedAt.invoke(object, Date.from(Instant.now()));
-                }
+                this.invokeSetters(object, params);
                 session.getTransaction().commit();
             }
             catch(Exception e){
@@ -58,6 +57,33 @@ abstract class EntityService extends SessionService {
                 this.getFactory(entityClasses).close();
             }
         }
+        return object;
+    }
+
+    private Object invokeSetters(Object object, Map<String, String> params) throws IllegalAccessException, InvocationTargetException {
+        for (Map.Entry<String, String> param: params.entrySet()) {
+            for (Method method: object.getClass().getMethods()) {
+                if (method.getName().equals("set" + StringUtils.capitalize(param.getKey()))) {
+                    method.invoke(object, param.getValue());
+                    try {
+                        Method setUpdatedAt = object.getClass().getMethod("setUpdatedAt", null);
+                        if (setUpdatedAt != null) {
+                            setUpdatedAt.invoke(object, null);
+                        }
+                    } catch(NoSuchMethodException e) {
+                        System.out.println(e.toString());
+                    }
+                }
+            }
+        }
+//        for (Map.Entry<String, String> param: params.entrySet()) {
+//            Method setterMethod = ReflectionUtils.findMethod(object.getClass(),
+//                    "set" + StringUtils.capitalize(param.getKey()));
+//            if (setterMethod != null) {
+//                setterMethod.invoke(object, param.getValue());
+//            }
+//        }
+        return object;
     }
 
     public void delete(ArrayList<Class> entityClasses, Object object) {
@@ -76,16 +102,6 @@ abstract class EntityService extends SessionService {
                     session.close();
                 }
                 this.getFactory(entityClasses).close();
-            }
-        }
-    }
-
-    private void applySetters(Object object, Map<String, String> values) throws IllegalAccessException, InvocationTargetException {
-        for (Map.Entry<String, String> value: values.entrySet()) {
-            Method setterMethod = ReflectionUtils.findMethod(object.getClass(),
-                    "set" + StringUtils.capitalize(value.getKey()));
-            if (setterMethod != null) {
-                setterMethod.invoke(object, value.getValue());
             }
         }
     }

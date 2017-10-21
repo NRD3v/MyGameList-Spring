@@ -21,9 +21,9 @@ public class UserAggregateService extends EntityService {
         }
     }
 
-    public void update(UserAggregate userAggregate, Map<String,String> values) {
-        if (userAggregate != null && values != null) {
-            this.update(this.getEntities(), userAggregate, values);
+    public void update(UserAggregate userAggregate, Map<String,String> params) {
+        if (userAggregate != null && params != null) {
+            this.update(this.getEntities(), userAggregate, params);
         }
     }
 

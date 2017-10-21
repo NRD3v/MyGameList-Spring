@@ -1,10 +1,102 @@
-<!doctype html>
-<html lang="en">
-    <body>
-    <div>
-        {{#games}}
-        <p>Id: {{ id }}, Name: {{name}}</p>
-        {{/games}}
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <title>Simple Sidebar - Start Bootstrap Template</title>
+    <!-- Bootstrap core CSS -->
+    <link href="{{ resources }}/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <link href="{{ resources }}/vendor/bootstrap/css/simple-sidebar.css" rel="stylesheet">
+    <!-- Custom styles for this template -->
+    <link href="{{ resources }}/css/mygamelist.css" rel="stylesheet">
+    <!-- Bootstrap core JavaScript -->
+    <script src="{{ resources }}/vendor/jquery/jquery.min.js"></script>
+    <script src="{{ resources }}/vendor/bootstrap/js/bootstrap.min.js"></script>
+</head>
+<body>
+    <div id="wrapper">
+        <!-- Sidebar -->
+        <div id="sidebar-wrapper">
+            <ul class="sidebar-nav">
+                <li class="sidebar-brand">
+                    <a href="#">
+                        MYGAMELIST
+                    </a>
+                </li>
+                <li>
+                    <a href="#">Dashboard</a>
+                </li>
+                <li>
+                    <a href="#">Shortcuts</a>
+                </li>
+                <li>
+                    <a href="#">Overview</a>
+                </li>
+                <li>
+                    <a href="#">Events</a>
+                </li>
+                <li>
+                    <a href="#">About</a>
+                </li>
+                <li>
+                    <a href="#">Services</a>
+                </li>
+                <li>
+                    <a href="#">Contact</a>
+                </li>
+            </ul>
+        </div>
+        <!-- /#sidebar-wrapper -->
+
+        <!-- Page Content -->
+        <div id="page-content-wrapper">
+            <div class="container-fluid">
+                <button id="menu-toggle" class="btn btn-secondary float-left mt0 mb20">Menu</button>
+                <button type="button" class="btn btn-success float-right mt0 mb20">Ajouter</button>
+
+                <table class="table table-sm table-hover">
+                    <thead class="thead-light">
+                        <tr>
+                            <th scope="col">#</th>
+                            <th scope="col">Titre</th>
+                            <th scope="col">Développeur</th>
+                            <th scope="col">Support</th>
+                            <th scope="col">Sortie</th>
+                            <th scope="col">Score</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {{#games}}
+                        <tr>
+                            <th class="align-middle" scope="row">
+                                <button class="btn btn-sm btn-outline-secondary">
+                                    {{#id}}{{ id }}{{/id}}
+                                </button>
+                            </th>
+                            <td class="align-middle">{{#name}}{{ name }}{{/name}}</td>
+                            <td class="align-middle">{{#developer}}{{ developer.name }}{{/developer}}</td>
+                            <td class="align-middle">{{#platform}}{{ platform.name }}{{/platform}}</td>
+                            <td class="align-middle">{{#year}}{{ year }}{{/year}}</td>
+                            <td class="align-middle">{{#score}}{{ score }}{{/score}}</td>
+                        </tr>
+                        {{/games}}
+                    </tbody>
+                </table>
+
+            </div>
+        </div>
+        <!-- /#page-content-wrapper -->
+
     </div>
-    </body>
+    <!-- /#wrapper -->
+
+    <script>
+        $("#menu-toggle").click(function(e) {
+            e.preventDefault();
+            $("#wrapper").toggleClass("toggled");
+        });
+    </script>
+</body>
 </html>
