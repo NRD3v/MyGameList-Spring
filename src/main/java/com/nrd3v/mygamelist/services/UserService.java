@@ -15,16 +15,18 @@ public class UserService extends EntityService {
         return entityClasses;
     }
 
-    public void create(User user) {
+    public User create(User user) {
         if (user != null) {
             this.create(this.getEntities(), user);
         }
+        return user;
     }
 
-    public void update(User user, Map<String,String> params) {
+    public User update(User user, Map<String,?> params) {
         if (user != null && params != null) {
             this.update(this.getEntities(), user, params);
         }
+        return user;
     }
 
     public void delete(User user) {

@@ -28,7 +28,7 @@ public class GameService extends EntityService {
         return game;
     }
 
-    public Game update(Game game, Map<String,String> params) {
+    public Game update(Game game, Map<String,?> params) {
         if (game != null && params != null) {
             this.update(this.getEntities(), game, params);
         }

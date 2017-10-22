@@ -33,7 +33,7 @@ abstract class EntityService extends SessionService {
         return object;
     }
 
-    public Object update(ArrayList<Class> entityClasses, Object object, Map<String,String> params) {
+    public Object update(ArrayList<Class> entityClasses, Object object, Map<String,?> params) {
         if (object != null && params != null) {
             Session session = this.getSession(entityClasses);
             try {
@@ -54,13 +54,14 @@ abstract class EntityService extends SessionService {
         return object;
     }
 
-    private Object invokeSetters(Object object, Map<String, String> params) throws IllegalAccessException, InvocationTargetException {
-        for (Map.Entry<String, String> param: params.entrySet()) {
+    private Object invokeSetters(Object object, Map<String, ?> params) throws IllegalAccessException, InvocationTargetException {
+        for (Map.Entry<String, ?> param: params.entrySet()) {
+            String methodName = "set" + StringUtils.capitalize(param.getKey());
             for (Method method: object.getClass().getMethods()) {
-                if (method.getName().equals("set" + StringUtils.capitalize(param.getKey()))) {
+                if (method.getName().equals(methodName)) {
                     method.invoke(object, param.getValue());
                     try {
-                        Method setUpdatedAt = object.getClass().getMethod("setUpdatedAt", null);
+                        Method setUpdatedAt = object.getClass().getMethod("setUpdatedAt", (Class[]) null);
                         if (setUpdatedAt != null) {
                             setUpdatedAt.invoke(object, null);
                         }
