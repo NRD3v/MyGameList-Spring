@@ -52,7 +52,6 @@ public class UserAggregate {
         return "UserAggregate{" +
                 "id=" + id +
                 ", name='" + name + '\'' +
-                ", user=" + user +
                 '}';
     }
 }

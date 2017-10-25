@@ -62,11 +62,31 @@
     <!-- Page Content -->
     <div id="page-content-wrapper">
         <div class="container-fluid">
-            <button id="menu-toggle" class="btn btn-secondary float-left mt0 mb20">Menu</button>
-            <button type="button" class="btn btn-success float-right mt0 mb20">Ajouter</button>
+            <button id="menu-toggle" class="btn btn-primary mt0 mb20">Menu</button>
+            <button type="button" class="btn btn-success pull-right mt0 mb20"
+                    data-toggle="modal" data-target="#gameAddModal">Ajouter</button>
+
+            <!-- Modal -->
+            <div class="modal fade" id="gameAddModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                            <h4 class="modal-title" id="myModalLabel">Modal title</h4>
+                        </div>
+                        <div class="modal-body">
+                            ...
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                            <button type="button" class="btn btn-success">Save changes</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
 
             <table class="table table-sm table-hover">
-                <thead class="thead-light">
+                <thead>
                 <tr>
                     <th scope="col">#</th>
                     <th scope="col">Titre</th>
@@ -79,34 +99,34 @@
                 <tbody>
                 <c:forEach var="game" items="${games}">
                     <tr>
-                        <th class="align-middle" scope="row">
-                            <button class="btn btn-sm btn-outline-secondary">
+                        <th scope="row">
+                            <button class="btn btn-sm">
                                 <c:if test="${game.id != null}">
                                     ${game.id}
                                 </c:if>
                             </button>
                         </th>
-                        <td class="align-middle">
+                        <td>
                             <c:if test="${game.name != null}">
                                 ${game.name}
                             </c:if>
                         </td>
-                        <td class="align-middle">
+                        <td>
                             <c:if test="${game.developer.name != null}">
                                 ${game.developer.name}
                             </c:if>
                         </td>
-                        <%--<td class="align-middle">--%>
+                        <%--<td>--%>
                             <%--<c:if test="${game.platform.name != null}">--%>
                                 <%--${game.platform.name}--%>
                             <%--</c:if>--%>
                         <%--</td>--%>
-                        <%--<td class="align-middle">--%>
+                        <%--<td>--%>
                             <%--<c:if test="${game.year != null}">--%>
                                 <%--${game.year}--%>
                             <%--</c:if>--%>
                         <%--</td>--%>
-                        <%--<td class="align-middle">--%>
+                        <%--<td>--%>
                             <%--<c:if test="${game.score != null}">--%>
                                 <%--${game.score}--%>
                             <%--</c:if>--%>
