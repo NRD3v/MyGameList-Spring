@@ -1,5 +1,6 @@
 package com.nrd3v.mygamelist.controllers;
 
+import com.google.gson.Gson;
 import com.nrd3v.mygamelist.entities.Developer;
 import com.nrd3v.mygamelist.entities.Game;
 import com.nrd3v.mygamelist.repositories.IDeveloperRepository;
@@ -19,6 +20,7 @@ import org.springframework.web.servlet.view.RedirectView;
 
 import javax.validation.Valid;
 import java.io.IOException;
+import java.util.List;
 
 @Controller
 public class IndexController {
@@ -43,7 +45,7 @@ public class IndexController {
         model.addAttribute("games", gameRepository.findAll());
         model.addAttribute("developers", developerRepository.findAll());
         model.addAttribute("newGame", new Game());
-//        model.addAttribute("apiGames", this.igdb(null, "halo"));
+        model.addAttribute("apiGames", this.igdb(null, "halo 3"));
         return "index";
     }
 
@@ -67,10 +69,10 @@ public class IndexController {
         return new RedirectView("/");
     }
 
-    public ResponseEntity<String> igdb(String gameId, String gameName) {
+    private List<String> igdb(String gameId, String gameName) {
         String searchName = null;
         if (gameName != null) {
-            searchName = "?search=" + gameName + "&fields=name,publishers";
+            searchName = "?search=" + gameName + "&fields=*";
         } else {
             searchName = gameId + "?fields=*";
         }
@@ -82,6 +84,6 @@ public class IndexController {
         HttpEntity<String> entity = new HttpEntity<String>("parameters", headers);
         ResponseEntity<String> response = restTemplate.exchange(theUrl, HttpMethod.GET, entity, String.class);
         System.out.println("Result - status ("+ response.getStatusCode() + ") has body: " + response.hasBody());
-        return response;
+        return new Gson().fromJson(response.getBody(), List.class);
     }
 }

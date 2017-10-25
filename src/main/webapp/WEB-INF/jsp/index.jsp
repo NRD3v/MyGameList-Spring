@@ -61,6 +61,19 @@
     <!-- /#sidebar-wrapper -->
 
     <%--${apiGames}--%>
+    <ul class="list-inline list-unstyled">
+        <c:forEach var="game" items="${apiGames}">
+            <li>
+                <img class="img-responsive" src="https:${game.cover.url}" alt="${game.name}">
+            </li>
+            <li>${game.id}</li>
+            <li>${game.name}</li>
+            <%--<li>${game.summary}</li>--%>
+            <li>${game.first_release_date}</li>
+            <li>${game.platforms}</li>
+            <br class="mb5">
+        </c:forEach>
+    </ul>
 
     <!-- Page Content -->
     <div id="page-content-wrapper">
