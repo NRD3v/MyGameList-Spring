@@ -1,5 +1,6 @@
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
-<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%@ page contentType="text/html; charset=UTF-8" %>
 <!DOCTYPE html>
 <html lang="fr">
@@ -59,6 +60,8 @@
     </div>
     <!-- /#sidebar-wrapper -->
 
+    <%--${apiGames}--%>
+
     <!-- Page Content -->
     <div id="page-content-wrapper">
         <div class="container-fluid">
@@ -68,21 +71,48 @@
 
             <!-- Modal -->
             <div class="modal fade" id="gameAddModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-                <div class="modal-dialog" role="document">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                            <h4 class="modal-title" id="myModalLabel">Modal title</h4>
-                        </div>
-                        <div class="modal-body">
-                            ...
-                        </div>
-                        <div class="modal-footer">
-                            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                            <button type="button" class="btn btn-success">Save changes</button>
+                <form:form cssClass="form-horizontal" method="POST" action="/add" modelAttribute="newGame">
+                    <div class="modal-dialog" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                                <h4 class="modal-title" id="myModalLabel">Ajouter un jeu</h4>
+                            </div>
+                            <div class="modal-body">
+                                <div class="form-group">
+                                    <form:label cssClass="col-lg-2 control-label" path="name">Titre</form:label>
+                                    <div class="col-lg-9">
+                                        <form:input cssClass="form-control" path="name" placeholder="Entrer un titre" required="required"/>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <form:label cssClass="col-lg-2 control-label" path="developer">Développeur</form:label>
+                                    <div class="col-lg-9">
+                                        <form:select cssClass="form-control" path="developer">
+                                            <form:option value="NONE"> -- Choisir parmi la liste --</form:option>
+                                            <c:forEach items="${developers}" var="developer">
+                                                <form:option value="${developer.id}">${developer.name}</form:option>
+                                            </c:forEach>
+                                        </form:select>
+                                    </div>
+                                </div>
+                                <%--<div class="form-group">--%>
+                                    <%--<form:label cssClass="col-lg-2 control-label" path="developer">Développeur</form:label>--%>
+                                    <%--<div class="col-lg-9">--%>
+                                        <%--<form:input cssClass="form-control" path="developer"/>--%>
+                                    <%--</div>--%>
+                                <%--</div>--%>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-default" data-dismiss="modal">Fermer</button>
+                                <%--<input type="submit" value="Submit"/>--%>
+                                <button type="submit" value="Submit" class="btn btn-success">Enregistrer</button>
+                            </div>
                         </div>
                     </div>
-                </div>
+                </form:form>
             </div>
 
             <table class="table table-sm table-hover">

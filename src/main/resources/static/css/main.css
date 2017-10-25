@@ -25,9 +25,11 @@
 .mb20 {
     margin-bottom: 20px;
 }
-.btn {
-    border-radius: 0;
-}
+
+/** Bootstrap override **/
+/*.btn, .modal-content, .form-control {*/
+    /*border-radius: 0;*/
+/*}*/
 .table > tbody > tr > td {
     vertical-align: middle;
 }
