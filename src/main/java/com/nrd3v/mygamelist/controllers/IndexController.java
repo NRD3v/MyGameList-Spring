@@ -24,12 +24,9 @@ public class IndexController {
 
     @RequestMapping(value = "/")
     public ModelAndView index() {
-        ModelAndView model = new ModelAndView();
         List<Game> games = gameRepository.findAll();
-        System.out.println(games);
-        model.setViewName("index");
+        ModelAndView model = new ModelAndView("index");
         model.addObject("games", games);
-        model.addObject("resources", "..");
         return model;
     }
 

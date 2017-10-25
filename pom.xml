@@ -6,7 +6,7 @@
 	<groupId>com.nrd3v</groupId>
 	<artifactId>mygamelist</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<packaging>jar</packaging>
+	<packaging>war</packaging>
 
 	<name>mygamelist</name>
 	<description>MyGameList for Spring Boot</description>
@@ -45,22 +45,24 @@
 			<artifactId>postgresql</artifactId>
 			<version>42.1.4</version>
 		</dependency>
-		<!-- https://mvnrepository.com/artifact/oracle/ojdbc6 -->
-		<dependency>
-			<groupId>com.oracle</groupId>
-			<artifactId>ojdbc6</artifactId>
-			<version>11.2.0.3</version>
-		</dependency>
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-test</artifactId>
 			<scope>test</scope>
 		</dependency>
 		<dependency>
-			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-starter-mustache</artifactId>
-			<version>1.5.8.RELEASE</version>
+			<groupId>org.apache.tomcat.embed</groupId>
+			<artifactId>tomcat-embed-jasper</artifactId>
 		</dependency>
+		<dependency>
+			<groupId>javax.servlet</groupId>
+			<artifactId>jstl</artifactId>
+		</dependency>
+		<!--<dependency>-->
+			<!--<groupId>org.springframework.boot</groupId>-->
+			<!--<artifactId>spring-boot-starter-mustache</artifactId>-->
+			<!--<version>1.5.8.RELEASE</version>-->
+		<!--</dependency>-->
 	</dependencies>
 
 	<build>
