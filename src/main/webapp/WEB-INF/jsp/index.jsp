@@ -60,25 +60,20 @@
     </div>
     <!-- /#sidebar-wrapper -->
 
-    <%--${apiGames}--%>
-    <ul class="list-inline list-unstyled">
-        <c:forEach var="game" items="${apiGames}">
-            <li>
-                <img class="img-responsive" src="https:${game.cover.url}" alt="${game.name}">
-            </li>
-            <li>${game.id}</li>
-            <li>${game.name}</li>
-            <%--<li>${game.summary}</li>--%>
-            <li>${game.first_release_date}</li>
-            <li>${game.platforms}</li>
-            <br class="mb5">
-        </c:forEach>
-    </ul>
-
     <!-- Page Content -->
     <div id="page-content-wrapper">
         <div class="container-fluid">
-            <button id="menu-toggle" class="btn btn-primary mt0 mb20">Menu</button>
+            <div class="row">
+                <button id="menu-toggle" class="btn btn-primary mt0 mb20">Menu</button>
+                <form class="form-horizontal col-lg-3 pull-right">
+                    <div class="form-group">
+                        <div class="input-group">
+                            <span class="input-group-addon" id="sizing-addon1"><span class="glyphicon glyphicon-search"></span></span>
+                            <%--<input type="text" class="form-control"  name="gameNameSearch" id="gameNameSearch"--%>
+                                   <%--placeholder="Rechercher un jeu" aria-describedby="sizing-addon1">--%>
+                        </div>
+                </form>
+            </div>
             <button type="button" class="btn btn-success pull-right mt0 mb20"
                     data-toggle="modal" data-target="#gameAddModal">Ajouter</button>
 
@@ -120,7 +115,6 @@
                             </div>
                             <div class="modal-footer">
                                 <button type="button" class="btn btn-default" data-dismiss="modal">Fermer</button>
-                                <%--<input type="submit" value="Submit"/>--%>
                                 <button type="submit" value="Submit" class="btn btn-success">Enregistrer</button>
                             </div>
                         </div>
@@ -128,7 +122,11 @@
                 </form:form>
             </div>
 
-            <table class="table table-sm table-hover">
+            <div class="row text-center">
+                <div id="results" class="col-lg-12"></div>
+            </div>
+
+            <table id="dataTable" class="table table-sm table-hover">
                 <thead>
                 <tr>
                     <th scope="col">#</th>
@@ -190,6 +188,52 @@
     $("#menu-toggle").click(function(e) {
         e.preventDefault();
         $("#wrapper").toggleClass("toggled");
+    });
+    $("#gameNameSearch").keypress(function () {
+        var val = $(this).val();
+        if (val.length >= 3) {
+            $("#results").empty();
+            $.ajax({
+                url: "/api/search/",
+                type: "POST",
+                data: { name: val },
+                cache: false,
+                dataType: "json",
+                success: function (response) {
+                    for (var i=0; i<response.length; i++) {
+                        $.ajax({
+                            url: "/api/search/",
+                            type: "POST",
+                            data: { id: response[i].id },
+                            cache: false,
+                            dataType: "json",
+                            success: function (response) {
+                                $("#results").append(
+                                    "<div class='col-lg-2'>" +
+                                    "<img class='mt20 mb10' style='border-radius:10px;' src='" + response[0].cover.url + "' height='150' width='150'>" +
+                                    "<span class='btn btn-info btn-sm mb20' id='gameModal" + response[0].id + "'>" +
+                                    "<span class='glyphicon glyphicon-question-sign'></span>" +
+                                    "</span>" +
+                                    "<span class='btn btn-info btn-sm mb20' id='gameModal" + response[0].id + "'>" +
+                                    "<span class='glyphicon glyphicon-plus-sign'></span>" +
+                                    "</span>" +
+                                    "</div>"
+                                );
+                                console.log("Success:" + JSON.stringify(response));
+                            },
+                            error: function (response) {
+                                console.log("Error:" + JSON.stringify(response));
+                            }
+                            //.done(function(data) { };
+                        });
+                    }
+                },
+                error: function (response) {
+                    console.log("Error:" + JSON.stringify(response));
+                }
+                //.done(function(data) { };
+            });
+        }
     });
 </script>
 </body>

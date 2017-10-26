@@ -1,3 +1,16 @@
+/** BOOTSTRAP OVERRIDE **/
+/*.btn, .modal-content, .form-control {*/
+    /*border-radius: 0;*/
+/*}*/
+.table > tbody > tr > td {
+    vertical-align: middle;
+}
+.table > thead > tr {
+    background-color: #4c4c4c;
+    color: white;
+}
+
+/** MARGINS & PADDINGS**/
 .m5 {
     margin: 5px;
 }
@@ -25,11 +38,30 @@
 .mb20 {
     margin-bottom: 20px;
 }
-
-/** Bootstrap override **/
-/*.btn, .modal-content, .form-control {*/
-    /*border-radius: 0;*/
-/*}*/
-.table > tbody > tr > td {
-    vertical-align: middle;
+.p5 {
+    padding: 5px;
+}
+.p10 {
+    padding: 10px;
+}
+.p20 {
+    padding: 20px;
+}
+.pt5 {
+    padding-top: 5px;
+}
+.pt10 {
+    padding-top: 10px;
+}
+.pt20 {
+    padding-top: 20px;
+}
+.pb5 {
+    padding-bottom: 5px;
+}
+.pb10 {
+    padding-bottom: 10px;
+}
+.pb20 {
+    padding-bottom: 20px;
 }
