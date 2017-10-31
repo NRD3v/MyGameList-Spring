@@ -63,17 +63,15 @@
     <!-- Page Content -->
     <div id="page-content-wrapper">
         <div class="container-fluid">
-            <div class="row">
-                <button id="menu-toggle" class="btn btn-primary mt0 mb20">Menu</button>
-                <form class="form-horizontal col-lg-3 pull-right">
-                    <div class="form-group">
-                        <div class="input-group">
-                            <span class="input-group-addon" id="sizing-addon1"><span class="glyphicon glyphicon-search"></span></span>
-                            <%--<input type="text" class="form-control"  name="gameNameSearch" id="gameNameSearch"--%>
-                                   <%--placeholder="Rechercher un jeu" aria-describedby="sizing-addon1">--%>
-                        </div>
-                </form>
-            </div>
+            <button id="menu-toggle" class="btn btn-primary mt0 mb20">Menu</button>
+            <%--<form class="form-horizontal col-lg-3 pull-right">--%>
+                <%--<div class="form-group">--%>
+                    <%--<div class="input-group">--%>
+                        <%--<span class="input-group-addon" id="sizing-addon1"><span class="glyphicon glyphicon-search"></span></span>--%>
+                        <%--<input type="text" class="form-control"  name="gameNameSearch" id="gameNameSearch"--%>
+                               <%--placeholder="Rechercher un jeu" aria-describedby="sizing-addon1">--%>
+                    <%--</div>--%>
+            <%--</form>--%>
             <button type="button" class="btn btn-success pull-right mt0 mb20"
                     data-toggle="modal" data-target="#gameAddModal">Ajouter</button>
 
