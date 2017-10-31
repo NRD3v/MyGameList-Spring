@@ -19,21 +19,21 @@ public class DeveloperService extends EntityService {
 
     public Developer create(Developer developer) {
         if (developer != null) {
-            this.create(this.getEntities(), developer);
+            this.createEntity(this.getEntities(), developer);
         }
         return developer;
     }
 
     public Developer update(Developer developer, Map<String,?> params) {
         if (developer != null && params != null) {
-            this.update(this.getEntities(), developer, params);
+            this.updateEntity(this.getEntities(), developer, params);
         }
         return developer;
     }
 
     public void delete(Developer developer) {
         if (developer != null) {
-            this.delete(this.getEntities(), developer);
+            this.deleteEntity(this.getEntities(), developer);
         }
     }
 }

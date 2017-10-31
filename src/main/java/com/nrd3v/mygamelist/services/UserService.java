@@ -17,21 +17,21 @@ public class UserService extends EntityService {
 
     public User create(User user) {
         if (user != null) {
-            this.create(this.getEntities(), user);
+            this.createEntity(this.getEntities(), user);
         }
         return user;
     }
 
     public User update(User user, Map<String,?> params) {
         if (user != null && params != null) {
-            this.update(this.getEntities(), user, params);
+            this.updateEntity(this.getEntities(), user, params);
         }
         return user;
     }
 
     public void delete(User user) {
         if (user != null) {
-            this.delete(this.getEntities(), user);
+            this.deleteEntity(this.getEntities(), user);
         }
     }
 }

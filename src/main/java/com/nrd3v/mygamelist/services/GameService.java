@@ -21,21 +21,21 @@ public class GameService extends EntityService {
 
     public Game create(Game game) {
         if (game != null) {
-            this.create(this.getEntities(), game);
+            this.createEntity(this.getEntities(), game);
         }
         return game;
     }
 
     public Game update(Game game, Map<String,?> params) {
         if (game != null && params != null) {
-            this.update(this.getEntities(), game, params);
+            this.updateEntity(this.getEntities(), game, params);
         }
         return game;
     }
 
     public void delete(Game game) {
         if (game != null) {
-            this.delete(this.getEntities(), game);
+            this.deleteEntity(this.getEntities(), game);
         }
     }
 }

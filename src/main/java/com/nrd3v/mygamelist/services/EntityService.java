@@ -12,7 +12,7 @@ import java.util.Map;
 @Service
 abstract class EntityService extends SessionService {
 
-    public Object create(ArrayList<Class> entityClasses, Object object) {
+    public Object createEntity(ArrayList<Class> entityClasses, Object object) {
         if (object != null) {
             Session session = this.getSession(entityClasses);
             try {
@@ -33,7 +33,7 @@ abstract class EntityService extends SessionService {
         return object;
     }
 
-    public Object update(ArrayList<Class> entityClasses, Object object, Map<String,?> params) {
+    public Object updateEntity(ArrayList<Class> entityClasses, Object object, Map<String,?> params) {
         if (object != null && params != null) {
             Session session = this.getSession(entityClasses);
             try {
@@ -81,7 +81,7 @@ abstract class EntityService extends SessionService {
         return object;
     }
 
-    public void delete(ArrayList<Class> entityClasses, Object object) {
+    public void deleteEntity(ArrayList<Class> entityClasses, Object object) {
         if (object != null) {
             Session session = this.getSession(entityClasses);
             try {
