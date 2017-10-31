@@ -32,7 +32,7 @@ public abstract class CoreRepository extends CoreSession {
         List<Class> objects = null;
         try {
             session.beginTransaction();
-            objects = session.createQuery("FROM " + classType.getName() + " ORDER BY name ASC").list();
+            objects = session.createQuery("FROM " + classType.getName()).list();
             session.getTransaction().commit();
         }
         catch (Exception e) {

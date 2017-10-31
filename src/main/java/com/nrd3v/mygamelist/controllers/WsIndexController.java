@@ -23,7 +23,7 @@ public class WsIndexController {
     }
 
     @RequestMapping(value = "/")
-    public List<Game> index() {
+    public List<Class> index() {
         return gameRepository.findAll();
     }
 

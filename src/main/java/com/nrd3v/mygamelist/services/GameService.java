@@ -12,7 +12,7 @@ import java.util.Map;
 @Service
 public class GameService extends CoreEntity {
 
-    private ArrayList<Class> getEntities() {
+    public ArrayList<Class> getEntities() {
         ArrayList<Class> entityClasses = new ArrayList<>();
         entityClasses.add(Developer.class);
         entityClasses.add(Game.class);

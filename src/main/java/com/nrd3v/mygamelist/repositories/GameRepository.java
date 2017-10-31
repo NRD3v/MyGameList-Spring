@@ -1,68 +1,27 @@
 package com.nrd3v.mygamelist.repositories;
 
-import com.nrd3v.mygamelist.entities.Developer;
+import com.nrd3v.mygamelist.core.CoreRepository;
 import com.nrd3v.mygamelist.entities.Game;
-import com.nrd3v.mygamelist.entities.User;
-import org.hibernate.Session;
-import org.hibernate.SessionFactory;
-import org.hibernate.cfg.Configuration;
+import com.nrd3v.mygamelist.services.GameService;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
 @Repository
-public class GameRepository implements IGameRepository {
+public class GameRepository extends CoreRepository implements IGameRepository {
+
+    private GameService gameService;
+
+    public GameRepository(GameService gameService) {
+        this.gameService = gameService;
+    }
 
     public Game findById(int id) {
-        SessionFactory factory = new Configuration()
-                .configure()
-                .addAnnotatedClass(Developer.class)
-                .addAnnotatedClass(Game.class)
-                .addAnnotatedClass(User.class)
-                .buildSessionFactory();
-        Session session = factory.getCurrentSession();
-        Game game = null;
-        try {
-            session.beginTransaction();
-            game = session.get(Game.class, id);
-            session.getTransaction().commit();
-        }
-        catch (Exception e) {
-            e.getStackTrace();
-        }
-        finally {
-            if (session.isOpen()) {
-                session.close();
-            }
-            factory.close();
-        }
-        return game;
+        return (Game) this.findEntityById(gameService.getEntities(), Game.class,id);
     }
 
     @Override
-    public List<Game> findAll() {
-        SessionFactory factory = new Configuration()
-                .configure()
-                .addAnnotatedClass(Developer.class)
-                .addAnnotatedClass(Game.class)
-                .addAnnotatedClass(User.class)
-                .buildSessionFactory();
-        Session session = factory.getCurrentSession();
-        List<Game> games = null;
-        try {
-            session.beginTransaction();
-            games = session.createQuery("FROM Game ORDER BY name ASC").list();
-            session.getTransaction().commit();
-        }
-        catch (Exception e) {
-            e.getStackTrace();
-        }
-        finally {
-            if (session.isOpen()) {
-                session.close();
-            }
-            factory.close();
-        }
-        return games;
+    public List<Class> findAll() {
+        return this.findAllEntities(gameService.getEntities(), Game.class);
     }
 }
