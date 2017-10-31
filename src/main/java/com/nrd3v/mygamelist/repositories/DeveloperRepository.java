@@ -54,7 +54,7 @@ public class DeveloperRepository implements IDeveloperRepository {
         List<Developer> developers = null;
         try {
             session.beginTransaction();
-            developers = session.createQuery("FROM Developer ").list();
+            developers = session.createQuery("FROM Developer ORDER BY name ASC").list();
             session.getTransaction().commit();
         }
         catch (Exception e) {

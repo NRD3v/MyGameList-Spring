@@ -64,14 +64,6 @@
     <div id="page-content-wrapper">
         <div class="container-fluid">
             <button id="menu-toggle" class="btn btn-primary mt0 mb20">Menu</button>
-            <%--<form class="form-horizontal col-lg-3 pull-right">--%>
-                <%--<div class="form-group">--%>
-                    <%--<div class="input-group">--%>
-                        <%--<span class="input-group-addon" id="sizing-addon1"><span class="glyphicon glyphicon-search"></span></span>--%>
-                        <%--<input type="text" class="form-control"  name="gameNameSearch" id="gameNameSearch"--%>
-                               <%--placeholder="Rechercher un jeu" aria-describedby="sizing-addon1">--%>
-                    <%--</div>--%>
-            <%--</form>--%>
             <button type="button" class="btn btn-success pull-right mt0 mb20"
                     data-toggle="modal" data-target="#gameAddModal">Ajouter</button>
 
@@ -127,12 +119,10 @@
             <table id="dataTable" class="table table-sm table-hover">
                 <thead>
                 <tr>
-                    <th scope="col">#</th>
-                    <th scope="col">Titre</th>
-                    <th scope="col">Développeur</th>
-                    <%--<th scope="col">Support</th>--%>
-                    <%--<th scope="col">Sortie</th>--%>
-                    <%--<th scope="col">Score</th>--%>
+                    <th>#</th>
+                    <th>Titre</th>
+                    <th>Développeur</th>
+                    <th>Actions</th>
                 </tr>
                 </thead>
                 <tbody>
@@ -155,21 +145,11 @@
                                 ${game.developer.name}
                             </c:if>
                         </td>
-                        <%--<td>--%>
-                            <%--<c:if test="${game.platform.name != null}">--%>
-                                <%--${game.platform.name}--%>
-                            <%--</c:if>--%>
-                        <%--</td>--%>
-                        <%--<td>--%>
-                            <%--<c:if test="${game.year != null}">--%>
-                                <%--${game.year}--%>
-                            <%--</c:if>--%>
-                        <%--</td>--%>
-                        <%--<td>--%>
-                            <%--<c:if test="${game.score != null}">--%>
-                                <%--${game.score}--%>
-                            <%--</c:if>--%>
-                        <%--</td>--%>
+                        <td>
+                            <a href="/delete/${game.id}">
+                                <button class="delete btn btn-sm btn-danger">Supprimer</button>
+                            </a>
+                        </td>
                     </tr>
                 </c:forEach>
                 </tbody>
@@ -187,52 +167,9 @@
         e.preventDefault();
         $("#wrapper").toggleClass("toggled");
     });
-    $("#gameNameSearch").keypress(function () {
-        var val = $(this).val();
-        if (val.length >= 3) {
-            $("#results").empty();
-            $.ajax({
-                url: "/api/search/",
-                type: "POST",
-                data: { name: val },
-                cache: false,
-                dataType: "json",
-                success: function (response) {
-                    for (var i=0; i<response.length; i++) {
-                        $.ajax({
-                            url: "/api/search/",
-                            type: "POST",
-                            data: { id: response[i].id },
-                            cache: false,
-                            dataType: "json",
-                            success: function (response) {
-                                $("#results").append(
-                                    "<div class='col-lg-2'>" +
-                                    "<img class='mt20 mb10' style='border-radius:10px;' src='" + response[0].cover.url + "' height='150' width='150'>" +
-                                    "<span class='btn btn-info btn-sm mb20' id='gameModal" + response[0].id + "'>" +
-                                    "<span class='glyphicon glyphicon-question-sign'></span>" +
-                                    "</span>" +
-                                    "<span class='btn btn-info btn-sm mb20' id='gameModal" + response[0].id + "'>" +
-                                    "<span class='glyphicon glyphicon-plus-sign'></span>" +
-                                    "</span>" +
-                                    "</div>"
-                                );
-                                console.log("Success:" + JSON.stringify(response));
-                            },
-                            error: function (response) {
-                                console.log("Error:" + JSON.stringify(response));
-                            }
-                            //.done(function(data) { };
-                        });
-                    }
-                },
-                error: function (response) {
-                    console.log("Error:" + JSON.stringify(response));
-                }
-                //.done(function(data) { };
-            });
-        }
-    });
+    $(".delete").on("click", function() {
+        alert("Attention: Voulez-vous supprimer ?")
+    })
 </script>
 </body>
 </html>

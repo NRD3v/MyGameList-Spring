@@ -55,4 +55,13 @@ public class IndexController {
         gameService.create(game);
         return new RedirectView("/");
     }
+
+    @RequestMapping(value = "/delete/{id}", method = RequestMethod.GET)
+    public RedirectView deleteGame(@PathVariable(name = "id") int id) {
+        Game game = gameRepository.findById(id);
+        if (game != null) {
+            gameService.delete(game);
+        }
+        return new RedirectView("/");
+    }
 }

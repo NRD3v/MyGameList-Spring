@@ -54,7 +54,7 @@ public class GameRepository implements IGameRepository {
         List<Game> games = null;
         try {
             session.beginTransaction();
-            games = session.createQuery("FROM Game").list();
+            games = session.createQuery("FROM Game ORDER BY name ASC").list();
             session.getTransaction().commit();
         }
         catch (Exception e) {
