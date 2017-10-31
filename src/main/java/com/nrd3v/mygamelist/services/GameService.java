@@ -3,7 +3,6 @@ package com.nrd3v.mygamelist.services;
 import com.nrd3v.mygamelist.entities.Developer;
 import com.nrd3v.mygamelist.entities.Game;
 import com.nrd3v.mygamelist.entities.User;
-import com.nrd3v.mygamelist.entities.UserAggregate;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -17,7 +16,6 @@ public class GameService extends EntityService {
         entityClasses.add(Developer.class);
         entityClasses.add(Game.class);
         entityClasses.add(User.class);
-        entityClasses.add(UserAggregate.class);
         return entityClasses;
     }
 

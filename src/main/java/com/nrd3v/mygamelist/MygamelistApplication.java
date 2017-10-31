@@ -17,7 +17,6 @@ public class MygamelistApplication {
 				.addAnnotatedClass(Developer.class)
 				.addAnnotatedClass(Game.class)
 				.addAnnotatedClass(User.class)
-				.addAnnotatedClass(UserAggregate.class)
 				.buildSessionFactory();
 		Session session = factory.getCurrentSession();
 
