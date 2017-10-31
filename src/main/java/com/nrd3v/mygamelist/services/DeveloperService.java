@@ -1,19 +1,22 @@
 package com.nrd3v.mygamelist.services;
 
+import com.nrd3v.mygamelist.core.CoreEntity;
 import com.nrd3v.mygamelist.entities.Developer;
 import com.nrd3v.mygamelist.entities.Game;
+import com.nrd3v.mygamelist.entities.User;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.Map;
 
 @Service
-public class DeveloperService extends EntityService {
+public class DeveloperService extends CoreEntity {
 
-    private ArrayList<Class> getEntities() {
+    public ArrayList<Class> getEntities() {
         ArrayList<Class> entityClasses = new ArrayList<>();
         entityClasses.add(Developer.class);
         entityClasses.add(Game.class);
+        entityClasses.add(User.class);
         return entityClasses;
     }
 

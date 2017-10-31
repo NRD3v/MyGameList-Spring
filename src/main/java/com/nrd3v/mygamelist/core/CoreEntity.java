@@ -1,4 +1,4 @@
-package com.nrd3v.mygamelist.services;
+package com.nrd3v.mygamelist.core;
 
 import org.hibernate.Session;
 import org.springframework.stereotype.Service;
@@ -10,7 +10,7 @@ import java.util.ArrayList;
 import java.util.Map;
 
 @Service
-abstract class EntityService extends SessionService {
+public abstract class CoreEntity extends CoreSession {
 
     public Object createEntity(ArrayList<Class> entityClasses, Object object) {
         if (object != null) {

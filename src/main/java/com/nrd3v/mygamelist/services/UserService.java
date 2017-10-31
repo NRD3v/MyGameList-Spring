@@ -1,5 +1,6 @@
 package com.nrd3v.mygamelist.services;
 
+import com.nrd3v.mygamelist.core.CoreEntity;
 import com.nrd3v.mygamelist.entities.User;
 import org.springframework.stereotype.Service;
 
@@ -7,7 +8,7 @@ import java.util.ArrayList;
 import java.util.Map;
 
 @Service
-public class UserService extends EntityService {
+public class UserService extends CoreEntity {
 
     private ArrayList<Class> getEntities() {
         ArrayList<Class> entityClasses = new ArrayList<>();

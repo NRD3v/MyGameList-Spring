@@ -1,4 +1,4 @@
-package com.nrd3v.mygamelist.services;
+package com.nrd3v.mygamelist.core;
 
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -6,7 +6,7 @@ import org.hibernate.cfg.Configuration;
 
 import java.util.ArrayList;
 
-abstract class SessionService {
+public abstract class CoreSession {
 
     public SessionFactory getFactory(ArrayList<Class> entityClasses) {
         Configuration configuration = new Configuration().configure();

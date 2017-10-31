@@ -1,5 +1,6 @@
 package com.nrd3v.mygamelist.services;
 
+import com.nrd3v.mygamelist.core.CoreEntity;
 import com.nrd3v.mygamelist.entities.Developer;
 import com.nrd3v.mygamelist.entities.Game;
 import com.nrd3v.mygamelist.entities.User;
@@ -9,7 +10,7 @@ import java.util.ArrayList;
 import java.util.Map;
 
 @Service
-public class GameService extends EntityService {
+public class GameService extends CoreEntity {
 
     private ArrayList<Class> getEntities() {
         ArrayList<Class> entityClasses = new ArrayList<>();

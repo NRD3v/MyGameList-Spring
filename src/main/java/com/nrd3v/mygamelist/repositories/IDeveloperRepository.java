@@ -7,5 +7,5 @@ import java.util.List;
 public interface IDeveloperRepository {
 
     Developer findById(int id);
-    List<Developer> findAll();
+    List<Class> findAll();
 }
