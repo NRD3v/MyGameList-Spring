@@ -12,7 +12,7 @@
     <meta name="author" content="NRD3v - Nicolas Rabagny">
     <title>MyGameList - Spring App</title>
     <!-- Bootstrap core CSS -->
-    <c:url value="/css/bootstrap.min.css" var="jstlBootstrapCSS" />
+    <c:url value="/css/bootstrap-lumen.min.css" var="jstlBootstrapCSS" />
     <link href="${jstlBootstrapCSS}" rel="stylesheet" />
     <c:url value="/css/simple-sidebar.css" var="jstlBootstrapTemplate" />
     <link href="${jstlBootstrapTemplate}" rel="stylesheet" />
@@ -67,7 +67,9 @@
     <!-- Page Content -->
     <div id="page-content-wrapper">
         <div class="container-fluid">
-            <button id="menu-toggle" class="btn btn-primary mt0 mb20">Menu</button>
+            <button id="menu-toggle" class="btn btn-primary mt0 mb20">
+                <span class="glyphicon glyphicon-menu-hamburger"></span>
+            </button>
             <%--<button type="button" class="btn btn-success pull-right mt0 mb20"--%>
                     <%--data-toggle="modal" data-target="#gameAddModal">Ajouter</button>--%>
             <%--<br>--%>
@@ -169,8 +171,12 @@
                             </c:if>
                         </td>
                         <td>
-                            <button data-toggle="modal" data-target="#gameDeleteModal"
-                                    class="btn btn-sm btn-danger">Supprimer</button>
+                            <button class="btn btn-xs btn-warning">
+                                <span class="glyphicon glyphicon-pencil"></span>
+                            </button>
+                            <button data-toggle="modal" data-target="#gameDeleteModal" class="btn btn-xs btn-danger">
+                                <span class="glyphicon glyphicon-remove"></span>
+                            </button>
 
                             <div class="modal fade" id="gameDeleteModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
                                 <div class="modal-dialog" role="document">
