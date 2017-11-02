@@ -13,6 +13,8 @@ public class Game {
     private int id;
     @Column(name = "name")
     private String name;
+    @Column(name = "release_date")
+    private String releaseDate;
 
     @ManyToOne(cascade = {CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH})
     @JoinColumn(name = "developer_id")
@@ -43,6 +45,14 @@ public class Game {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public String getReleaseDate() {
+        return releaseDate;
+    }
+
+    public void setReleaseDate(String releaseDate) {
+        this.releaseDate = releaseDate;
     }
 
     public Developer getDeveloper() {

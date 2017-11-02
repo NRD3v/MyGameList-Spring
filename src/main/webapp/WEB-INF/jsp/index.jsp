@@ -72,18 +72,18 @@
 
 
 
-            <%--<br>--%>
-            <%--<form class="form-horizontal col-lg-3 pull-right">--%>
-                <%--<div class="form-group">--%>
-                    <%--<div class="input-group">--%>
-                    <%--<span class="input-group-addon" id="sizing-addon1">--%>
-                        <%--<span class="glyphicon glyphicon-search"></span>--%>
-                    <%--</span>--%>
-                    <%--<input type="text" class="form-control" name="gameNameSearch" id="gameNameSearch"--%>
-                           <%--placeholder="Rechercher un jeu" aria-describedby="sizing-addon1">--%>
-                    <%--</div>--%>
-                <%--</div>--%>
-            <%--</form>--%>
+            <br>
+            <form class="form-horizontal col-lg-3 pull-right">
+                <div class="form-group">
+                    <div class="input-group">
+                    <span class="input-group-addon" id="sizing-addon1">
+                        <span class="glyphicon glyphicon-search"></span>
+                    </span>
+                    <input type="text" class="form-control" name="gameNameSearch" id="gameNameSearch"
+                           placeholder="Rechercher un jeu" aria-describedby="sizing-addon1">
+                    </div>
+                </div>
+            </form>
 
 
 
@@ -123,6 +123,12 @@
                                         <%--<form:input cssClass="form-control" path="developer"/>--%>
                                     <%--</div>--%>
                                 <%--</div>--%>
+                                <div class="form-group">
+                                    <form:label cssClass="col-lg-2 control-label" path="releaseDate">Année</form:label>
+                                    <div class="col-lg-9">
+                                        <form:input cssClass="dateField form-control" path="releaseDate" placeholder="Entrer une date de sortie"/>
+                                    </div>
+                                </div>
                             </div>
                             <div class="modal-footer">
                                 <button type="button" class="btn btn-default" data-dismiss="modal">Fermer</button>
@@ -143,6 +149,7 @@
                     <th>#</th>
                     <th>Titre</th>
                     <th>Développeur</th>
+                    <th>Sortie</th>
                     <th>Actions</th>
                 </tr>
                 </thead>
@@ -164,6 +171,11 @@
                         <td>
                             <c:if test="${game.developer.name != null}">
                                 ${game.developer.name}
+                            </c:if>
+                        </td>
+                        <td>
+                            <c:if test="${game.releaseDate != null}">
+                                ${game.releaseDate}
                             </c:if>
                         </td>
                         <td>

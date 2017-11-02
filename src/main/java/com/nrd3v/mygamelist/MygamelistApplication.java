@@ -84,7 +84,7 @@ public class MygamelistApplication {
 		/*************\
 		 * App launch *
 		\*************/
-		System.out.println(ToolService.ANSI_RED + "STARTED AT: " + ToolService.getTime());
+        System.out.println(ToolService.ANSI_RED + "STARTED AT: " + ToolService.getTime());
 		SpringApplication.run(MygamelistApplication.class, args);
 	}
 }

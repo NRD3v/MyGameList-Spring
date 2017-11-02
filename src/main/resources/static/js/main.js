@@ -18,23 +18,25 @@ $(function () {
                        $("#results").append(
                            "<div class='col-lg-2'>" +
                                "<img class='mt20 mb10' style='border-radius:10px;' src='" + result.image.thumb_url + "' height='150' width='150'>" +
-                               "<button data-toggle='modal' id='"+result.id+"' class='games btn btn-success btn-sm mb20' " +
-                           // "data-target='#gameAddModal' " +
-                               // "onclick='$(\".nameField\").val() == result.name; $(\".developerField\").val() == 2; console.log($(\".nameField\").val()); console.log($(\".developerField\").val())'" +
-                           "> " +
+                               "<button data-toggle='modal' data-target='#gameAddModal' id='"+result.id+"' class='games btn btn-success btn-sm mb20'>" +
                                    "<span class='glyphicon glyphicon-plus-sign'></span> Ajouter" +
                                "</button>" +
                            "</div>"
                        );
                    });
-                   var elements = $(".games").map(function() {
-                       return this;
-                   }).get();
-                   $.each(elements, function (index, element) {
-                       console.log($.type(element));
-                       element.bind("click", function () {
-                           //noinspection JSAnnotator
-                           $(".nameField").val() = result.name;
+                   $(document.body).on('click', 'button', function (element) {
+                       $.ajax({
+                           url: "/api/search",
+                           type: "POST",
+                           data: { id: element.currentTarget.id },
+                           dataType: "json",
+                           success: function (response) {
+                               $(".nameField").val(response.results.name);
+                               $(".dateField").val(response.results.original_release_date);
+                           },
+                           error: function (response) {
+
+                           }
                        });
                    });
                },
