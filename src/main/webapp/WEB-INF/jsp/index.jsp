@@ -153,9 +153,14 @@
                             </c:if>
                         </td>
                         <td>
-                            <c:if test="${game.developer.name != null}">
-                                ${game.developer.name}
-                            </c:if>
+                            <c:choose>
+                                <c:when test="${game.developer.name != null}">
+                                    ${game.developer.name}
+                                </c:when>
+                                <c:otherwise>
+                                    <em>Information MAJ ultérieurement...</em>
+                                </c:otherwise>
+                            </c:choose>
                         </td>
                         <td>
                             <c:if test="${game.releaseDate != null}">

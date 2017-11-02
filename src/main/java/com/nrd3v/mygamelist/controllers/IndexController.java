@@ -52,6 +52,8 @@ public class IndexController {
             if (developer != null) {
                 game.setDeveloper(developer);
             }
+        } else {
+            game.setDeveloper(null);
         }
         gameService.create(game);
         return new RedirectView("/");

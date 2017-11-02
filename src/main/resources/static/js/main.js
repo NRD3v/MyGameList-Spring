@@ -17,7 +17,7 @@ $(function () {
                    response.results.forEach(function (result) {
                        $("#results").append(
                            "<div class='col-lg-2'>" +
-                               "<img class='mt20 mb10' style='border-radius:10px;' src='" + result.image.thumb_url + "' height='150' width='150'>" +
+                               "<img class='mt20 mb10' src='" + result.image.thumb_url + "' height='150' width='125'>" +
                                "<button data-toggle='modal' data-target='#gameAddModal' id='"+result.id+"' class='games btn btn-success btn-sm mb20'>" +
                                    "<span class='glyphicon glyphicon-plus-sign'></span> Ajouter" +
                                "</button>" +
