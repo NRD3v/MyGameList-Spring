@@ -45,7 +45,7 @@ public class IndexController {
                                 @RequestParam(name = "developer", required=false) String developer_id,
                                 BindingResult result) {
         if (result.hasErrors()) {
-            return new RedirectView("/");
+            // TODO
         }
         if (!developer_id.equals("NONE")) {
             Developer developer = developerRepository.findById(Integer.parseInt(developer_id));

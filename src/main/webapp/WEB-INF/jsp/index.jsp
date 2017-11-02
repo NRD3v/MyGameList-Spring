@@ -24,6 +24,9 @@
     <!-- Bootstrap core JavaScript -->
     <c:url value="/js/bootstrap.min.js" var="jstlBootstrapJS" />
     <script type="text/javascript" src="${jstlBootstrapJS}"></script>
+    <!-- Custom JavaScript -->
+    <c:url value="/js/main.js" var="jstlMainJs" />
+    <script type="text/javascript" src="${jstlMainJs}"></script>
 </head>
 <body>
 <div id="wrapper">
@@ -146,9 +149,30 @@
                             </c:if>
                         </td>
                         <td>
-                            <a href="/delete/${game.id}">
-                                <button class="delete btn btn-sm btn-danger">Supprimer</button>
-                            </a>
+                            <button data-toggle="modal" data-target="#gameDeleteModal"
+                                    class="btn btn-sm btn-danger">Supprimer</button>
+
+                            <div class="modal fade" id="gameDeleteModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+                                <div class="modal-dialog" role="document">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                <span aria-hidden="true">&times;</span>
+                                            </button>
+                                            <h4 class="modal-title" id="myModalLabel">Attention !</h4>
+                                        </div>
+                                        <div class="modal-body text-center">
+                                            <p class="m20">Souhaitez-vous supprimer le jeu de votre liste ?</p>
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-default" data-dismiss="modal">Annuler</button>
+                                            <a href="/delete/${game.id}">
+                                                <button type="submit" value="Submit" class="btn btn-danger">Supprimer</button>
+                                            </a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
                         </td>
                     </tr>
                 </c:forEach>
@@ -161,15 +185,5 @@
 
 </div>
 <!-- /#wrapper -->
-
-<script>
-    $("#menu-toggle").click(function(e) {
-        e.preventDefault();
-        $("#wrapper").toggleClass("toggled");
-    });
-    $(".delete").on("click", function() {
-        alert("Attention: Voulez-vous supprimer ?")
-    })
-</script>
 </body>
 </html>

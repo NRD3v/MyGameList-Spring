@@ -9,7 +9,7 @@ public abstract class CoreRepository extends CoreSession {
 
     public static final String ORDER_BY_NAME_ASC = "ORDER BY name ASC";
 
-    public Object findEntityById(ArrayList<Class> entityClasses, Class classType, int id) {
+    protected Object findEntityById(ArrayList<Class> entityClasses, Class classType, int id) {
         Session session = this.getSession(entityClasses);
         Object object = null;
         try {
@@ -29,7 +29,7 @@ public abstract class CoreRepository extends CoreSession {
         return object;
     }
 
-    public List<Class> findAllEntities(ArrayList<Class> entityClasses, Class classType, String orderBy) {
+    protected List<Class> findAllEntities(ArrayList<Class> entityClasses, Class classType, String orderBy) {
         Session session = this.getSession(entityClasses);
         List<Class> objects = null;
         try {

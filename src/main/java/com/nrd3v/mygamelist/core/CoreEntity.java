@@ -12,7 +12,7 @@ import java.util.Map;
 @Service
 public abstract class CoreEntity extends CoreSession {
 
-    public Object createEntity(ArrayList<Class> entityClasses, Object object) {
+    protected Object createEntity(ArrayList<Class> entityClasses, Object object) {
         if (object != null) {
             Session session = this.getSession(entityClasses);
             try {
@@ -33,7 +33,7 @@ public abstract class CoreEntity extends CoreSession {
         return object;
     }
 
-    public Object updateEntity(ArrayList<Class> entityClasses, Object object, Map<String,?> params) {
+    protected Object updateEntity(ArrayList<Class> entityClasses, Object object, Map<String,?> params) {
         if (object != null && params != null) {
             Session session = this.getSession(entityClasses);
             try {
@@ -81,7 +81,7 @@ public abstract class CoreEntity extends CoreSession {
         return object;
     }
 
-    public void deleteEntity(ArrayList<Class> entityClasses, Object object) {
+    protected void deleteEntity(ArrayList<Class> entityClasses, Object object) {
         if (object != null) {
             Session session = this.getSession(entityClasses);
             try {
