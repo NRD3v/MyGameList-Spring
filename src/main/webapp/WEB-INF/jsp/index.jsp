@@ -70,6 +70,24 @@
             <button type="button" class="btn btn-success pull-right mt0 mb20"
                     data-toggle="modal" data-target="#gameAddModal">Ajouter</button>
 
+
+
+            <%--<br>--%>
+            <%--<form class="form-horizontal col-lg-3 pull-right">--%>
+                <%--<div class="form-group">--%>
+                    <%--<div class="input-group">--%>
+                    <%--<span class="input-group-addon" id="sizing-addon1">--%>
+                        <%--<span class="glyphicon glyphicon-search"></span>--%>
+                    <%--</span>--%>
+                    <%--<input type="text" class="form-control" name="gameNameSearch" id="gameNameSearch"--%>
+                           <%--placeholder="Rechercher un jeu" aria-describedby="sizing-addon1">--%>
+                    <%--</div>--%>
+                <%--</div>--%>
+            <%--</form>--%>
+
+
+
+
             <!-- Modal -->
             <div class="modal fade" id="gameAddModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
                 <form:form cssClass="form-horizontal" method="POST" action="/add" modelAttribute="newGame">
@@ -85,13 +103,13 @@
                                 <div class="form-group">
                                     <form:label cssClass="col-lg-2 control-label" path="name">Titre</form:label>
                                     <div class="col-lg-9">
-                                        <form:input cssClass="form-control" path="name" placeholder="Entrer un titre" required="required"/>
+                                        <form:input cssClass="nameField form-control" path="name" placeholder="Entrer un titre" required="required"/>
                                     </div>
                                 </div>
                                 <div class="form-group">
                                     <form:label cssClass="col-lg-2 control-label" path="developer">Développeur</form:label>
                                     <div class="col-lg-9">
-                                        <form:select cssClass="form-control" path="developer">
+                                        <form:select cssClass="developerField form-control" path="developer">
                                             <form:option value="NONE"> -- Choisir parmi la liste --</form:option>
                                             <c:forEach items="${developers}" var="developer">
                                                 <form:option value="${developer.id}">${developer.name}</form:option>
