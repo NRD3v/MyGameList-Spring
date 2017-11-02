@@ -112,18 +112,7 @@
                                         </form:select>
                                     </div>
                                 </div>
-                                <%--<div class="form-group">--%>
-                                    <%--<form:label cssClass="col-lg-2 control-label" path="developer">Développeur</form:label>--%>
-                                    <%--<div class="col-lg-9">--%>
-                                        <%--<form:input cssClass="form-control" path="developer"/>--%>
-                                    <%--</div>--%>
-                                <%--</div>--%>
-                                <div class="form-group">
-                                    <form:label cssClass="col-lg-2 control-label" path="releaseDate">Année</form:label>
-                                    <div class="col-lg-9">
-                                        <form:input cssClass="dateField form-control" path="releaseDate" placeholder="Entrer une date de sortie"/>
-                                    </div>
-                                </div>
+                                <form:input type="hidden" cssClass="dateField" path="releaseDate" />
                             </div>
                             <div class="modal-footer">
                                 <button type="button" class="btn btn-default" data-dismiss="modal">Fermer</button>
