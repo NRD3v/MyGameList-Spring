@@ -1,5 +1,6 @@
 package com.nrd3v.mygamelist.controllers;
 
+import com.nrd3v.mygamelist.core.CoreRepository;
 import com.nrd3v.mygamelist.entities.Game;
 import com.nrd3v.mygamelist.repositories.IGameRepository;
 import com.nrd3v.mygamelist.services.GameService;
@@ -24,7 +25,7 @@ public class WsIndexController {
 
     @RequestMapping(value = "/")
     public List<Class> index() {
-        return gameRepository.findAll();
+        return gameRepository.findAll(CoreRepository.ORDER_BY_NAME_ASC);
     }
 
     @RequestMapping(value = "/update/{id}")

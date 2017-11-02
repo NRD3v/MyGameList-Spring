@@ -21,7 +21,7 @@ public class DeveloperRepository extends CoreRepository implements IDeveloperRep
     }
 
     @Override
-    public List<Class> findAll() {
-        return this.findAllEntities(developerService.getEntities(), Developer.class);
+    public List<Class> findAll(String orderBy) {
+        return this.findAllEntities(developerService.getEntities(), Developer.class, orderBy);
     }
 }

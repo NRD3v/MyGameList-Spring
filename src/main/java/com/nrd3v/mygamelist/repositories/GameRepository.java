@@ -21,7 +21,7 @@ public class GameRepository extends CoreRepository implements IGameRepository {
     }
 
     @Override
-    public List<Class> findAll() {
-        return this.findAllEntities(gameService.getEntities(), Game.class);
+    public List<Class> findAll(String orderBy) {
+        return this.findAllEntities(gameService.getEntities(), Game.class, orderBy);
     }
 }

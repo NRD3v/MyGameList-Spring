@@ -1,5 +1,6 @@
 package com.nrd3v.mygamelist.controllers;
 
+import com.nrd3v.mygamelist.core.CoreRepository;
 import com.nrd3v.mygamelist.entities.Developer;
 import com.nrd3v.mygamelist.entities.Game;
 import com.nrd3v.mygamelist.repositories.IDeveloperRepository;
@@ -33,8 +34,8 @@ public class IndexController {
 
     @RequestMapping(value = "/")
     public String index(Model model) throws IOException {
-        model.addAttribute("games", gameRepository.findAll());
-        model.addAttribute("developers", developerRepository.findAll());
+        model.addAttribute("games", gameRepository.findAll(CoreRepository.ORDER_BY_NAME_ASC));
+        model.addAttribute("developers", developerRepository.findAll(CoreRepository.ORDER_BY_NAME_ASC));
         model.addAttribute("newGame", new Game());
         return "index";
     }

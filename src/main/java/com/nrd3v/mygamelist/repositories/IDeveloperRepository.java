@@ -7,5 +7,5 @@ import java.util.List;
 public interface IDeveloperRepository {
 
     Developer findById(int id);
-    List<Class> findAll();
+    List<Class> findAll(String orderBy);
 }

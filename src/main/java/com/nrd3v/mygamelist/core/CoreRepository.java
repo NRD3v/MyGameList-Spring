@@ -7,6 +7,8 @@ import java.util.List;
 
 public abstract class CoreRepository extends CoreSession {
 
+    public static final String ORDER_BY_NAME_ASC = "ORDER BY name ASC";
+
     public Object findEntityById(ArrayList<Class> entityClasses, Class classType, int id) {
         Session session = this.getSession(entityClasses);
         Object object = null;
@@ -27,12 +29,18 @@ public abstract class CoreRepository extends CoreSession {
         return object;
     }
 
-    public List<Class> findAllEntities(ArrayList<Class> entityClasses, Class classType) {
+    public List<Class> findAllEntities(ArrayList<Class> entityClasses, Class classType, String orderBy) {
         Session session = this.getSession(entityClasses);
         List<Class> objects = null;
         try {
             session.beginTransaction();
-            objects = session.createQuery("FROM " + classType.getName()).list();
+            String query;
+            if (orderBy != null) {
+                query = String.format("FROM %s %s", classType.getName(), orderBy);
+            } else {
+                query = String.format("FROM %s", classType.getName());
+            }
+            objects = session.createQuery(query).list();
             session.getTransaction().commit();
         }
         catch (Exception e) {
