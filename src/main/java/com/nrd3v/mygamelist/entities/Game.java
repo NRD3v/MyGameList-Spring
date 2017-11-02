@@ -1,6 +1,8 @@
 package com.nrd3v.mygamelist.entities;
 
 import javax.persistence.*;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 @Entity

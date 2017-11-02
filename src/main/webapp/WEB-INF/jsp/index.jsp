@@ -1,6 +1,7 @@
-<%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
+<%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
 <%@ page contentType="text/html; charset=UTF-8" %>
 <!DOCTYPE html>
 <html lang="fr">
@@ -67,13 +68,10 @@
     <div id="page-content-wrapper">
         <div class="container-fluid">
             <button id="menu-toggle" class="btn btn-primary mt0 mb20">Menu</button>
-            <button type="button" class="btn btn-success pull-right mt0 mb20"
-                    data-toggle="modal" data-target="#gameAddModal">Ajouter</button>
-
-
-
-            <br>
-            <form class="form-horizontal col-lg-3 pull-right">
+            <%--<button type="button" class="btn btn-success pull-right mt0 mb20"--%>
+                    <%--data-toggle="modal" data-target="#gameAddModal">Ajouter</button>--%>
+            <%--<br>--%>
+            <form class="form-horizontal mb20 col-lg-3 pull-right">
                 <div class="form-group">
                     <div class="input-group">
                     <span class="input-group-addon" id="sizing-addon1">
@@ -84,9 +82,6 @@
                     </div>
                 </div>
             </form>
-
-
-
 
             <!-- Modal -->
             <div class="modal fade" id="gameAddModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
@@ -175,7 +170,8 @@
                         </td>
                         <td>
                             <c:if test="${game.releaseDate != null}">
-                                ${game.releaseDate}
+                                <fmt:parseDate value="${game.releaseDate}" type="date" pattern="yyyy-MM-dd HH:mm:ss" var="formatedDate"/>
+                                <fmt:formatDate value="${formatedDate}" type="date" pattern="yyyy"/>
                             </c:if>
                         </td>
                         <td>
