@@ -86,7 +86,7 @@
                         <span class="glyphicon glyphicon-search"></span>
                     </span>
                     <input type="text" class="form-control" name="gameNameSearch" id="gameNameSearch"
-                           placeholder="Rechercher un jeu" aria-describedby="sizing-addon1">
+                           placeholder="Rechercher un jeu (min. 3 caractères)" aria-describedby="sizing-addon1">
                     </div>
                 </div>
             </form>
@@ -120,6 +120,7 @@
                                         </form:select>
                                     </div>
                                 </div>
+                                <form:input type="hidden" cssClass="giantbombIdField" path="giantbombId" />
                                 <form:input type="hidden" cssClass="dateField" path="releaseDate" />
                             </div>
                             <div class="modal-footer">
@@ -131,17 +132,18 @@
                 </form:form>
             </div>
 
-            <div class="row text-center">
-                <div id="results" class="col-lg-12"></div>
+            <div class="row col-lg-12 text-center">
+                <p id="waiting"><strong>Chargement en cours...</strong></p>
+                <div id="results"></div>
             </div>
 
             <table id="dataTable" class="table table-sm table-hover">
                 <thead>
                 <tr>
                     <th>#</th>
-                    <th>Titre&nbsp;&nbsp;<span class="glyphicon glyphicon-menu-down"></span></th>
-                    <th>Développeur&nbsp;&nbsp;<span class="glyphicon glyphicon-menu-down"></span></th>
-                    <th>Sortie&nbsp;&nbsp;<span class="glyphicon glyphicon-menu-down"></span></th>
+                    <th>Titre</th>
+                    <th>Développeur</th>
+                    <th>Sortie</th>
                     <%--<th>Actions&nbsp;&nbsp;<span class="glyphicon glyphicon-menu-down"></span></th>--%>
                 </tr>
                 </thead>

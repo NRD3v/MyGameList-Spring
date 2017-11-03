@@ -1,8 +1,6 @@
 package com.nrd3v.mygamelist.entities;
 
 import javax.persistence.*;
-import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 @Entity
@@ -13,6 +11,8 @@ public class Game {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
     private int id;
+    @Column(name = "giantbomb_id")
+    private Integer giantbombId;
     @Column(name = "name")
     private String name;
     @Column(name = "release_date")
@@ -39,6 +39,14 @@ public class Game {
 
     public void setId(int id) {
         this.id = id;
+    }
+
+    public Integer getGiantbombId() {
+        return giantbombId;
+    }
+
+    public void setGiantbombId(String giantbombId) {
+        this.giantbombId = Integer.parseInt(giantbombId);
     }
 
     public String getName() {

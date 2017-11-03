@@ -55,18 +55,24 @@ public class IndexController {
         } else {
             game.setDeveloper(null);
         }
+//        Game existingGame = gameRepository.findById(game.getId());
+//        if (game.getGiantbombId() == existingGame.getGiantbombId()) {
+//            gameService.update(game);
+//        } else {
+//            gameService.create(game);
+//        }
         gameService.create(game);
         return new RedirectView("/");
     }
 
-    @RequestMapping(value = "/show/{id}", method = RequestMethod.GET)
-    public String showGame(Model model, @PathVariable(name = "id") int id) throws IOException {
-        Game game = gameRepository.findById(id);
-        if (game != null) {
-            model.addAttribute("game", game);
-        }
-        return "show";
-    }
+//    @RequestMapping(value = "/show/{id}", method = RequestMethod.GET)
+//    public String showGame(Model model, @PathVariable(name = "id") int id) throws IOException {
+//        Game game = gameRepository.findById(id);
+//        if (game != null) {
+//            model.addAttribute("game", game);
+//        }
+//        return "show";
+//    }
 
     @RequestMapping(value = "/delete/{id}", method = RequestMethod.GET)
     public RedirectView deleteGame(@PathVariable(name = "id") int id) {

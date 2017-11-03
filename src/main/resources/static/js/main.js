@@ -1,10 +1,14 @@
-$(document).ready(function () {
+$(function () {
     $("#menu-toggle").click(function(e) {
         e.preventDefault();
         $("#wrapper").toggleClass("toggled");
     });
 
-    $('#dataTable').DataTable();
+    $('#dataTable').DataTable({
+        "language": {
+            "url": "../locales/datatables-french.json"
+        }
+    });
 
     $("#gameNameSearch").on("keyup", function (e) {
         if(e.keyCode == 8 || e.keyCode == 46) {
@@ -12,13 +16,15 @@ $(document).ready(function () {
         }
         var val = $(this).val();
         if (val.length >= 3) {
-           $("#results").empty();
-           $.ajax({
-               url: "/api/search",
-               type: "POST",
-               data: { name: val },
-               dataType: "json",
-               success: function (response) {
+            $("#waiting").show();
+            $("#results").empty();
+            $.ajax({
+                url: "/api/search",
+                type: "POST",
+                data: { name: val },
+                dataType: "json",
+                success: function (response) {
+                   $("#waiting").hide();
                    response.results.forEach(function (result) {
                        $("#results").append(
                            "<div class='col-lg-2'>" +
@@ -37,6 +43,7 @@ $(document).ready(function () {
                            data: { id: element.currentTarget.id },
                            dataType: "json",
                            success: function (response) {
+                               $(".giantbombIdField").val(response.results.id);
                                $(".nameField").val(response.results.name);
                                $(".dateField").val(response.results.original_release_date);
                            },
@@ -52,4 +59,21 @@ $(document).ready(function () {
            });
         }
     });
+
+    // $(document.body).on('click', 'td', function (element) {
+    //     $.ajax({
+    //         url: "/api/game/" + element.currentTarget.id,
+    //         type: "GET",
+    //         data: { id: element.currentTarget.id },
+    //         dataType: "json",
+    //         success: function (response) {
+    //             $(".giantbombIdField").val(response.results.id);
+    //             $(".nameField").val(response.results.name);
+    //             $(".dateField").val(response.results.original_release_date);
+    //         },
+    //         error: function (response) {
+    //
+    //         }
+    //     });
+    // });
 })();
