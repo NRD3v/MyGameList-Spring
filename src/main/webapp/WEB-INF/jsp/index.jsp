@@ -12,10 +12,13 @@
     <meta name="author" content="NRD3v - Nicolas Rabagny">
     <title>MyGameList - Spring App</title>
     <!-- Bootstrap core CSS -->
-    <c:url value="/css/bootstrap-lumen.min.css" var="jstlBootstrapCSS" />
-    <link href="${jstlBootstrapCSS}" rel="stylesheet" />
-    <c:url value="/css/simple-sidebar.css" var="jstlBootstrapTemplate" />
-    <link href="${jstlBootstrapTemplate}" rel="stylesheet" />
+    <c:url value="/css/bootstrap-lumen.min.css" var="jstlBootstrapCss" />
+    <link href="${jstlBootstrapCss}" rel="stylesheet" />
+    <c:url value="/css/simple-sidebar.css" var="jstlBootstrapTemplateCss" />
+    <link href="${jstlBootstrapTemplateCss}" rel="stylesheet" />
+    <!-- Datatables Core CSS -->
+    <c:url value="/css/datatables.min.css" var="jstlDatatablesCss" />
+    <link href="${jstlDatatablesCss}" rel="stylesheet" />
     <!-- Custom CSS -->
     <c:url value="/css/main.css" var="jstlMainCss" />
     <link href="${jstlMainCss}" rel="stylesheet" />
@@ -23,8 +26,11 @@
     <c:url value="/js/jquery.min.js" var="jstlJQuery" />
     <script type="text/javascript" src="${jstlJQuery}"></script>
     <!-- Bootstrap core JavaScript -->
-    <c:url value="/js/bootstrap.min.js" var="jstlBootstrapJS" />
-    <script type="text/javascript" src="${jstlBootstrapJS}"></script>
+    <c:url value="/js/bootstrap.min.js" var="jstlBootstrapJs" />
+    <script type="text/javascript" src="${jstlBootstrapJs}"></script>
+    <!-- Bootstrap core DataTables -->
+    <c:url value="/js/datatables.min.js" var="jstlDatatablesJs" />
+    <script type="text/javascript" src="${jstlDatatablesJs}"></script>
     <!-- Custom JavaScript -->
     <c:url value="/js/main.js" var="jstlMainJs" />
     <script type="text/javascript" src="${jstlMainJs}"></script>
