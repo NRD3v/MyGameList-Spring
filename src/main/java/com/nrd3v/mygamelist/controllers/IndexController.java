@@ -59,6 +59,15 @@ public class IndexController {
         return new RedirectView("/");
     }
 
+    @RequestMapping(value = "/show/{id}", method = RequestMethod.GET)
+    public String showGame(Model model, @PathVariable(name = "id") int id) throws IOException {
+        Game game = gameRepository.findById(id);
+        if (game != null) {
+            model.addAttribute("game", game);
+        }
+        return "show";
+    }
+
     @RequestMapping(value = "/delete/{id}", method = RequestMethod.GET)
     public RedirectView deleteGame(@PathVariable(name = "id") int id) {
         Game game = gameRepository.findById(id);

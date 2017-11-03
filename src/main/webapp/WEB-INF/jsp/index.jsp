@@ -139,21 +139,21 @@
                 <thead>
                 <tr>
                     <th>#</th>
-                    <th>Titre</th>
-                    <th>Développeur</th>
-                    <th>Sortie</th>
-                    <th>Actions</th>
+                    <th>Titre&nbsp;&nbsp;<span class="glyphicon glyphicon-menu-down"></span></th>
+                    <th>Développeur&nbsp;&nbsp;<span class="glyphicon glyphicon-menu-down"></span></th>
+                    <th>Sortie&nbsp;&nbsp;<span class="glyphicon glyphicon-menu-down"></span></th>
+                    <%--<th>Actions&nbsp;&nbsp;<span class="glyphicon glyphicon-menu-down"></span></th>--%>
                 </tr>
                 </thead>
                 <tbody>
                 <c:forEach var="game" items="${games}">
                     <tr>
                         <th scope="row">
-                            <button class="btn btn-sm">
-                                <c:if test="${game.id != null}">
-                                    ${game.id}
-                                </c:if>
-                            </button>
+                            <a href="/show/$(game.id)">
+                                <button class="btn btn-sm" data-toggle="modal" data-target="#showGameModal$(game.id)">
+                                    <span class="glyphicon glyphicon-search"></span>
+                                </button>
+                            </a>
                         </th>
                         <td>
                             <c:if test="${game.name != null}">
@@ -176,36 +176,36 @@
                                 <fmt:formatDate value="${formatedDate}" type="date" pattern="yyyy"/>
                             </c:if>
                         </td>
-                        <td>
-                            <button class="btn btn-xs btn-warning">
-                                <span class="glyphicon glyphicon-pencil"></span>
-                            </button>
-                            <button data-toggle="modal" data-target="#gameDeleteModal" class="btn btn-xs btn-danger">
-                                <span class="glyphicon glyphicon-remove"></span>
-                            </button>
+                        <%--<td>--%>
+                            <%--<button class="btn btn-xs btn-warning">--%>
+                                <%--<span class="glyphicon glyphicon-pencil"></span>--%>
+                            <%--</button>--%>
+                            <%--<button data-toggle="modal" data-target="#gameDeleteModal" class="btn btn-xs btn-danger">--%>
+                                <%--<span class="glyphicon glyphicon-remove"></span>--%>
+                            <%--</button>--%>
 
-                            <div class="modal fade" id="gameDeleteModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-                                <div class="modal-dialog" role="document">
-                                    <div class="modal-content">
-                                        <div class="modal-header">
-                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                                <span aria-hidden="true">&times;</span>
-                                            </button>
-                                            <h4 class="modal-title" id="myModalLabel">Attention !</h4>
-                                        </div>
-                                        <div class="modal-body text-center">
-                                            <p class="m20">Souhaitez-vous supprimer le jeu de votre liste ?</p>
-                                        </div>
-                                        <div class="modal-footer">
-                                            <button type="button" class="btn btn-default" data-dismiss="modal">Annuler</button>
-                                            <a href="/delete/${game.id}">
-                                                <button type="submit" value="Submit" class="btn btn-danger">Supprimer</button>
-                                            </a>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </td>
+                            <%--<div class="modal fade" id="gameDeleteModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">--%>
+                                <%--<div class="modal-dialog" role="document">--%>
+                                    <%--<div class="modal-content">--%>
+                                        <%--<div class="modal-header">--%>
+                                            <%--<button type="button" class="close" data-dismiss="modal" aria-label="Close">--%>
+                                                <%--<span aria-hidden="true">&times;</span>--%>
+                                            <%--</button>--%>
+                                            <%--<h4 class="modal-title" id="myModalLabel">Attention !</h4>--%>
+                                        <%--</div>--%>
+                                        <%--<div class="modal-body text-center">--%>
+                                            <%--<p class="m20">Souhaitez-vous supprimer le jeu de votre liste ?</p>--%>
+                                        <%--</div>--%>
+                                        <%--<div class="modal-footer">--%>
+                                            <%--<button type="button" class="btn btn-default" data-dismiss="modal">Annuler</button>--%>
+                                            <%--<a href="/delete/${game.id}">--%>
+                                                <%--<button type="submit" value="Submit" class="btn btn-danger">Supprimer</button>--%>
+                                            <%--</a>--%>
+                                        <%--</div>--%>
+                                    <%--</div>--%>
+                                <%--</div>--%>
+                            <%--</div>--%>
+                        <%--</td>--%>
                     </tr>
                 </c:forEach>
                 </tbody>

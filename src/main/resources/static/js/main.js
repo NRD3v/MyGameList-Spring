@@ -6,9 +6,12 @@ $(document).ready(function () {
 
     $('#dataTable').DataTable();
 
-    $("#gameNameSearch").on("keyup", function () {
-       var val = $(this).val();
-       if (val.length >= 3) {
+    $("#gameNameSearch").on("keyup", function (e) {
+        if(e.keyCode == 8 || e.keyCode == 46) {
+            $("#results").empty();
+        }
+        var val = $(this).val();
+        if (val.length >= 3) {
            $("#results").empty();
            $.ajax({
                url: "/api/search",
@@ -22,7 +25,7 @@ $(document).ready(function () {
                                "<img class='mt20 mb10' src='" + result.image.thumb_url + "' height='150' width='125'>" +
                                "<br>" +
                                "<button data-toggle='modal' data-target='#gameAddModal' id='"+result.id+"' class='games btn btn-success btn-xs mb20'>" +
-                                   "<span class='glyphicon glyphicon-plus-sign'></span>" +
+                                   "<span class='glyphicon glyphicon-plus'></span>" +
                                "</button>" +
                            "</div>"
                        );
@@ -47,6 +50,6 @@ $(document).ready(function () {
                    console.log("Error:" + JSON.stringify(response));
                }
            });
-       }
-   });
+        }
+    });
 })();
