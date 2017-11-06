@@ -1,7 +1,9 @@
 package com.nrd3v.mygamelist.core;
 
+import com.nrd3v.mygamelist.services.ToolService;
 import org.hibernate.Session;
 import org.springframework.stereotype.Service;
+import org.springframework.util.ReflectionUtils;
 import org.springframework.util.StringUtils;
 
 import java.lang.reflect.InvocationTargetException;
@@ -39,6 +41,7 @@ public abstract class CoreEntity extends CoreSession {
             try {
                 session.beginTransaction();
                 this.invokeSetters(object, params);
+                session.saveOrUpdate(object);
                 session.getTransaction().commit();
             }
             catch(Exception e){
@@ -56,26 +59,35 @@ public abstract class CoreEntity extends CoreSession {
 
     private Object invokeSetters(Object object, Map<String, ?> params) throws IllegalAccessException, InvocationTargetException {
         for (Map.Entry<String, ?> param: params.entrySet()) {
-            String methodName = "set" + StringUtils.capitalize(param.getKey());
-            for (Method method: object.getClass().getMethods()) {
-                if (method.getName().equals(methodName)) {
-                    method.invoke(object, param.getValue());
-                    try {
-                        Method setUpdatedAt = object.getClass().getMethod("setUpdatedAt", (Class[]) null);
-                        if (setUpdatedAt != null) {
-                            setUpdatedAt.invoke(object, null);
-                        }
-                    } catch(NoSuchMethodException e) {
-                        System.out.println(e.toString());
-                    }
+            Method setterMethod = ReflectionUtils.findMethod(object.getClass(),
+                    "set" + StringUtils.capitalize(param.getKey()),
+                    param.getValue().getClass());
+            if (setterMethod != null) {
+                setterMethod.invoke(object, param.getValue());
+            }
+            try {
+                Method setUpdatedAt = object.getClass().getMethod("setUpdatedAt", String.class);
+                if (setUpdatedAt != null) {
+                    setUpdatedAt.invoke(object, ToolService.getTime());
                 }
+            } catch(NoSuchMethodException e) {
+                System.out.println(e.toString());
             }
         }
-//        for (Map.Entry<String, String> param: params.entrySet()) {
-//            Method setterMethod = ReflectionUtils.findMethod(object.getClass(),
-//                    "set" + StringUtils.capitalize(param.getKey()));
-//            if (setterMethod != null) {
-//                setterMethod.invoke(object, param.getValue());
+//        for (Map.Entry<String, ?> param: params.entrySet()) {
+//            String methodName = "set" + StringUtils.capitalize(param.getKey());
+//            for (Method method: object.getClass().getMethods()) {
+//                if (method.getName().equals(methodName)) {
+//                    method.invoke(object, param.getValue());
+//                    try {
+//                        Method setUpdatedAt = object.getClass().getMethod("setUpdatedAt", String.class);
+//                        if (setUpdatedAt != null) {
+//                            setUpdatedAt.invoke(object, ToolService.getTime());
+//                        }
+//                    } catch(NoSuchMethodException e) {
+//                        System.out.println(e.toString());
+//                    }
+//                }
 //            }
 //        }
         return object;

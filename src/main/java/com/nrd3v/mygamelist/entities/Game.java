@@ -19,6 +19,8 @@ public class Game {
     private String name;
     @Column(name = "release_date")
     private String releaseDate;
+    @Column(name = "updated_at")
+    private String updatedAt;
 
     @JsonIgnore
     @ManyToOne(cascade = {CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH})
@@ -50,7 +52,11 @@ public class Game {
     }
 
     public void setGiantbombId(String giantbombId) {
-        this.giantbombId = Integer.parseInt(giantbombId);
+        if (giantbombId != null) {
+            this.giantbombId = Integer.parseInt(giantbombId);
+        } else {
+            this.giantbombId = null;
+        }
     }
 
     public String getName() {
@@ -67,6 +73,14 @@ public class Game {
 
     public void setReleaseDate(String releaseDate) {
         this.releaseDate = releaseDate;
+    }
+
+    public String getUpdatedAt() {
+        return updatedAt;
+    }
+
+    public void setUpdatedAt(String updatedAt) {
+        this.updatedAt = updatedAt;
     }
 
     public Developer getDeveloper() {
