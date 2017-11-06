@@ -59,7 +59,8 @@ public class MainController {
         if (existingGame == null) {
             gameService.create(game);
         } else {
-            // TODO: Update
+            existingGame.setName(game.getName());
+            gameService.update(existingGame);
         }
         return new RedirectView("/");
     }

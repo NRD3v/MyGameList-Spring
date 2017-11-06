@@ -3,8 +3,10 @@
     /*border-radius: 0;*/
 /*}*/
 .table > tbody > tr > td {
-    cursor: pointer;
     vertical-align: middle;
+}
+.table > tbody > tr, .table > tbody > th {
+    cursor: pointer;
 }
 .table > thead > tr {
     background-color: #4c4c4c;

@@ -7,7 +7,6 @@ import com.nrd3v.mygamelist.entities.User;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
-import java.util.Map;
 
 @Service
 public class DeveloperService extends CoreEntity {
@@ -27,9 +26,9 @@ public class DeveloperService extends CoreEntity {
         return developer;
     }
 
-    public Developer update(Developer developer, Map<String,?> params) {
-        if (developer != null && params != null) {
-            this.updateEntity(this.getEntities(), developer, params);
+    public Developer update(Developer developer) {
+        if (developer != null) {
+            this.updateEntity(this.getEntities(), developer);
         }
         return developer;
     }

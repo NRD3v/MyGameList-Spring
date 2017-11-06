@@ -77,7 +77,7 @@
                 <span class="glyphicon glyphicon-menu-hamburger"></span>
             </button>
             <%--<button type="button" class="btn btn-success pull-right mt0 mb20"--%>
-                    <%--data-toggle="modal" data-target="#gameAddModal">Ajouter</button>--%>
+                    <%--data-toggle="modal" data-target="#gameModal">Ajouter</button>--%>
             <%--<br>--%>
             <form class="form-horizontal mb20 col-lg-3 pull-right">
                 <div class="form-group">
@@ -92,15 +92,15 @@
             </form>
 
             <!-- Modal -->
-            <div class="modal fade" id="gameAddModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-                <form:form cssClass="form-horizontal" method="POST" action="/add" modelAttribute="newGame">
+            <div class="modal fade" id="gameModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+                <form:form cssClass="form-horizontal" method="POST" action="/game/add" modelAttribute="newGame">
                     <div class="modal-dialog" role="document">
                         <div class="modal-content">
                             <div class="modal-header">
                                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                     <span aria-hidden="true">&times;</span>
                                 </button>
-                                <h4 class="modal-title" id="myModalLabel">Ajouter un jeu</h4>
+                                <h4 class="modal-title" id="myModalLabel"></h4>
                             </div>
                             <div class="modal-body">
                                 <div class="form-group">
@@ -112,10 +112,10 @@
                                 <div class="form-group">
                                     <form:label cssClass="col-lg-2 control-label" path="developer">Développeur</form:label>
                                     <div class="col-lg-9">
-                                        <form:select cssClass="developerField form-control" path="developer">
+                                        <form:select cssClass="form-control" path="developer">
                                             <form:option value="NONE"> -- Choisir parmi la liste --</form:option>
                                             <c:forEach items="${developers}" var="developer">
-                                                <form:option value="${developer.id}">${developer.name}</form:option>
+                                                <form:option cssClass="developerField" value="${developer.id}">${developer.name}</form:option>
                                             </c:forEach>
                                         </form:select>
                                     </div>
@@ -124,8 +124,10 @@
                                 <form:input type="hidden" cssClass="dateField" path="releaseDate" />
                             </div>
                             <div class="modal-footer">
+                                <button id="deleteButton" data-dismiss="modal" data-toggle="modal" data-target="#gameDeleteModal"
+                                        type="button" class="btn btn-danger pull-left">Supprimer</button>
                                 <button type="button" class="btn btn-default" data-dismiss="modal">Fermer</button>
-                                <button type="submit" value="Submit" class="btn btn-success">Enregistrer</button>
+                                <button id="saveButton" type="submit" value="Submit" class="btn btn-success">Enregistrer</button>
                             </div>
                         </div>
                     </div>
@@ -149,13 +151,11 @@
                 </thead>
                 <tbody>
                 <c:forEach var="game" items="${games}">
-                    <tr>
+                    <tr class="dataRow" id="${game.id}" data-toggle="modal" data-target="#gameModal">
                         <th scope="row">
-                            <a href="/show/$(game.id)">
-                                <button class="btn btn-sm" data-toggle="modal" data-target="#showGameModal$(game.id)">
-                                    <span class="glyphicon glyphicon-search"></span>
-                                </button>
-                            </a>
+                            <button class="btn btn-secondary" data-toggle="modal" data-target="#showGameModal">
+                                <span class="glyphicon glyphicon-search"></span>
+                            </button>
                         </th>
                         <td>
                             <c:if test="${game.name != null}">
@@ -186,27 +186,27 @@
                                 <%--<span class="glyphicon glyphicon-remove"></span>--%>
                             <%--</button>--%>
 
-                            <%--<div class="modal fade" id="gameDeleteModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">--%>
-                                <%--<div class="modal-dialog" role="document">--%>
-                                    <%--<div class="modal-content">--%>
-                                        <%--<div class="modal-header">--%>
-                                            <%--<button type="button" class="close" data-dismiss="modal" aria-label="Close">--%>
-                                                <%--<span aria-hidden="true">&times;</span>--%>
-                                            <%--</button>--%>
-                                            <%--<h4 class="modal-title" id="myModalLabel">Attention !</h4>--%>
-                                        <%--</div>--%>
-                                        <%--<div class="modal-body text-center">--%>
-                                            <%--<p class="m20">Souhaitez-vous supprimer le jeu de votre liste ?</p>--%>
-                                        <%--</div>--%>
-                                        <%--<div class="modal-footer">--%>
-                                            <%--<button type="button" class="btn btn-default" data-dismiss="modal">Annuler</button>--%>
-                                            <%--<a href="/delete/${game.id}">--%>
-                                                <%--<button type="submit" value="Submit" class="btn btn-danger">Supprimer</button>--%>
-                                            <%--</a>--%>
-                                        <%--</div>--%>
-                                    <%--</div>--%>
-                                <%--</div>--%>
-                            <%--</div>--%>
+                            <div class="modal fade" id="gameDeleteModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+                                <div class="modal-dialog" role="document">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                <span aria-hidden="true">&times;</span>
+                                            </button>
+                                            <h4 class="modal-title" id="gameDeleteModalLabel">Attention !</h4>
+                                        </div>
+                                        <div class="modal-body text-center">
+                                            <p class="m20">Souhaitez-vous supprimer le jeu de votre liste ?</p>
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-default" data-dismiss="modal">Annuler</button>
+                                            <a href="/game/${game.id}/delete">
+                                                <button type="submit" value="Submit" class="btn btn-danger">Supprimer</button>
+                                            </a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
                         <%--</td>--%>
                     </tr>
                 </c:forEach>

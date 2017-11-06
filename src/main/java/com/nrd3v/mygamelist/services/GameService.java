@@ -7,7 +7,6 @@ import com.nrd3v.mygamelist.entities.User;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
-import java.util.Map;
 
 @Service
 public class GameService extends CoreEntity {
@@ -27,9 +26,9 @@ public class GameService extends CoreEntity {
         return game;
     }
 
-    public Game update(Game game, Map<String,?> params) {
-        if (game != null && params != null) {
-            this.updateEntity(this.getEntities(), game, params);
+    public Game update(Game game) {
+        if (game != null) {
+            this.updateEntity(this.getEntities(), game);
         }
         return game;
     }

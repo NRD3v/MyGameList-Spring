@@ -11,7 +11,6 @@ import org.springframework.web.client.RestTemplate;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.HashMap;
 
 @RestController
 @RequestMapping("/api")
@@ -47,10 +46,9 @@ public class WsMainController {
                      @RequestParam(name = "name") String name,
                      @RequestParam(name = "giantbombId") String giantbombId) {
         Game game = gameRepository.findById(gameId);
-        HashMap<String, String> params = new HashMap<>();
-        params.put("name", name);
-        params.put("giantbombId", giantbombId);
-        return gameService.update(game, params);
+        game.setName(name);
+        game.setGiantbombId(giantbombId);
+        return gameService.create(game);
     }
 
     @RequestMapping(value = "/game/{id}/delete", method = RequestMethod.GET)
