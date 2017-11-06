@@ -5,7 +5,7 @@ import com.nrd3v.mygamelist.entities.Game;
 import com.nrd3v.mygamelist.services.GameService;
 import org.springframework.stereotype.Repository;
 
-import java.util.List;
+import java.util.ArrayList;
 
 @Repository
 public class GameRepository extends CoreRepository implements IGameRepository {
@@ -21,7 +21,12 @@ public class GameRepository extends CoreRepository implements IGameRepository {
     }
 
     @Override
-    public List<Class> findAll(String orderBy) {
-        return this.findAllEntities(gameService.getEntities(), Game.class, orderBy);
+    public ArrayList<Game> findAll(String orderBy) {
+        return (ArrayList<Game>) this.findAllEntities(gameService.getEntities(), Game.class, orderBy);
+    }
+
+    @Override
+    public Game findByGiantbombId(int giantbombId) {
+        return (Game) this.findEntityByGiantbombId(gameService.getEntities(), Game.class, giantbombId);
     }
 }

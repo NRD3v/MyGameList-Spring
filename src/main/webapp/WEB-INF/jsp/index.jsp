@@ -159,7 +159,7 @@
                         </th>
                         <td>
                             <c:if test="${game.name != null}">
-                                ${game.name}
+                                <strong>${game.name}</strong>
                             </c:if>
                         </td>
                         <td>

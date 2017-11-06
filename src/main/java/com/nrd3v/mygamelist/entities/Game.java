@@ -1,5 +1,7 @@
 package com.nrd3v.mygamelist.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
 import java.util.List;
 
@@ -18,10 +20,12 @@ public class Game {
     @Column(name = "release_date")
     private String releaseDate;
 
+    @JsonIgnore
     @ManyToOne(cascade = {CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH})
     @JoinColumn(name = "developer_id")
     private Developer developer;
 
+    @JsonIgnore
     @ManyToMany(cascade = {CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH})
     @JoinTable(name = "user_game", joinColumns = @JoinColumn(name = "game_id"), inverseJoinColumns = @JoinColumn(name = "user_id"))
     private List<User> users;
@@ -85,7 +89,9 @@ public class Game {
     public String toString() {
         return "Game{" +
                 "id=" + id +
+                ", giantbombId=" + giantbombId +
                 ", name='" + name + '\'' +
+                ", releaseDate='" + releaseDate + '\'' +
                 '}';
     }
 }

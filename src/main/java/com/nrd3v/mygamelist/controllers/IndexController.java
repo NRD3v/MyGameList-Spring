@@ -55,13 +55,12 @@ public class IndexController {
         } else {
             game.setDeveloper(null);
         }
-//        Game existingGame = gameRepository.findById(game.getId());
-//        if (game.getGiantbombId() == existingGame.getGiantbombId()) {
-//            gameService.update(game);
-//        } else {
-//            gameService.create(game);
-//        }
-        gameService.create(game);
+        Game existingGame = gameRepository.findByGiantbombId(game.getGiantbombId());
+        if (existingGame == null) {
+            gameService.create(game);
+        } else {
+            // TODO: Display error in front
+        }
         return new RedirectView("/");
     }
 
@@ -78,6 +77,7 @@ public class IndexController {
     public RedirectView deleteGame(@PathVariable(name = "id") int id) {
         Game game = gameRepository.findById(id);
         if (game != null) {
+            // TODO: Debug same id on all lines
             gameService.delete(game);
         }
         return new RedirectView("/");

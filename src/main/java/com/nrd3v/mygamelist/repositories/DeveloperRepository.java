@@ -5,7 +5,7 @@ import com.nrd3v.mygamelist.entities.Developer;
 import com.nrd3v.mygamelist.services.DeveloperService;
 import org.springframework.stereotype.Repository;
 
-import java.util.List;
+import java.util.ArrayList;
 
 @Repository
 public class DeveloperRepository extends CoreRepository implements IDeveloperRepository {
@@ -21,7 +21,7 @@ public class DeveloperRepository extends CoreRepository implements IDeveloperRep
     }
 
     @Override
-    public List<Class> findAll(String orderBy) {
-        return this.findAllEntities(developerService.getEntities(), Developer.class, orderBy);
+    public ArrayList<Developer> findAll(String orderBy) {
+        return (ArrayList<Developer>) this.findAllEntities(developerService.getEntities(), Developer.class, orderBy);
     }
 }

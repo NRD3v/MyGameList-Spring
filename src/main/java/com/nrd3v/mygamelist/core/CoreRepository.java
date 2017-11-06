@@ -1,9 +1,10 @@
 package com.nrd3v.mygamelist.core;
 
+import com.nrd3v.mygamelist.entities.Game;
+import org.hibernate.Query;
 import org.hibernate.Session;
 
 import java.util.ArrayList;
-import java.util.List;
 
 public abstract class CoreRepository extends CoreSession {
 
@@ -29,9 +30,9 @@ public abstract class CoreRepository extends CoreSession {
         return object;
     }
 
-    protected List<Class> findAllEntities(ArrayList<Class> entityClasses, Class classType, String orderBy) {
+    protected ArrayList<?> findAllEntities(ArrayList<Class> entityClasses, Class classType, String orderBy) {
         Session session = this.getSession(entityClasses);
-        List<Class> objects = null;
+        ArrayList<?> objects = new ArrayList<>();
         try {
             session.beginTransaction();
             String query;
@@ -40,7 +41,7 @@ public abstract class CoreRepository extends CoreSession {
             } else {
                 query = String.format("FROM %s", classType.getName());
             }
-            objects = session.createQuery(query).list();
+            objects = (ArrayList<?>) session.createQuery(query).list();
             session.getTransaction().commit();
         }
         catch (Exception e) {
@@ -53,5 +54,31 @@ public abstract class CoreRepository extends CoreSession {
             this.getFactory(entityClasses).close();
         }
         return objects;
+    }
+
+    protected Object findEntityByGiantbombId(ArrayList<Class> entityClasses, Class<Game> classType, int giantbombId) {
+        Session session = this.getSession(entityClasses);
+        ArrayList<?> objects = new ArrayList<>();
+        try {
+            session.beginTransaction();
+            Query query = session.createQuery("FROM " + classType.getName() + " WHERE giantbomb_id = :giantbomb_id ");
+            query.setParameter("giantbomb_id", giantbombId);
+            objects = (ArrayList<?>) query.list();
+            session.getTransaction().commit();
+        }
+        catch (Exception e) {
+            e.getStackTrace();
+        }
+        finally {
+            if (session.isOpen()) {
+                session.close();
+            }
+            this.getFactory(entityClasses).close();
+        }
+        Object object = null;
+        if (objects.size() > 0) {
+            object = objects.get(0);
+        }
+        return object;
     }
 }

@@ -7,8 +7,8 @@ import com.nrd3v.mygamelist.services.GameService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 
 @RestController
 @RequestMapping("/api")
@@ -23,9 +23,14 @@ public class WsIndexController {
         this.gameRepository = gameRepository;
     }
 
-    @RequestMapping(value = "/")
-    public List<Class> index() {
-        return gameRepository.findAll(CoreRepository.ORDER_BY_NAME_ASC);
+    @RequestMapping(value = "")
+    public ArrayList<Game> index() {
+        return (ArrayList<Game>) gameRepository.findAll(CoreRepository.ORDER_BY_NAME_ASC);
+    }
+
+    @RequestMapping(value = "/game/{id}")
+    public Game getById(@PathVariable(name = "id") String giantbombId) {
+        return gameRepository.findByGiantbombId(Integer.parseInt(giantbombId));
     }
 
     @RequestMapping(value = "/update/{id}")
