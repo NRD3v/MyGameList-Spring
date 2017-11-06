@@ -17,16 +17,16 @@ import javax.validation.Valid;
 import java.io.IOException;
 
 @Controller
-public class IndexController {
+public class MainController {
 
     private GameService gameService;
     private IDeveloperRepository developerRepository;
     private IGameRepository gameRepository;
 
     @Autowired
-    public IndexController(GameService gameService,
-                           IDeveloperRepository developerRepository,
-                           IGameRepository gameRepository) {
+    public MainController(GameService gameService,
+                          IDeveloperRepository developerRepository,
+                          IGameRepository gameRepository) {
         this.gameService = gameService;
         this.developerRepository = developerRepository;
         this.gameRepository = gameRepository;

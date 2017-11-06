@@ -62,7 +62,7 @@ $(function () {
 
     // $(document.body).on('click', 'td', function (element) {
     //     $.ajax({
-    //         url: "/api/game/" + element.currentTarget.id,
+    //         url: "/api/game/" + element.currentTarget.id + /show,
     //         type: "GET",
     //         data: { id: element.currentTarget.id },
     //         dataType: "json",
