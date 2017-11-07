@@ -56,7 +56,7 @@ public abstract class CoreRepository extends CoreSession {
         return objects;
     }
 
-    protected Object findEntityByGiantbombId(ArrayList<Class> entityClasses, Class<Game> classType, int giantbombId) {
+    protected Object findEntityByGiantbombId(ArrayList<Class> entityClasses, Class<?> classType, int giantbombId) {
         Session session = this.getSession(entityClasses);
         ArrayList<?> objects = new ArrayList<>();
         try {

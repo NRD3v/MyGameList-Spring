@@ -8,4 +8,5 @@ public interface IDeveloperRepository {
 
     Developer findById(int id);
     ArrayList<Developer> findAll(String orderBy);
+    Developer findByGiantbombId(int giantbombId);
 }

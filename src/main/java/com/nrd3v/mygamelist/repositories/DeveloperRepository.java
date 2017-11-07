@@ -24,4 +24,9 @@ public class DeveloperRepository extends CoreRepository implements IDeveloperRep
     public ArrayList<Developer> findAll(String orderBy) {
         return (ArrayList<Developer>) this.findAllEntities(developerService.getEntities(), Developer.class, orderBy);
     }
+
+    @Override
+    public Developer findByGiantbombId(int giantbombId) {
+        return (Developer) this.findEntityByGiantbombId(developerService.getEntities(), Developer.class, giantbombId);
+    }
 }

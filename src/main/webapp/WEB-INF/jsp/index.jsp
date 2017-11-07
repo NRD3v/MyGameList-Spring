@@ -11,26 +11,30 @@
     <meta name="description" content="A MyGameList Spring app">
     <meta name="author" content="NRD3v - Nicolas Rabagny">
     <title>MyGameList - Spring App</title>
-    <!-- Bootstrap core CSS -->
-    <c:url value="/css/bootstrap-lumen.min.css" var="jstlBootstrapCss" />
-    <link href="${jstlBootstrapCss}" rel="stylesheet" />
-    <c:url value="/css/simple-sidebar.css" var="jstlBootstrapTemplateCss" />
-    <link href="${jstlBootstrapTemplateCss}" rel="stylesheet" />
-    <!-- Datatables Core CSS -->
-    <c:url value="/css/datatables.min.css" var="jstlDatatablesCss" />
-    <link href="${jstlDatatablesCss}" rel="stylesheet" />
+
+    <!-- Core CSS -->
+    <c:url value="/css/bootstrap-lumen.min.css" var="bootstrapCss" />
+    <link href="${bootstrapCss}" rel="stylesheet" />
+    <c:url value="/css/simple-sidebar.css" var="bootstrapLumen" />
+    <link href="${bootstrapLumen}" rel="stylesheet" />
+    <c:url value="/css/datatables.min.css" var="datatablesCss" />
+    <link href="${datatablesCss}" rel="stylesheet" />
+
+    <!-- Core JavaScript -->
+    <c:url value="/js/jquery.min.js" var="jquery" />
+    <script type="text/javascript" src="${jquery}"></script>
+    <c:url value="/js/bootstrap.min.js" var="bootstrapJs" />
+    <script type="text/javascript" src="${bootstrapJs}"></script>
+    <c:url value="/js/underscore.min.js" var="underscore" />
+    <script type="text/javascript" src="${underscore}"></script>
+    <c:url value="/js/datatables.min.js" var="datatablesJs" />
+    <script type="text/javascript" src="${datatablesJs}"></script>
+
+
     <!-- Custom CSS -->
     <c:url value="/css/main.css" var="jstlMainCss" />
     <link href="${jstlMainCss}" rel="stylesheet" />
-    <!-- jQuery core JavaScript -->
-    <c:url value="/js/jquery.min.js" var="jstlJQuery" />
-    <script type="text/javascript" src="${jstlJQuery}"></script>
-    <!-- Bootstrap core JavaScript -->
-    <c:url value="/js/bootstrap.min.js" var="jstlBootstrapJs" />
-    <script type="text/javascript" src="${jstlBootstrapJs}"></script>
-    <!-- Bootstrap core DataTables -->
-    <c:url value="/js/datatables.min.js" var="jstlDatatablesJs" />
-    <script type="text/javascript" src="${jstlDatatablesJs}"></script>
+
     <!-- Custom JavaScript -->
     <c:url value="/js/main.js" var="jstlMainJs" />
     <script type="text/javascript" src="${jstlMainJs}"></script>
@@ -93,9 +97,9 @@
 
             <!-- Modal -->
             <div class="modal fade" id="gameModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-                <form:form cssClass="form-horizontal" method="POST" action="/game/add" modelAttribute="newGame">
-                    <div class="modal-dialog" role="document">
-                        <div class="modal-content">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <form class="form-horizontal" method="POST" action="/game/add">
                             <div class="modal-header">
                                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                     <span aria-hidden="true">&times;</span>
@@ -104,24 +108,44 @@
                             </div>
                             <div class="modal-body">
                                 <div class="form-group">
-                                    <form:label cssClass="col-lg-2 control-label" path="name">Titre</form:label>
+                                    <label class="col-lg-2 control-label" for="nameField">Titre</label>
                                     <div class="col-lg-9">
-                                        <form:input cssClass="nameField form-control" path="name" placeholder="Entrer un titre" required="required"/>
+                                        <spring:bind path="newGame.name">
+                                            <input type="text" class="nameField form-control" id="nameField" name="${status.expression}"
+                                                   value="${status.value}" placeholder="Entrer un titre" required="required">
+                                        </spring:bind>
                                     </div>
+                                    <spring:bind path="newGame.giantbombId">
+                                        <input type="hidden" class="giantbombIdGameField" name="${status.expression}"
+                                               value="${status.value}" placeholder="Entrer un titre">
+                                    </spring:bind>
+                                    <spring:bind path="newGame.releaseDate">
+                                        <input type="hidden" class="releaseDateField" name="${status.expression}"
+                                               value="${status.value}" placeholder="Entrer un titre">
+                                    </spring:bind>
                                 </div>
                                 <div class="form-group">
-                                    <form:label cssClass="col-lg-2 control-label" path="developer">Développeur</form:label>
+                                    <label class="col-lg-2 control-label" for="developerField">Titre</label>
                                     <div class="col-lg-9">
-                                        <form:select cssClass="form-control" path="developer">
-                                            <form:option value="NONE"> -- Choisir parmi la liste --</form:option>
-                                            <c:forEach items="${developers}" var="developer">
-                                                <form:option cssClass="developerField" value="${developer.id}">${developer.name}</form:option>
-                                            </c:forEach>
-                                        </form:select>
+                                        <spring:bind path="newDeveloper.name">
+                                            <input type="text" class="developerField form-control" id="developerField" name="${status.expression}"
+                                                   value="${status.value}" placeholder="Entrer un titre" required="required">
+                                        </spring:bind>
                                     </div>
+                                    <spring:bind path="newDeveloper.giantbombId">
+                                        <input type="hidden" class="giantbombIdDeveloperField" name="${status.expression}"
+                                               value="${status.value}" placeholder="Entrer un titre">
+                                    </spring:bind>
                                 </div>
-                                <form:input type="hidden" cssClass="giantbombIdField" path="giantbombId" />
-                                <form:input type="hidden" cssClass="dateField" path="releaseDate" />
+                                <%--<form:form cssClass="form-horizontal" method="POST" action="/game/add" modelAttribute="newDeveloper">--%>
+                                <%--<div class="form-group">--%>
+                                    <%--<form:label cssClass="col-lg-2 control-label" path="developer">Développeur</form:label>--%>
+                                    <%--<div class="col-lg-9">--%>
+                                        <%--<form:input cssClass="developerField form-control" path="developer" placeholder="Entrer un développeur" />--%>
+                                        <%--<form:input type="hidden" cssClass="giantbombIdDeveloperField" path="giantbombId" />--%>
+                                    <%--</div>--%>
+                                <%--</div>--%>
+                                <%--</form:form>--%>
                             </div>
                             <div class="modal-footer">
                                 <span id="deleteButton" data-dismiss="modal" class="btn btn-danger pull-left"
@@ -129,9 +153,9 @@
                                 <span class="btn btn-default" data-dismiss="modal">Fermer</span>
                                 <input type="submit" id="saveButton" value="Enregistrer" class="btn btn-success" />
                             </div>
-                        </div>
+                        </form>
                     </div>
-                </form:form>
+                </div>
             </div>
 
             <div class="row col-lg-12 text-center">

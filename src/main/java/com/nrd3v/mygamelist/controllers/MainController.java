@@ -5,6 +5,7 @@ import com.nrd3v.mygamelist.entities.Developer;
 import com.nrd3v.mygamelist.entities.Game;
 import com.nrd3v.mygamelist.repositories.IDeveloperRepository;
 import com.nrd3v.mygamelist.repositories.IGameRepository;
+import com.nrd3v.mygamelist.services.DeveloperService;
 import com.nrd3v.mygamelist.services.GameService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -19,14 +20,17 @@ import java.io.IOException;
 @Controller
 public class MainController {
 
+    private DeveloperService developerService;
     private GameService gameService;
     private IDeveloperRepository developerRepository;
     private IGameRepository gameRepository;
 
     @Autowired
-    public MainController(GameService gameService,
+    public MainController(DeveloperService developerService,
+                          GameService gameService,
                           IDeveloperRepository developerRepository,
                           IGameRepository gameRepository) {
+        this.developerService = developerService;
         this.gameService = gameService;
         this.developerRepository = developerRepository;
         this.gameRepository = gameRepository;
@@ -35,33 +39,34 @@ public class MainController {
     @RequestMapping(value = "")
     public String index(Model model) throws IOException {
         model.addAttribute("games", gameRepository.findAll(CoreRepository.ORDER_BY_NAME_ASC));
-        model.addAttribute("developers", developerRepository.findAll(CoreRepository.ORDER_BY_NAME_ASC));
         model.addAttribute("newGame", new Game());
+        model.addAttribute("newDeveloper", new Developer());
         return "index";
     }
 
     @RequestMapping(value = "/game/add", method = RequestMethod.POST)
     public RedirectView addGame(@Valid @ModelAttribute("newGame") Game game,
-                                @RequestParam(name = "developer", required=false) String developer_id,
-                                BindingResult result) {
-        if (result.hasErrors()) {
+                                BindingResult resultGame,
+                                @Valid @ModelAttribute("newDeveloper") Developer developer,
+                                BindingResult resultDeveloper) {
+        if (resultGame.hasErrors() || resultDeveloper.hasErrors()) {
             // TODO: Display error in front
         }
-        if (!developer_id.equals("NONE")) {
-            Developer developer = developerRepository.findById(Integer.parseInt(developer_id));
-            if (developer != null) {
-                game.setDeveloper(developer);
-            }
+        Developer finalDeveloper = developerRepository.findByGiantbombId(developer.getGiantbombId());
+        if (finalDeveloper == null) {
+            finalDeveloper = developerService.create(developer);
         } else {
-            game.setDeveloper(null);
+            finalDeveloper.setName(game.getName());
+            finalDeveloper = developerService.update(finalDeveloper);
         }
-        Game existingGame = gameRepository.findByGiantbombId(game.getGiantbombId());
-        if (existingGame == null) {
-            gameService.create(game);
+        Game finalGame = gameRepository.findByGiantbombId(game.getGiantbombId());
+        if (finalGame == null) {
+            game.setDeveloper(finalDeveloper);
+            finalGame = gameService.create(game);
         } else {
-            existingGame.setName(game.getName());
-            existingGame.setDeveloper(game.getDeveloper());
-            gameService.update(existingGame);
+            finalGame.setName(game.getName());
+            finalGame.setDeveloper(finalDeveloper);
+            finalGame = gameService.update(finalGame);
         }
         return new RedirectView("/");
     }

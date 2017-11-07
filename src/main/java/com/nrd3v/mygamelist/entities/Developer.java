@@ -14,6 +14,8 @@ public class Developer {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
     private int id;
+    @Column(name = "giantbomb_id")
+    private Integer giantbombId;
     @Column(name = "name")
     private String name;
 
@@ -34,6 +36,14 @@ public class Developer {
 
     public void setId(int id) {
         this.id = id;
+    }
+
+    public Integer getGiantbombId() {
+        return giantbombId;
+    }
+
+    public void setGiantbombId(Integer giantbombId) {
+        this.giantbombId = giantbombId;
     }
 
     public String getName() {
