@@ -60,6 +60,7 @@ public class MainController {
             gameService.create(game);
         } else {
             existingGame.setName(game.getName());
+            existingGame.setDeveloper(game.getDeveloper());
             gameService.update(existingGame);
         }
         return new RedirectView("/");

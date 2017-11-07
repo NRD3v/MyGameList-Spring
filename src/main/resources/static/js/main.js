@@ -28,33 +28,15 @@ $(function () {
                    response.results.forEach(function (result) {
                        $("#results").append(
                            "<div class='col-lg-2'>" +
-                               "<img class='mt20 mb10' src='" + result.image.thumb_url + "' height='150' width='125'>" +
+                               "<img class='mb10' src='" + result.image.thumb_url + "' height='150' width='125'>" +
                                "<br>" +
-                               "<button data-toggle='modal' data-target='#gameModal' id='"+result.id+"' class='games btn btn-success btn-xs mb20'>" +
+                               "<button data-toggle='modal' data-target='#gameModal' id='"+result.id+"' class='addGame btn btn-success btn-xs mb20'>" +
                                    "<span class='glyphicon glyphicon-plus'></span>" +
                                "</button>" +
                            "</div>"
                        );
                    });
-                   $(document.body).on('click', 'button', function (element) {
-                       $("#myModalLabel").empty().append("Ajouter un jeu :");
-                       $("#saveButton").removeClass("disabled");
-                       $("#deleteButton").hide();
-                       $.ajax({
-                           url: "/api/search",
-                           type: "POST",
-                           data: { id: element.currentTarget.id },
-                           dataType: "json",
-                           success: function (response) {
-                               $(".giantbombIdField").val(response.results.id);
-                               $(".nameField").val(response.results.name);
-                               $(".dateField").val(response.results.original_release_date);
-                           },
-                           error: function (response) {
 
-                           }
-                       });
-                   });
                },
                error: function (response) {
                    console.log("Error:" + JSON.stringify(response));
@@ -65,7 +47,7 @@ $(function () {
 
     $(".dataRow").on('click', function (element) {
         $("#myModalLabel").empty().append("Editer un jeu :");
-        $("#saveButton").addClass("disabled");
+        $("#saveButton").val("Editer");
         $("#deleteButton").show();
         $.ajax({
             url: "/api/game/" + element.currentTarget.id + "/show",
@@ -76,6 +58,28 @@ $(function () {
                 $(".giantbombIdField").val(response.giantbombId);
                 $(".nameField").val(response.name);
                 $(".dateField").val(response.releaseDate);
+            },
+            error: function (response) {
+
+            }
+        });
+    });
+
+    $(document.body).on('click', 'button', function (element) {
+        console.log(element);
+        $("#myModalLabel").empty().append("Ajouter un jeu :");
+        $("#saveButton").val("Ajouter");
+        $("#deleteButton").hide();
+        $.ajax({
+            url: "/api/search",
+            type: "POST",
+            data: { id: element.currentTarget.id },
+            dataType: "json",
+            success: function (response) {
+                console.log(response);
+                $(".giantbombIdField").val(response.results.id);
+                $(".nameField").val(response.results.name);
+                $(".dateField").val(response.results.original_release_date);
             },
             error: function (response) {
 

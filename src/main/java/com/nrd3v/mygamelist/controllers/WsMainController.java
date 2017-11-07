@@ -47,7 +47,7 @@ public class WsMainController {
                      @RequestParam(name = "giantbombId") String giantbombId) {
         Game game = gameRepository.findById(gameId);
         game.setName(name);
-        game.setGiantbombId(giantbombId);
+        game.setGiantbombId(Integer.parseInt(giantbombId));
         return gameService.create(game);
     }
 

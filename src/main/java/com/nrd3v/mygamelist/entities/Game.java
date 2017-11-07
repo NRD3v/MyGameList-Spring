@@ -19,6 +19,8 @@ public class Game {
     private String name;
     @Column(name = "release_date")
     private String releaseDate;
+    @Column(name = "created_at")
+    private String createdAt;
     @Column(name = "updated_at")
     private String updatedAt;
 
@@ -51,12 +53,8 @@ public class Game {
         return giantbombId;
     }
 
-    public void setGiantbombId(String giantbombId) {
-        if (giantbombId != null) {
-            this.giantbombId = Integer.parseInt(giantbombId);
-        } else {
-            this.giantbombId = null;
-        }
+    public void setGiantbombId(Integer giantbombId) {
+        this.giantbombId = giantbombId;
     }
 
     public String getName() {
@@ -73,6 +71,14 @@ public class Game {
 
     public void setReleaseDate(String releaseDate) {
         this.releaseDate = releaseDate;
+    }
+
+    public String getCreatedAt() {
+        return createdAt;
+    }
+
+    public void setCreatedAt(String createdAt) {
+        this.createdAt = createdAt;
     }
 
     public String getUpdatedAt() {

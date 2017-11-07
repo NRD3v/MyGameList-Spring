@@ -73,9 +73,9 @@
     <!-- Page Content -->
     <div id="page-content-wrapper">
         <div class="container-fluid">
-            <button id="menu-toggle" class="btn btn-primary mt0 mb20">
+            <span id="menu-toggle" class="btn btn-primary mt0 mb20">
                 <span class="glyphicon glyphicon-menu-hamburger"></span>
-            </button>
+            </span>
             <%--<button type="button" class="btn btn-success pull-right mt0 mb20"--%>
                     <%--data-toggle="modal" data-target="#gameModal">Ajouter</button>--%>
             <%--<br>--%>
@@ -124,10 +124,10 @@
                                 <form:input type="hidden" cssClass="dateField" path="releaseDate" />
                             </div>
                             <div class="modal-footer">
-                                <button id="deleteButton" data-dismiss="modal" data-toggle="modal" data-target="#gameDeleteModal"
-                                        type="button" class="btn btn-danger pull-left">Supprimer</button>
-                                <button type="button" class="btn btn-default" data-dismiss="modal">Fermer</button>
-                                <button id="saveButton" type="submit" value="Submit" class="btn btn-success">Enregistrer</button>
+                                <span id="deleteButton" data-dismiss="modal" class="btn btn-danger pull-left"
+                                      data-toggle="modal" data-target="#gameDeleteModal">Supprimer</span>
+                                <span class="btn btn-default" data-dismiss="modal">Fermer</span>
+                                <input type="submit" id="saveButton" value="Enregistrer" class="btn btn-success" />
                             </div>
                         </div>
                     </div>
@@ -153,9 +153,9 @@
                 <c:forEach var="game" items="${games}">
                     <tr class="dataRow" id="${game.id}" data-toggle="modal" data-target="#gameModal">
                         <th scope="row">
-                            <button class="btn btn-secondary" data-toggle="modal" data-target="#showGameModal">
+                            <span class="btn btn-secondary" data-toggle="modal" data-target="#showGameModal">
                                 <span class="glyphicon glyphicon-search"></span>
-                            </button>
+                            </span>
                         </th>
                         <td>
                             <c:if test="${game.name != null}">
