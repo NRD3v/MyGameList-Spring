@@ -6,7 +6,7 @@ $(function () {
 
     $('#dataTable').DataTable({
         "language": {
-            "url": "../locales/datatables-french.json"
+            "url": "datatables-french.json"
         }
     });
 

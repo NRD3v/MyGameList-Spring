@@ -9,8 +9,8 @@ import org.springframework.http.*;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.client.RestTemplate;
 
-import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 
 @RestController
 @RequestMapping("/api")
@@ -27,7 +27,7 @@ public class WsMainController {
     }
 
     @RequestMapping(value = "")
-    public ArrayList<Game> index() {
+    public List<Game> index() {
         return gameRepository.findAll(CoreRepository.ORDER_BY_NAME_ASC);
     }
 
@@ -37,7 +37,7 @@ public class WsMainController {
     }
 
     @RequestMapping(value = "/game/{giantbombId}/giantbomb")
-    public Game getByGiantbombId(@PathVariable(name = "giantbombId") int giantbombId) {
+    public Game getByGiantbombId(@PathVariable(name = "giantbombId") String giantbombId) {
         return gameRepository.findByGiantbombId(giantbombId);
     }
 
@@ -48,7 +48,7 @@ public class WsMainController {
         Game game = gameRepository.findById(gameId);
         game.setGameName(name);
         game.setGameGiantbombId(giantbombId);
-        return gameService.create(game, null);
+        return gameService.create(game);
     }
 
     @RequestMapping(value = "/game/{id}/delete", method = RequestMethod.GET)

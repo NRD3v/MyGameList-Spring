@@ -3,40 +3,38 @@ package com.nrd3v.mygamelist.entities;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.persistence.*;
-import java.util.ArrayList;
 import java.util.List;
 
 @Entity
-@Table(name = "developer")
-public class Developer {
+@Table(name = "platform")
+public class Platform {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
     private int id;
     @Column(name = "giantbomb_id")
-    private String developerGiantbombId;
+    private String platformGiantbombId;
     @Column(name = "name")
-    private String developerName;
+    private String platformName;
     @Column(name = "created_at")
     private String createdAt;
     @Column(name = "updated_at")
     private String updatedAt;
 
-    @JsonIgnore
-    @ManyToMany(cascade = {CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH})
-    @JoinTable(name = "game_developer", joinColumns = @JoinColumn(name = "developer_id"), inverseJoinColumns = @JoinColumn(name = "game_id"))
-    private List<Game> games;
+    @ManyToOne(cascade = {CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH})
+    @JoinColumn(name = "manufacturer_id")
+    private Manufacturer manufacturer;
 
     @OneToOne(cascade = {CascadeType.ALL})
     @JoinColumn(name = "media_id")
     private Media media;
 
-    public Developer() {
-    }
+    @JsonIgnore
+    @OneToMany(mappedBy = "game", cascade = {CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH})
+    private List<Release> releases;
 
-    public Developer(String developerName) {
-        this.developerName = developerName;
+    public Platform() {
     }
 
     public int getId() {
@@ -47,20 +45,20 @@ public class Developer {
         this.id = id;
     }
 
-    public String getDeveloperGiantbombId() {
-        return developerGiantbombId;
+    public String getPlatformGiantbombId() {
+        return platformGiantbombId;
     }
 
-    public void setDeveloperGiantbombId(String developerGiantbombId) {
-        this.developerGiantbombId = developerGiantbombId;
+    public void setPlatformGiantbombId(String platformGiantbombId) {
+        this.platformGiantbombId = platformGiantbombId;
     }
 
-    public String getDeveloperName() {
-        return developerName;
+    public String getPlatformName() {
+        return platformName;
     }
 
-    public void setDeveloperName(String developerName) {
-        this.developerName = developerName;
+    public void setPlatformName(String platformName) {
+        this.platformName = platformName;
     }
 
     public String getCreatedAt() {
@@ -79,19 +77,12 @@ public class Developer {
         this.updatedAt = updatedAt;
     }
 
-    public List<Game> getGames() {
-        return games;
+    public Manufacturer getManufacturer() {
+        return manufacturer;
     }
 
-    public void setGames(List<Game> games) {
-        this.games = games;
-    }
-
-    public void addGame(Game game) {
-        if (games == null) {
-            games = new ArrayList<>();
-        }
-        games.add(game);
+    public void setManufacturer(Manufacturer manufacturer) {
+        this.manufacturer = manufacturer;
     }
 
     public Media getMedia() {
@@ -102,12 +93,20 @@ public class Developer {
         this.media = media;
     }
 
+    public List<Release> getReleases() {
+        return releases;
+    }
+
+    public void setReleases(List<Release> releases) {
+        this.releases = releases;
+    }
+
     @Override
     public String toString() {
-        return "Developer{" +
+        return "Platform{" +
                 "id=" + id +
-                ", developerGiantbombId='" + developerGiantbombId + '\'' +
-                ", developerName='" + developerName + '\'' +
+                ", platformGiantbombId='" + platformGiantbombId + '\'' +
+                ", platformName='" + platformName + '\'' +
                 ", createdAt='" + createdAt + '\'' +
                 ", updatedAt='" + updatedAt + '\'' +
                 '}';

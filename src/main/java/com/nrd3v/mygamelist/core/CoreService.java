@@ -2,18 +2,15 @@ package com.nrd3v.mygamelist.core;
 
 import com.nrd3v.mygamelist.services.ToolService;
 import org.hibernate.Session;
-import org.springframework.stereotype.Service;
 
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
-import java.util.ArrayList;
 
-@Service
 public abstract class CoreService extends CoreSession {
 
-    protected Object createEntity(ArrayList<Class> entityClasses, Object object) {
+    protected Object createEntity(Object object) {
         if (object != null) {
-            Session session = this.getSession(entityClasses);
+            Session session = this.getSession();
             try {
                 session.beginTransaction();
                 this.setDatation(object);
@@ -27,15 +24,15 @@ public abstract class CoreService extends CoreSession {
                 if (session.isOpen()) {
                     session.close();
                 }
-                this.getFactory(entityClasses).close();
+                this.getFactory().close();
             }
         }
         return object;
     }
 
-    protected Object updateEntity(ArrayList<Class> entityClasses, Object object) {
+    protected Object updateEntity(Object object) {
         if (object != null) {
-            Session session = this.getSession(entityClasses);
+            Session session = this.getSession();
             try {
                 session.beginTransaction();
                 this.setDatation(object);
@@ -49,15 +46,15 @@ public abstract class CoreService extends CoreSession {
                 if (session.isOpen()) {
                     session.close();
                 }
-                this.getFactory(entityClasses).close();
+                this.getFactory().close();
             }
         }
         return object;
     }
 
-    protected void deleteEntity(ArrayList<Class> entityClasses, Object object) {
+    protected void deleteEntity(Object object) {
         if (object != null) {
-            Session session = this.getSession(entityClasses);
+            Session session = this.getSession();
             try {
                 session.beginTransaction();
                 session.delete(object);
@@ -70,7 +67,7 @@ public abstract class CoreService extends CoreSession {
                 if (session.isOpen()) {
                     session.close();
                 }
-                this.getFactory(entityClasses).close();
+                this.getFactory().close();
             }
         }
     }

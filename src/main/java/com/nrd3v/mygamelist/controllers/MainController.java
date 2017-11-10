@@ -1,12 +1,10 @@
 package com.nrd3v.mygamelist.controllers;
 
 import com.nrd3v.mygamelist.core.CoreRepository;
-import com.nrd3v.mygamelist.entities.Developer;
-import com.nrd3v.mygamelist.entities.Game;
-import com.nrd3v.mygamelist.entities.User;
+import com.nrd3v.mygamelist.entities.*;
 import com.nrd3v.mygamelist.repositories.IDeveloperRepository;
 import com.nrd3v.mygamelist.repositories.IGameRepository;
-import com.nrd3v.mygamelist.services.DeveloperService;
+import com.nrd3v.mygamelist.repositories.IPlatformRepository;
 import com.nrd3v.mygamelist.services.GameService;
 import com.nrd3v.mygamelist.services.ToolService;
 import org.hibernate.Session;
@@ -21,27 +19,25 @@ import org.springframework.web.servlet.view.RedirectView;
 
 import javax.validation.Valid;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 
 @Controller
 public class MainController {
 
-    private DeveloperService developerService;
     private GameService gameService;
     private IDeveloperRepository developerRepository;
     private IGameRepository gameRepository;
+    private IPlatformRepository platformRepository;
 
     @Autowired
-    public MainController(DeveloperService developerService,
-                          GameService gameService,
+    public MainController(GameService gameService,
                           IDeveloperRepository developerRepository,
-                          IGameRepository gameRepository) {
-        this.developerService = developerService;
+                          IGameRepository gameRepository,
+                          IPlatformRepository platformRepository) {
         this.gameService = gameService;
         this.developerRepository = developerRepository;
         this.gameRepository = gameRepository;
+        this.platformRepository = platformRepository;
     }
 
     @RequestMapping(value = "")
@@ -56,8 +52,12 @@ public class MainController {
     public RedirectView addGame(@Valid @ModelAttribute("newGame") Game game,
                                 BindingResult resultGame,
                                 @Valid @ModelAttribute("newDeveloper") Developer developer,
-                                BindingResult resultDeveloper) {
-        if (resultGame.hasErrors() || resultDeveloper.hasErrors()) {
+                                BindingResult resultDeveloper,
+                                @Valid @ModelAttribute("newPlatform") Platform platform,
+                                BindingResult resultPlatform) {
+        if (resultGame.hasErrors() ||
+            resultDeveloper.hasErrors() ||
+            resultPlatform.hasErrors()) {
             // TODO: Display error in front
         }
 
@@ -73,19 +73,70 @@ public class MainController {
             session.beginTransaction();
 
             String dateTime = ToolService.getTime();
-            game.setCreatedAt(dateTime);
-            game.setUpdatedAt(dateTime);
-            session.save(game);
+            Game existingGame = gameRepository.findByGiantbombId(game.getGameGiantbombId());
+            if (existingGame != null) {
+                game.setUpdatedAt(dateTime);
+                session.update(game);
+            } else {
+                game.setCreatedAt(dateTime);
+                game.setUpdatedAt(dateTime);
+                session.save(game);
+            }
 
-            Integer numberOfParams = developer.getDeveloperName().split(",").length;
-            for(int i = 0; i < numberOfParams; i++) {
-                Developer newDeveloper = new Developer();
-                newDeveloper.setDeveloperName(developer.getDeveloperName().split(",")[i]);
-                newDeveloper.setDeveloperGiantbombId(developer.getDeveloperGiantbombId().split(",")[i]);
-                newDeveloper.setCreatedAt(dateTime);
-                newDeveloper.setUpdatedAt(dateTime);
-                game.addDeveloper(newDeveloper);
-                session.save(newDeveloper);
+//            Integer numberOfPlatformParams = platform.getPlatformGiantbombId().split(",").length;
+//            for (int i = 0; i < numberOfPlatformParams; i++) {
+//                String paramPlatformName = platform.getPlatformName().split(",")[i];
+//                Platform existingPlatform = platformRepository.findByGiantbombId((platform.getPlatformGiantbombId().split(",")[i]));
+//                if (existingPlatform != null) {
+//                    List<Release> mappedReleases = game.getReleases();
+//                    for (Release release: mappedReleases) {
+//                        if (!release.getPlatform().getPlatformName().equals(existingPlatform.getPlatformName())) {
+//                            existingPlatform.setPlatformName(paramPlatformName);
+//                        }
+//                    }
+//
+//                    // TODO: check cardinalities
+//
+//                    existingPlatform.setUpdatedAt(dateTime);
+//                    session.update(existingPlatform);
+//                } else {
+//                    Platform newPlatform = new Platform();
+//                    newPlatform.setPlatformName(developer.getDeveloperName().split(",")[i]);
+//                    newPlatform.setPlatformGiantbombId(developer.getDeveloperGiantbombId().split(",")[i]);
+//                    newPlatform.setCreatedAt(dateTime);
+//                    newPlatform.setUpdatedAt(dateTime);
+//
+//                    // TODO: add cardinality
+//
+//                    session.save(newPlatform);
+//                }
+//            }
+
+            Integer numberOfDeveloperParams = developer.getDeveloperGiantbombId().split(",").length;
+            for (int i = 0; i < numberOfDeveloperParams; i++) {
+                String paramDeveloperName = developer.getDeveloperName().split(",")[i];
+                Developer existingDeveloper = developerRepository.findByGiantbombId((developer.getDeveloperGiantbombId().split(",")[i]));
+                if (existingDeveloper != null) {
+                    List<Developer> mappedDevelopers = game.getDevelopers();
+                    if (!existingDeveloper.getDeveloperName().equals(paramDeveloperName)) {
+                        existingDeveloper.setDeveloperName(paramDeveloperName);
+                    }
+                    for (Developer mappedDeveloper: mappedDevelopers) {
+                        if (!mappedDeveloper.getDeveloperGiantbombId().equals(existingDeveloper.getDeveloperGiantbombId())) {
+                            game.addDeveloper(existingDeveloper);
+                        }
+                    }
+                    existingDeveloper.setUpdatedAt(dateTime);
+                    session.update(existingDeveloper);
+                } else {
+                    Developer newDeveloper = new Developer();
+                    newDeveloper.setDeveloperName(developer.getDeveloperName().split(",")[i]);
+                    newDeveloper.setDeveloperGiantbombId(developer.getDeveloperGiantbombId().split(",")[i]);
+                    newDeveloper.setCreatedAt(dateTime);
+                    newDeveloper.setUpdatedAt(dateTime);
+                    game.addDeveloper(newDeveloper);
+                    session.save(newDeveloper);
+                }
             }
             session.getTransaction().commit();
         }

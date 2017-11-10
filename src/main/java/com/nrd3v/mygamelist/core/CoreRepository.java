@@ -4,13 +4,14 @@ import org.hibernate.Query;
 import org.hibernate.Session;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public abstract class CoreRepository extends CoreSession {
 
     public static final String ORDER_BY_NAME_ASC = "ORDER BY name ASC";
 
-    protected Object findEntityById(ArrayList<Class> entityClasses, Class classType, int id) {
-        Session session = this.getSession(entityClasses);
+    protected Object findEntityById(Class classType, int id) {
+        Session session = this.getSession();
         Object object = null;
         try {
             session.beginTransaction();
@@ -24,14 +25,14 @@ public abstract class CoreRepository extends CoreSession {
             if (session.isOpen()) {
                 session.close();
             }
-            this.getFactory(entityClasses).close();
+            this.getFactory().close();
         }
         return object;
     }
 
-    protected ArrayList<?> findAllEntities(ArrayList<Class> entityClasses, Class classType, String orderBy) {
-        Session session = this.getSession(entityClasses);
-        ArrayList<?> objects = new ArrayList<>();
+    protected List<?> findAllEntities(Class classType, String orderBy) {
+        Session session = this.getSession();
+        List<?> objects = new ArrayList<>();
         try {
             session.beginTransaction();
             String query;
@@ -40,7 +41,7 @@ public abstract class CoreRepository extends CoreSession {
             } else {
                 query = String.format("FROM %s", classType.getName());
             }
-            objects = (ArrayList<?>) session.createQuery(query).list();
+            objects = (List<?>) session.createQuery(query).list();
             session.getTransaction().commit();
         }
         catch (Exception e) {
@@ -50,19 +51,19 @@ public abstract class CoreRepository extends CoreSession {
             if (session.isOpen()) {
                 session.close();
             }
-            this.getFactory(entityClasses).close();
+            this.getFactory().close();
         }
         return objects;
     }
 
-    protected Object findEntityByGiantbombId(ArrayList<Class> entityClasses, Class<?> classType, int giantbombId) {
-        Session session = this.getSession(entityClasses);
-        ArrayList<?> objects = new ArrayList<>();
+    protected Object findEntityByGiantbombId(Class<?> classType, String giantbombId) {
+        Session session = this.getSession();
+        List<?> objects = new ArrayList<>();
         try {
             session.beginTransaction();
             Query query = session.createQuery("FROM " + classType.getName() + " WHERE giantbomb_id = :giantbomb_id ");
             query.setParameter("giantbomb_id", giantbombId);
-            objects = (ArrayList<?>) query.list();
+            objects = (List<?>) query.list();
             session.getTransaction().commit();
         }
         catch (Exception e) {
@@ -72,7 +73,7 @@ public abstract class CoreRepository extends CoreSession {
             if (session.isOpen()) {
                 session.close();
             }
-            this.getFactory(entityClasses).close();
+            this.getFactory().close();
         }
         Object object = null;
         if (objects.size() > 0) {

@@ -26,16 +26,13 @@ public class Game {
     private String updatedAt;
 
     @JsonIgnore
-    @ManyToMany(
-            fetch = FetchType.EAGER,
-            cascade = {CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH})
+    @ManyToMany(cascade = {CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH})
     @JoinTable(name = "game_developer", joinColumns = @JoinColumn(name = "game_id"), inverseJoinColumns = @JoinColumn(name = "developer_id"))
     private List<Developer> developers;
 
     @JsonIgnore
-    @ManyToMany(cascade = {CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH})
-    @JoinTable(name = "user_game", joinColumns = @JoinColumn(name = "game_id"), inverseJoinColumns = @JoinColumn(name = "user_id"))
-    private List<User> users;
+    @OneToMany(mappedBy = "game", cascade = {CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH})
+    private List<Release> releases;
 
     public Game() {
     }
@@ -107,19 +104,19 @@ public class Game {
         developers.add(developer);
     }
 
-    public List<User> getUsers() {
-        return users;
+    public List<Release> getReleases() {
+        return releases;
     }
 
-    public void setUsers(List<User> users) {
-        this.users = users;
+    public void setReleases(List<Release> releases) {
+        this.releases = releases;
     }
 
     @Override
     public String toString() {
         return "Game{" +
                 "id=" + id +
-                ", gameGiantbombId=" + gameGiantbombId +
+                ", gameGiantbombId='" + gameGiantbombId + '\'' +
                 ", gameName='" + gameName + '\'' +
                 ", releaseDate='" + releaseDate + '\'' +
                 ", createdAt='" + createdAt + '\'' +

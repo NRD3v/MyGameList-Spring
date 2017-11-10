@@ -2,11 +2,11 @@ package com.nrd3v.mygamelist.repositories;
 
 import com.nrd3v.mygamelist.entities.Developer;
 
-import java.util.ArrayList;
+import java.util.List;
 
 public interface IDeveloperRepository {
 
     Developer findById(int id);
-    ArrayList<Developer> findAll(String orderBy);
-    Developer findByGiantbombId(int giantbombId);
+    List<Developer> findAll(String orderBy);
+    Developer findByGiantbombId(String giantbombId);
 }

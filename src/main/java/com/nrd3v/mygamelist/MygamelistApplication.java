@@ -16,6 +16,11 @@ public class MygamelistApplication {
 				.configure()
 				.addAnnotatedClass(Developer.class)
 				.addAnnotatedClass(Game.class)
+				.addAnnotatedClass(Manufacturer.class)
+				.addAnnotatedClass(Media.class)
+				.addAnnotatedClass(MediaType.class)
+				.addAnnotatedClass(Platform.class)
+				.addAnnotatedClass(Release.class)
 				.addAnnotatedClass(User.class)
 				.buildSessionFactory();
 		Session session = factory.getCurrentSession();

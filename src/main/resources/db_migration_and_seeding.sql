@@ -3,75 +3,160 @@ DROP SCHEMA IF EXISTS `mygamelist`;
 CREATE SCHEMA `mygamelist`;
 USE `mygamelist`;
 
-CREATE TABLE `mygamelist`.`user_aggregate` (
-	`id` INT NOT NULL AUTO_INCREMENT,
+CREATE TABLE `mygamelist`.`media_type` (
+	`id` VARCHAR(50) NOT NULL,
 	`name` VARCHAR(50) NULL DEFAULT NULL,
+	`created_at` DATETIME NULL DEFAULT NULL,
+	`updated_at` DATETIME NULL DEFAULT NULL,
 	PRIMARY KEY (`id`)
+) COLLATE='utf8_general_ci' ENGINE=InnoDB;
+
+CREATE TABLE `mygamelist`.`media` (
+	`id` INT NOT NULL AUTO_INCREMENT,
+	`media_type_id` VARCHAR(50) NULL DEFAULT NULL,
+	`name` VARCHAR(50) NULL DEFAULT NULL,
+	`created_at` DATETIME NULL DEFAULT NULL,
+	`updated_at` DATETIME NULL DEFAULT NULL,
+	PRIMARY KEY (`id`),
+	CONSTRAINT `FK_MEDIA_MEDIA_TYPE`
+		FOREIGN KEY (`media_type_id`)
+		REFERENCES `mygamelist`.`media_type` (`id`)
+		ON UPDATE NO ACTION
+		ON DELETE NO ACTION
 ) COLLATE='utf8_general_ci' ENGINE=InnoDB;
 
 CREATE TABLE `mygamelist`.`user` (
 	`id` INT NOT NULL AUTO_INCREMENT,
 	`email` VARCHAR(50) NULL DEFAULT NULL,
-	`user_aggregate_id` INT NOT NULL,
-	PRIMARY KEY (`id`),
-	CONSTRAINT `FK_USER_AGGREGATE`
-		FOREIGN KEY (`user_aggregate_id`)
-		REFERENCES `user_aggregate` (`id`)
-		ON UPDATE CASCADE
-		ON DELETE CASCADE
+	`password` VARCHAR(255) NULL DEFAULT NULL,
+	`created_at` DATETIME NULL DEFAULT NULL,
+	`updated_at` DATETIME NULL DEFAULT NULL,
+	PRIMARY KEY (`id`)
 ) COLLATE='utf8_general_ci' ENGINE=InnoDB;
 
-CREATE TABLE `mygamelist`.`developer` (
+CREATE TABLE `mygamelist`.`user_aggregate` (
 	`id` INT NOT NULL AUTO_INCREMENT,
+	`user_id` INT NOT NULL,
 	`name` VARCHAR(50) NULL DEFAULT NULL,
-	PRIMARY KEY (`id`)
+	`media_id` INT NULL DEFAULT NULL,
+	`created_at` DATETIME NULL DEFAULT NULL,
+	`updated_at` DATETIME NULL DEFAULT NULL,
+	PRIMARY KEY (`id`),
+	CONSTRAINT `FK_USER_AGGREGATE_USER`
+		FOREIGN KEY (`user_id`) REFERENCES `mygamelist`.`user` (`id`) ON UPDATE NO ACTION ON DELETE NO ACTION,
+	CONSTRAINT `FK_USER_AGGREGATE_MEDIA`
+		FOREIGN KEY (`media_id`) REFERENCES `mygamelist`.`media` (`id`) ON UPDATE NO ACTION ON DELETE NO ACTION
 ) COLLATE='utf8_general_ci' ENGINE=InnoDB;
 
 CREATE TABLE `mygamelist`.`game` (
 	`id` INT NOT NULL AUTO_INCREMENT,
+	`giantbomb_id` VARCHAR(50) NULL DEFAULT NULL,
 	`name` VARCHAR(50) NULL DEFAULT NULL,
-	`developer_id` INT NULL DEFAULT NULL,
-	PRIMARY KEY (`id`),
-	CONSTRAINT `FK_DEVELOPER`
-		FOREIGN KEY (`developer_id`)
-		REFERENCES `developer` (`id`)
-		ON UPDATE NO ACTION
-		ON DELETE NO ACTION
+	`created_at` DATETIME NULL DEFAULT NULL,
+	`updated_at` DATETIME NULL DEFAULT NULL,
+	PRIMARY KEY (`id`)
 ) COLLATE='utf8_general_ci' ENGINE=InnoDB;
 
-CREATE TABLE `mygamelist`.`user_game` (
-	`user_id` INT NOT NULL,
+CREATE TABLE `mygamelist`.`developer` (
+	`id` INT NOT NULL AUTO_INCREMENT,
+	`giantbomb_id` VARCHAR(50) NULL DEFAULT NULL,
+	`name` VARCHAR(50) NULL DEFAULT NULL,
+	`media_id` INT NULL DEFAULT NULL,
+	`created_at` DATETIME NULL DEFAULT NULL,
+	`updated_at` DATETIME NULL DEFAULT NULL,
+	PRIMARY KEY (`id`),
+	CONSTRAINT `FK_DEVELOPER_MEDIA`
+		FOREIGN KEY (`media_id`) REFERENCES `mygamelist`.`media` (`id`) ON UPDATE NO ACTION ON DELETE NO ACTION
+) COLLATE='utf8_general_ci' ENGINE=InnoDB;
+
+CREATE TABLE `mygamelist`.`game_developer` (
 	`game_id` INT NOT NULL,
-	PRIMARY KEY (`user_id`, `game_id`),
-	CONSTRAINT `FK_USER`
-		FOREIGN KEY (`user_id`)
-		REFERENCES `user` (`id`)
-		ON UPDATE NO ACTION
-		ON DELETE NO ACTION,
-	CONSTRAINT `FK_GAME`
-		FOREIGN KEY (`game_id`)
-		REFERENCES `game` (`id`)
-		ON UPDATE NO ACTION
-		ON DELETE NO ACTION
+	`developer_id` INT NOT NULL,
+	`created_at` DATETIME NULL DEFAULT NULL,
+	`updated_at` DATETIME NULL DEFAULT NULL,
+	PRIMARY KEY (`game_id`, `developer_id`),
+	CONSTRAINT `FK_GAME_DEVELOPER_GAME`
+		FOREIGN KEY (`game_id`) REFERENCES `mygamelist`.`game` (`id`) ON UPDATE NO ACTION ON DELETE NO ACTION,
+	CONSTRAINT `FK_GAME_DEVELOPER_DEVELOPER`
+		FOREIGN KEY (`developer_id`) REFERENCES `mygamelist`.`developer` (`id`) ON UPDATE NO ACTION ON DELETE NO ACTION
+) COLLATE='utf8_general_ci' ENGINE=InnoDB;
+
+CREATE TABLE `mygamelist`.`manufacturer` (
+	`id` INT NOT NULL AUTO_INCREMENT,
+	`giantbomb_id` VARCHAR(50) NULL DEFAULT NULL,
+	`name` VARCHAR(50) NULL DEFAULT NULL,
+	`media_id` INT NULL DEFAULT NULL,
+	`created_at` DATETIME NULL DEFAULT NULL,
+	`updated_at` DATETIME NULL DEFAULT NULL,
+	PRIMARY KEY (`id`),
+	CONSTRAINT `FK_MANUFACTURER_MEDIA`
+		FOREIGN KEY (`media_id`) REFERENCES `mygamelist`.`media` (`id`) ON UPDATE NO ACTION ON DELETE NO ACTION
+) COLLATE='utf8_general_ci' ENGINE=InnoDB;
+
+CREATE TABLE `mygamelist`.`platform` (
+	`id` INT NOT NULL AUTO_INCREMENT,
+	`giantbomb_id` VARCHAR(50) NULL DEFAULT NULL,
+	`manufacturer_id` INT NULL DEFAULT NULL,
+	`name` VARCHAR(50) NULL DEFAULT NULL,
+	`media_id` INT NULL DEFAULT NULL,
+	`created_at` DATETIME NULL DEFAULT NULL,
+	`updated_at` DATETIME NULL DEFAULT NULL,
+	PRIMARY KEY (`id`),
+	CONSTRAINT `FK_PLATFORM_MANUFACTURER`
+		FOREIGN KEY (`manufacturer_id`) REFERENCES `mygamelist`.`manufacturer` (`id`) ON UPDATE NO ACTION ON DELETE NO ACTION,
+	CONSTRAINT `FK_PLATFORM_MEDIA`
+		FOREIGN KEY (`media_id`) REFERENCES `mygamelist`.`media` (`id`) ON UPDATE NO ACTION ON DELETE NO ACTION
+) COLLATE='utf8_general_ci' ENGINE=InnoDB;
+
+CREATE TABLE `mygamelist`.`release` (
+	`id` INT NOT NULL AUTO_INCREMENT,
+	`game_id` INT NOT NULL,
+	`platform_id` INT NOT NULL,
+	`media_id` INT NULL DEFAULT NULL,
+	`created_at` DATETIME NULL DEFAULT NULL,
+	`updated_at` DATETIME NULL DEFAULT NULL,
+	PRIMARY KEY (`id`),
+	CONSTRAINT `FK_RELEASE_GAME`
+		FOREIGN KEY (`game_id`) REFERENCES `mygamelist`.`game` (`id`) ON UPDATE NO ACTION ON DELETE NO ACTION,
+	CONSTRAINT `FK_RELEASE_PLATFORM`
+		FOREIGN KEY (`platform_id`) REFERENCES `mygamelist`.`platform` (`id`) ON UPDATE NO ACTION ON DELETE NO ACTION,
+	CONSTRAINT `FK_RELEASE_MEDIA`
+		FOREIGN KEY (`media_id`) REFERENCES `mygamelist`.`media` (`id`) ON UPDATE NO ACTION ON DELETE NO ACTION
+) COLLATE='utf8_general_ci' ENGINE=InnoDB;
+
+CREATE TABLE `mygamelist`.`user_release` (
+	`user_id` INT NOT NULL,
+	`release_id` INT NOT NULL,
+	`created_at` DATETIME NULL DEFAULT NULL,
+	`updated_at` DATETIME NULL DEFAULT NULL,
+	PRIMARY KEY (`user_id`, `release_id`),
+	CONSTRAINT `FK_USER_RELEASE_USER`
+		FOREIGN KEY (`user_id`) REFERENCES `mygamelist`.`user` (`id`) ON UPDATE NO ACTION ON DELETE NO ACTION,
+	CONSTRAINT `FK_USER_RELEASE_RELEASE`
+		FOREIGN KEY (`release_id`) REFERENCES `mygamelist`.`release` (`id`) ON UPDATE NO ACTION ON DELETE NO ACTION
 ) COLLATE='utf8_general_ci' ENGINE=InnoDB;
 
 /* SEEDING */
-INSERT INTO `mygamelist`.`user_aggregate` (`name`) VALUES ("Nouvel Utilisateur 1");
-INSERT INTO `mygamelist`.`user_aggregate` (`name`) VALUES ("Nouvel Utilisateur 2");
-INSERT INTO `mygamelist`.`user_aggregate` (`name`) VALUES ("Nouvel Utilisateur 3");
+INSERT INTO `mygamelist`.`manufacturer` (`name`,`created_at`,`updated_at`) VALUES ("Windows", NOW(), NOW());
+INSERT INTO `mygamelist`.`manufacturer` (`name`,`created_at`,`updated_at`) VALUES ("Sony", NOW(), NOW());
+INSERT INTO `mygamelist`.`manufacturer` (`name`,`created_at`,`updated_at`) VALUES ("Microsoft", NOW(), NOW());
+INSERT INTO `mygamelist`.`manufacturer` (`name`,`created_at`,`updated_at`) VALUES ("Nintendo", NOW(), NOW());
+INSERT INTO `mygamelist`.`manufacturer` (`name`,`created_at`,`updated_at`) VALUES ("SEGA", NOW(), NOW());
+INSERT INTO `mygamelist`.`manufacturer` (`name`,`created_at`,`updated_at`) VALUES ("Atari", NOW(), NOW());
+INSERT INTO `mygamelist`.`manufacturer` (`name`,`created_at`,`updated_at`) VALUES ("Amiga", NOW(), NOW());
+INSERT INTO `mygamelist`.`manufacturer` (`name`,`created_at`,`updated_at`) VALUES ("Amstrad", NOW(), NOW());
+INSERT INTO `mygamelist`.`manufacturer` (`name`,`created_at`,`updated_at`) VALUES ("CBM", NOW(), NOW());
+INSERT INTO `mygamelist`.`manufacturer` (`name`,`created_at`,`updated_at`) VALUES ("NEC", NOW(), NOW());
+INSERT INTO `mygamelist`.`manufacturer` (`name`,`created_at`,`updated_at`) VALUES ("SNK", NOW(), NOW());
+INSERT INTO `mygamelist`.`manufacturer` (`name`,`created_at`,`updated_at`) VALUES ("Philips", NOW(), NOW());
+INSERT INTO `mygamelist`.`manufacturer` (`name`,`created_at`,`updated_at`) VALUES ("Coleco", NOW(), NOW());
+INSERT INTO `mygamelist`.`manufacturer` (`name`,`created_at`,`updated_at`) VALUES ("Panasonic", NOW(), NOW());
+INSERT INTO `mygamelist`.`manufacturer` (`name`,`created_at`,`updated_at`) VALUES ("Goldstar", NOW(), NOW());
+INSERT INTO `mygamelist`.`manufacturer` (`name`,`created_at`,`updated_at`) VALUES ("Sanyo", NOW(), NOW());
+INSERT INTO `mygamelist`.`manufacturer` (`name`,`created_at`,`updated_at`) VALUES ("Magnavox", NOW(), NOW());
 
-INSERT INTO `mygamelist`.`user` (`email`, `user_aggregate_id`) VALUES ("1nouvel@utilisateur.com", 1);
-INSERT INTO `mygamelist`.`user` (`email`, `user_aggregate_id`) VALUES ("2nouvel@utilisateur.com", 2);
-INSERT INTO `mygamelist`.`user` (`email`, `user_aggregate_id`) VALUES ("3nouvel@utilisateur.com", 3);
-
-INSERT INTO `mygamelist`.`developer` (`name`) VALUES ("Epic Games");
-INSERT INTO `mygamelist`.`developer` (`name`) VALUES ("Valve");
-INSERT INTO `mygamelist`.`developer` (`name`) VALUES ("Gearbox Software");
-
-INSERT INTO `mygamelist`.`game` (`name`, `developer_id`) VALUES ("Gears of War", 1);
-INSERT INTO `mygamelist`.`game` (`name`, `developer_id`) VALUES ("Half Life", 2);
-INSERT INTO `mygamelist`.`game` (`name`, `developer_id`) VALUES ("Borderlands", 3);
-
-INSERT INTO `mygamelist`.`user_game` (`user_id`, `game_id`) VALUES (1, 1);
-INSERT INTO `mygamelist`.`user_game` (`user_id`, `game_id`) VALUES (1, 2);
-INSERT INTO `mygamelist`.`user_game` (`user_id`, `game_id`) VALUES (1, 3);
+INSERT INTO `mygamelist`.`media_type` (`id`,`name`,`created_at`,`updated_at`) VALUES ("user", "User avatar", NOW(), NOW());
+INSERT INTO `mygamelist`.`media_type` (`id`,`name`,`created_at`,`updated_at`) VALUES ("developer", "Developer image", NOW(), NOW());
+INSERT INTO `mygamelist`.`media_type` (`id`,`name`,`created_at`,`updated_at`) VALUES ("manufacturer", "Manufacturer image", NOW(), NOW());
+INSERT INTO `mygamelist`.`media_type` (`id`,`name`,`created_at`,`updated_at`) VALUES ("platform", "Platform image", NOW(), NOW());
+INSERT INTO `mygamelist`.`media_type` (`id`,`name`,`created_at`,`updated_at`) VALUES ("release", "Release image", NOW(), NOW());

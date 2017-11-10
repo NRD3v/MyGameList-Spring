@@ -19,8 +19,8 @@ public class User {
 
     @JsonIgnore
     @ManyToMany(cascade = {CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH})
-    @JoinTable(name = "user_game", joinColumns = @JoinColumn(name = "user_id"), inverseJoinColumns = @JoinColumn(name = "game_id"))
-    private List<Game> games;
+    @JoinTable(name = "user_release", joinColumns = @JoinColumn(name = "user_id"), inverseJoinColumns = @JoinColumn(name = "release_id"))
+    private List<Release> releases;
 
     public User() {
     }
@@ -45,19 +45,19 @@ public class User {
         this.email = email;
     }
 
-    public List<Game> getGames() {
-        return games;
+    public List<Release> getReleases() {
+        return releases;
     }
 
-    public void setGames(List<Game> games) {
-        this.games = games;
+    public void setReleases(List<Release> releases) {
+        this.releases = releases;
     }
 
-    public void addGame(Game game) {
-        if (games == null) {
-            games = new ArrayList<>();
+    public void addRelease(Release release) {
+        if (releases == null) {
+            releases = new ArrayList<>();
         }
-        games.add(game);
+        releases.add(release);
     }
 
     @Override
