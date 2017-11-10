@@ -1,6 +1,6 @@
 package com.nrd3v.mygamelist.services;
 
-import com.nrd3v.mygamelist.core.CoreEntity;
+import com.nrd3v.mygamelist.core.CoreService;
 import com.nrd3v.mygamelist.entities.Developer;
 import com.nrd3v.mygamelist.entities.Game;
 import com.nrd3v.mygamelist.entities.User;
@@ -9,7 +9,7 @@ import org.springframework.stereotype.Service;
 import java.util.ArrayList;
 
 @Service
-public class GameService extends CoreEntity {
+public class GameService extends CoreService {
 
     public ArrayList<Class> getEntities() {
         ArrayList<Class> entityClasses = new ArrayList<>();
@@ -19,7 +19,7 @@ public class GameService extends CoreEntity {
         return entityClasses;
     }
 
-    public Game create(Game game) {
+    public Game create(Game game, Object relation) {
         if (game != null) {
             this.createEntity(this.getEntities(), game);
         }

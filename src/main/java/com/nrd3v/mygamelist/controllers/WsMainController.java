@@ -46,9 +46,9 @@ public class WsMainController {
                      @RequestParam(name = "name") String name,
                      @RequestParam(name = "giantbombId") String giantbombId) {
         Game game = gameRepository.findById(gameId);
-        game.setName(name);
-        game.setGiantbombId(Integer.parseInt(giantbombId));
-        return gameService.create(game);
+        game.setGameName(name);
+        game.setGameGiantbombId(giantbombId);
+        return gameService.create(game, null);
     }
 
     @RequestMapping(value = "/game/{id}/delete", method = RequestMethod.GET)

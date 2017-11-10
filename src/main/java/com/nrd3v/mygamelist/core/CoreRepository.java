@@ -1,6 +1,5 @@
 package com.nrd3v.mygamelist.core;
 
-import com.nrd3v.mygamelist.entities.Game;
 import org.hibernate.Query;
 import org.hibernate.Session;
 

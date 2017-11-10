@@ -15,19 +15,26 @@ public class Developer {
     @Column(name = "id")
     private int id;
     @Column(name = "giantbomb_id")
-    private Integer giantbombId;
+    private String developerGiantbombId;
     @Column(name = "name")
-    private String name;
+    private String developerName;
+    @Column(name = "created_at")
+    private String createdAt;
+    @Column(name = "updated_at")
+    private String updatedAt;
 
     @JsonIgnore
-    @OneToMany(mappedBy = "developer", cascade = {CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH})
+    @ManyToMany(
+            fetch = FetchType.EAGER,
+            cascade = {CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH})
+    @JoinTable(name = "game_developer", joinColumns = @JoinColumn(name = "developer_id"), inverseJoinColumns = @JoinColumn(name = "game_id"))
     private List<Game> games;
 
     public Developer() {
     }
 
-    public Developer(String name) {
-        this.name = name;
+    public Developer(String developerName) {
+        this.developerName = developerName;
     }
 
     public int getId() {
@@ -38,20 +45,36 @@ public class Developer {
         this.id = id;
     }
 
-    public Integer getGiantbombId() {
-        return giantbombId;
+    public String getDeveloperGiantbombId() {
+        return developerGiantbombId;
     }
 
-    public void setGiantbombId(Integer giantbombId) {
-        this.giantbombId = giantbombId;
+    public void setDeveloperGiantbombId(String developerGiantbombId) {
+        this.developerGiantbombId = developerGiantbombId;
     }
 
-    public String getName() {
-        return name;
+    public String getDeveloperName() {
+        return developerName;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setDeveloperName(String developerName) {
+        this.developerName = developerName;
+    }
+
+    public String getCreatedAt() {
+        return createdAt;
+    }
+
+    public void setCreatedAt(String createdAt) {
+        this.createdAt = createdAt;
+    }
+
+    public String getUpdatedAt() {
+        return updatedAt;
+    }
+
+    public void setUpdatedAt(String updatedAt) {
+        this.updatedAt = updatedAt;
     }
 
     public List<Game> getGames() {
@@ -67,14 +90,16 @@ public class Developer {
             games = new ArrayList<>();
         }
         games.add(game);
-        game.setDeveloper(this);
     }
 
     @Override
     public String toString() {
         return "Developer{" +
                 "id=" + id +
-                ", name='" + name + '\'' +
+                ", developerGiantbombId=" + developerGiantbombId +
+                ", developerName='" + developerName + '\'' +
+                ", createdAt='" + createdAt + '\'' +
+                ", updatedAt='" + updatedAt + '\'' +
                 '}';
     }
 }

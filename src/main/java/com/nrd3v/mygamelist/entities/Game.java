@@ -3,6 +3,7 @@ package com.nrd3v.mygamelist.entities;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -14,9 +15,9 @@ public class Game {
     @Column(name = "id")
     private int id;
     @Column(name = "giantbomb_id")
-    private Integer giantbombId;
+    private String gameGiantbombId;
     @Column(name = "name")
-    private String name;
+    private String gameName;
     @Column(name = "release_date")
     private String releaseDate;
     @Column(name = "created_at")
@@ -25,9 +26,11 @@ public class Game {
     private String updatedAt;
 
     @JsonIgnore
-    @ManyToOne(cascade = {CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH})
-    @JoinColumn(name = "developer_id")
-    private Developer developer;
+    @ManyToMany(
+            fetch = FetchType.EAGER,
+            cascade = {CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH})
+    @JoinTable(name = "game_developer", joinColumns = @JoinColumn(name = "game_id"), inverseJoinColumns = @JoinColumn(name = "developer_id"))
+    private List<Developer> developers;
 
     @JsonIgnore
     @ManyToMany(cascade = {CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH})
@@ -37,8 +40,8 @@ public class Game {
     public Game() {
     }
 
-    public Game(String name) {
-        this.name = name;
+    public Game(String gameName) {
+        this.gameName = gameName;
     }
 
     public int getId() {
@@ -49,20 +52,20 @@ public class Game {
         this.id = id;
     }
 
-    public Integer getGiantbombId() {
-        return giantbombId;
+    public String getGameGiantbombId() {
+        return gameGiantbombId;
     }
 
-    public void setGiantbombId(Integer giantbombId) {
-        this.giantbombId = giantbombId;
+    public void setGameGiantbombId(String gameGiantbombId) {
+        this.gameGiantbombId = gameGiantbombId;
     }
 
-    public String getName() {
-        return name;
+    public String getGameName() {
+        return gameName;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setGameName(String gameName) {
+        this.gameName = gameName;
     }
 
     public String getReleaseDate() {
@@ -89,12 +92,19 @@ public class Game {
         this.updatedAt = updatedAt;
     }
 
-    public Developer getDeveloper() {
-        return developer;
+    public List<Developer> getDevelopers() {
+        return developers;
     }
 
-    public void setDeveloper(Developer developer) {
-        this.developer = developer;
+    public void setDevelopers(List<Developer> developers) {
+        this.developers = developers;
+    }
+
+    public void addDeveloper(Developer developer) {
+        if (developers == null) {
+            developers = new ArrayList<>();
+        }
+        developers.add(developer);
     }
 
     public List<User> getUsers() {
@@ -109,9 +119,11 @@ public class Game {
     public String toString() {
         return "Game{" +
                 "id=" + id +
-                ", giantbombId=" + giantbombId +
-                ", name='" + name + '\'' +
+                ", gameGiantbombId=" + gameGiantbombId +
+                ", gameName='" + gameName + '\'' +
                 ", releaseDate='" + releaseDate + '\'' +
+                ", createdAt='" + createdAt + '\'' +
+                ", updatedAt='" + updatedAt + '\'' +
                 '}';
     }
 }

@@ -110,29 +110,29 @@
                                 <div class="form-group">
                                     <label class="col-lg-2 control-label" for="nameField">Titre</label>
                                     <div class="col-lg-9">
-                                        <spring:bind path="newGame.name">
+                                        <spring:bind path="newGame.gameName">
                                             <input type="text" class="nameField form-control" id="nameField" name="${status.expression}"
                                                    value="${status.value}" placeholder="Entrer un titre" required="required">
                                         </spring:bind>
                                     </div>
-                                    <spring:bind path="newGame.giantbombId">
+                                    <spring:bind path="newGame.gameGiantbombId">
                                         <input type="hidden" class="giantbombIdGameField" name="${status.expression}"
                                                value="${status.value}" placeholder="Entrer un titre">
                                     </spring:bind>
                                     <spring:bind path="newGame.releaseDate">
                                         <input type="hidden" class="releaseDateField" name="${status.expression}"
-                                               value="${status.value}" placeholder="Entrer un titre">
+                                               value="${status.value}" placeholder="Entrer un titre" required="required">
                                     </spring:bind>
                                 </div>
                                 <div class="form-group">
-                                    <label class="col-lg-2 control-label" for="developerField">Titre</label>
+                                    <label class="col-lg-2 control-label" for="developerField">Développeur</label>
                                     <div class="col-lg-9">
-                                        <spring:bind path="newDeveloper.name">
+                                        <spring:bind path="newDeveloper.developerName">
                                             <input type="text" class="developerField form-control" id="developerField" name="${status.expression}"
-                                                   value="${status.value}" placeholder="Entrer un titre" required="required">
+                                                   value="${status.value}" placeholder="Entrer un développeur">
                                         </spring:bind>
                                     </div>
-                                    <spring:bind path="newDeveloper.giantbombId">
+                                    <spring:bind path="newDeveloper.developerGiantbombId">
                                         <input type="hidden" class="giantbombIdDeveloperField" name="${status.expression}"
                                                value="${status.value}" placeholder="Entrer un titre">
                                     </spring:bind>
@@ -168,7 +168,7 @@
                 <tr>
                     <th>#</th>
                     <th>Titre</th>
-                    <th>Développeur</th>
+                    <th>Développeur(s)</th>
                     <th>Sortie</th>
                     <%--<th>Actions&nbsp;&nbsp;<span class="glyphicon glyphicon-menu-down"></span></th>--%>
                 </tr>
@@ -182,14 +182,17 @@
                             </span>
                         </th>
                         <td>
-                            <c:if test="${game.name != null}">
-                                <strong>${game.name}</strong>
+                            <c:if test="${game.gameName != null}">
+                                <strong>${game.gameName}</strong>
                             </c:if>
                         </td>
                         <td>
                             <c:choose>
-                                <c:when test="${game.developer.name != null}">
-                                    ${game.developer.name}
+                                <c:when test="${game.developers != null}">
+                                    <c:forEach var="developer" items="${game.developers}" varStatus="status">
+                                        ${developer.developerName}
+                                        <c:if test="${!status.last}">,</c:if>
+                                    </c:forEach>
                                 </c:when>
                                 <c:otherwise>
                                     <em>Information MAJ ultérieurement...</em>

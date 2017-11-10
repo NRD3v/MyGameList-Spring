@@ -55,9 +55,9 @@ $(function () {
             type: "GET",
             dataType: "json",
             success: function (response) {
-                console.log(response);
-                $(".giantbombIdGameField").val(response.giantbombId);
-                $(".nameField").val(response.name);
+                console.log(response.developerId);
+                $(".nameField").val(response.gameName);
+                $(".giantbombIdGameField").val(response.gameGbId);
                 $(".releaseDateField").val(response.releaseDate);
             },
             error: function (response) {
@@ -77,22 +77,17 @@ $(function () {
             data: { id: element.currentTarget.id },
             dataType: "json",
             success: function (response) {
-                console.log(response);
+                var developersName = [];
+                var developersGiantbombId = [];
+                _.each(response.results.developers, function (developer) {
+                    developersName.push(developer.name);
+                    developersGiantbombId.push(developer.id);
+                });
                 $(".giantbombIdGameField").val(response.results.id);
                 $(".nameField").val(response.results.name);
                 $(".releaseDateField").val(response.results.original_release_date);
-                $(".developerField").val(response.results.developers[0].name);
-                $(".giantbombIdDeveloperField").val(response.results.developers[0].id);
-                // _.each(response.developers, function (developer) {
-                //     _.first(developer, function () {
-                //         $(".developerField").append(developer.name);
-                //         $(".giantbombIdDeveloperField").append(developer.id);
-                //     });
-                //     _.rest(developer, function () {
-                //         $(".developerField").append(", " + developer.name);
-                //         $(".giantbombIdDeveloperField").append(", " + developer.id);
-                //     });
-                // });
+                $(".developerField").val(developersName.toString());
+                $(".giantbombIdDeveloperField").val(developersGiantbombId.toString());
             },
             error: function (response) {
 

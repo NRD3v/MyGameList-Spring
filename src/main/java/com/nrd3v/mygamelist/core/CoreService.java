@@ -4,21 +4,19 @@ import com.nrd3v.mygamelist.services.ToolService;
 import org.hibernate.Session;
 import org.springframework.stereotype.Service;
 
+import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
 
 @Service
-public abstract class CoreEntity extends CoreSession {
+public abstract class CoreService extends CoreSession {
 
     protected Object createEntity(ArrayList<Class> entityClasses, Object object) {
         if (object != null) {
             Session session = this.getSession(entityClasses);
             try {
                 session.beginTransaction();
-                Method setCreatedAt = object.getClass().getMethod("setCreatedAt", String.class);
-                if (setCreatedAt != null) {
-                    setCreatedAt.invoke(object, ToolService.getTime());
-                }
+                this.setDatation(object);
                 session.save(object);
                 session.getTransaction().commit();
             }
@@ -40,10 +38,7 @@ public abstract class CoreEntity extends CoreSession {
             Session session = this.getSession(entityClasses);
             try {
                 session.beginTransaction();
-                Method setUpdatedAt = object.getClass().getMethod("setUpdatedAt", String.class);
-                if (setUpdatedAt != null) {
-                    setUpdatedAt.invoke(object, ToolService.getTime());
-                }
+                this.setDatation(object);
                 session.update(object);
                 session.getTransaction().commit();
             }
@@ -77,6 +72,17 @@ public abstract class CoreEntity extends CoreSession {
                 }
                 this.getFactory(entityClasses).close();
             }
+        }
+    }
+
+    private void setDatation(Object object) throws NoSuchMethodException, InvocationTargetException, IllegalAccessException {
+        Method setCreatedAt = object.getClass().getMethod("setCreatedAt", String.class);
+        if (setCreatedAt != null) {
+            setCreatedAt.invoke(object, ToolService.getTime());
+        }
+        Method setUpdatedAt = object.getClass().getMethod("setUpdatedAt", String.class);
+        if (setUpdatedAt != null) {
+            setUpdatedAt.invoke(object, ToolService.getTime());
         }
     }
 }
