@@ -17,6 +17,8 @@ public class Platform {
     private String platformGiantbombId;
     @Column(name = "name")
     private String platformName;
+    @Column(name = "css_id")
+    private String cssId;
     @Column(name = "created_at")
     private String createdAt;
     @Column(name = "updated_at")
@@ -59,6 +61,14 @@ public class Platform {
 
     public void setPlatformName(String platformName) {
         this.platformName = platformName;
+    }
+
+    public String getCssId() {
+        return cssId;
+    }
+
+    public void setCssId(String cssId) {
+        this.cssId = cssId;
     }
 
     public String getCreatedAt() {
@@ -107,6 +117,7 @@ public class Platform {
                 "id=" + id +
                 ", platformGiantbombId='" + platformGiantbombId + '\'' +
                 ", platformName='" + platformName + '\'' +
+                ", cssId='" + cssId + '\'' +
                 ", createdAt='" + createdAt + '\'' +
                 ", updatedAt='" + updatedAt + '\'' +
                 '}';

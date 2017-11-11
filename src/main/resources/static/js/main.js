@@ -5,8 +5,9 @@ $(function () {
     });
 
     $('#dataTable').DataTable({
+        "aLengthMenu": [ 50, 100, "All" ],
         "language": {
-            "url": "datatables-french.json"
+            "url": "js/datatables-french.json"
         }
     });
 

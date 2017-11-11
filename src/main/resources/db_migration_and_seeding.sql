@@ -52,6 +52,7 @@ CREATE TABLE `mygamelist`.`game` (
 	`id` INT NOT NULL AUTO_INCREMENT,
 	`giantbomb_id` VARCHAR(50) NULL DEFAULT NULL,
 	`name` VARCHAR(50) NULL DEFAULT NULL,
+	`release_date` DATETIME NULL DEFAULT NULL,
 	`created_at` DATETIME NULL DEFAULT NULL,
 	`updated_at` DATETIME NULL DEFAULT NULL,
 	PRIMARY KEY (`id`)
@@ -98,6 +99,7 @@ CREATE TABLE `mygamelist`.`platform` (
 	`giantbomb_id` VARCHAR(50) NULL DEFAULT NULL,
 	`manufacturer_id` INT NULL DEFAULT NULL,
 	`name` VARCHAR(50) NULL DEFAULT NULL,
+	`css_id` VARCHAR(50) NULL DEFAULT NULL,
 	`media_id` INT NULL DEFAULT NULL,
 	`created_at` DATETIME NULL DEFAULT NULL,
 	`updated_at` DATETIME NULL DEFAULT NULL,
