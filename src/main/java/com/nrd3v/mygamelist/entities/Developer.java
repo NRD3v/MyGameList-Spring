@@ -35,10 +35,6 @@ public class Developer {
     public Developer() {
     }
 
-    public Developer(String developerName) {
-        this.developerName = developerName;
-    }
-
     public int getId() {
         return id;
     }

@@ -17,8 +17,8 @@ public class Platform {
     private String platformGiantbombId;
     @Column(name = "name")
     private String platformName;
-    @Column(name = "css_id")
-    private String cssId;
+    @Column(name = "abbreviation")
+    private String abbreviation;
     @Column(name = "created_at")
     private String createdAt;
     @Column(name = "updated_at")
@@ -34,7 +34,7 @@ public class Platform {
 
     @JsonIgnore
     @OneToMany(mappedBy = "game", cascade = {CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH})
-    private List<Release> releases;
+    private List<GameRelease> gameReleases;
 
     public Platform() {
     }
@@ -63,12 +63,12 @@ public class Platform {
         this.platformName = platformName;
     }
 
-    public String getCssId() {
-        return cssId;
+    public String getAbbreviation() {
+        return abbreviation;
     }
 
-    public void setCssId(String cssId) {
-        this.cssId = cssId;
+    public void setAbbreviation(String abbreviation) {
+        this.abbreviation = abbreviation;
     }
 
     public String getCreatedAt() {
@@ -103,12 +103,12 @@ public class Platform {
         this.media = media;
     }
 
-    public List<Release> getReleases() {
-        return releases;
+    public List<GameRelease> getGameReleases() {
+        return gameReleases;
     }
 
-    public void setReleases(List<Release> releases) {
-        this.releases = releases;
+    public void setGameReleases(List<GameRelease> gameReleases) {
+        this.gameReleases = gameReleases;
     }
 
     @Override
@@ -117,7 +117,7 @@ public class Platform {
                 "id=" + id +
                 ", platformGiantbombId='" + platformGiantbombId + '\'' +
                 ", platformName='" + platformName + '\'' +
-                ", cssId='" + cssId + '\'' +
+                ", abbreviation='" + abbreviation + '\'' +
                 ", createdAt='" + createdAt + '\'' +
                 ", updatedAt='" + updatedAt + '\'' +
                 '}';

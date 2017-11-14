@@ -9,11 +9,34 @@
     cursor: pointer;
 }
 .table > thead > tr {
-    background-color: #4c4c4c;
+    background-color: #4C4C4C;
     color: white;
 }
 #waiting {
     display: none;
+}
+.gameContainer {
+    background-color: #E2E2E2;
+    transition: 0.5s;
+}
+.gameContainer:hover {
+    background-color: #7c7c7c;
+    transition: 0.5s;
+}
+.platform {
+    border-radius: 3px;
+    font-weight: bold;
+    height: 20px;
+    text-align: center;
+    width: 35px;
+}
+.ps1 {
+    background-color: #C0C0C0;
+    color: #000;
+}
+.pc {
+    background-color: #000000;
+    color: #ffffff;
 }
 
 /** MARGINS & PADDINGS**/

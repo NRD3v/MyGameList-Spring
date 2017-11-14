@@ -16,17 +16,19 @@ public class User {
     private int id;
     @Column(name = "email")
     private String email;
+    @Column(name = "password")
+    private String password;
+    @Column(name = "created_at")
+    private String createdAt;
+    @Column(name = "updated_at")
+    private String updatedAt;
 
     @JsonIgnore
-    @ManyToMany(cascade = {CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH})
+    @ManyToMany(fetch = FetchType.EAGER, cascade = {CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH})
     @JoinTable(name = "user_release", joinColumns = @JoinColumn(name = "user_id"), inverseJoinColumns = @JoinColumn(name = "release_id"))
-    private List<Release> releases;
+    private List<GameRelease> gameReleases;
 
     public User() {
-    }
-
-    public User(String email) {
-        this.email = email;
     }
 
     public int getId() {
@@ -45,19 +47,43 @@ public class User {
         this.email = email;
     }
 
-    public List<Release> getReleases() {
-        return releases;
+    public String getPassword() {
+        return password;
     }
 
-    public void setReleases(List<Release> releases) {
-        this.releases = releases;
+    public void setPassword(String password) {
+        this.password = password;
     }
 
-    public void addRelease(Release release) {
-        if (releases == null) {
-            releases = new ArrayList<>();
+    public String getCreatedAt() {
+        return createdAt;
+    }
+
+    public void setCreatedAt(String createdAt) {
+        this.createdAt = createdAt;
+    }
+
+    public String getUpdatedAt() {
+        return updatedAt;
+    }
+
+    public void setUpdatedAt(String updatedAt) {
+        this.updatedAt = updatedAt;
+    }
+
+    public List<GameRelease> getGameReleases() {
+        return gameReleases;
+    }
+
+    public void setGameReleases(List<GameRelease> gameReleases) {
+        this.gameReleases = gameReleases;
+    }
+
+    public void addRelease(GameRelease gameRelease) {
+        if (gameReleases == null) {
+            gameReleases = new ArrayList<>();
         }
-        releases.add(release);
+        gameReleases.add(gameRelease);
     }
 
     @Override
@@ -65,6 +91,9 @@ public class User {
         return "User{" +
                 "id=" + id +
                 ", email='" + email + '\'' +
+                ", password='" + password + '\'' +
+                ", createdAt='" + createdAt + '\'' +
+                ", updatedAt='" + updatedAt + '\'' +
                 '}';
     }
 }

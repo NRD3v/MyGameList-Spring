@@ -20,7 +20,7 @@ public class MygamelistApplication {
 				.addAnnotatedClass(Media.class)
 				.addAnnotatedClass(MediaType.class)
 				.addAnnotatedClass(Platform.class)
-				.addAnnotatedClass(Release.class)
+				.addAnnotatedClass(GameRelease.class)
 				.addAnnotatedClass(User.class)
 				.buildSessionFactory();
 		Session session = factory.getCurrentSession();

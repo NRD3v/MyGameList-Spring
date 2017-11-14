@@ -1,6 +1,5 @@
 package com.nrd3v.mygamelist.controllers;
 
-import com.nrd3v.mygamelist.core.CoreRepository;
 import com.nrd3v.mygamelist.entities.Game;
 import com.nrd3v.mygamelist.repositories.IGameRepository;
 import com.nrd3v.mygamelist.services.GameService;
@@ -28,7 +27,7 @@ public class WsMainController {
 
     @RequestMapping(value = "")
     public List<Game> index() {
-        return gameRepository.findAll(CoreRepository.ORDER_BY_NAME_ASC);
+        return gameRepository.findAllByOrderByGameNameAsc();
     }
 
     @RequestMapping(value = "/game/{id}/show")
@@ -38,7 +37,7 @@ public class WsMainController {
 
     @RequestMapping(value = "/game/{giantbombId}/giantbomb")
     public Game getByGiantbombId(@PathVariable(name = "giantbombId") String giantbombId) {
-        return gameRepository.findByGiantbombId(giantbombId);
+        return gameRepository.findByGameGiantbombId(giantbombId);
     }
 
     @RequestMapping(value = "/game/{id}/update", method = RequestMethod.POST)

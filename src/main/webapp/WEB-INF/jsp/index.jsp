@@ -2,6 +2,7 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <%@ page contentType="text/html; charset=UTF-8" %>
 <!DOCTYPE html>
 <html lang="fr">
@@ -169,39 +170,52 @@
                     <th>#</th>
                     <th>Titre</th>
                     <th>Développeur(s)</th>
+                    <th>Plateforme(s)</th>
                     <th>Sortie</th>
                     <%--<th>Actions&nbsp;&nbsp;<span class="glyphicon glyphicon-menu-down"></span></th>--%>
                 </tr>
                 </thead>
                 <tbody>
-                <c:forEach var="game" items="${games}">
-                    <tr class="dataRow" id="${game.id}" data-toggle="modal" data-target="#gameModal">
+                <c:forEach var="gameRelease" items="${gameReleases}">
+                    <tr class="dataRow" id="${gameRelease.game.id}" data-toggle="modal" data-target="#gameModal">
                         <th scope="row">
                             <span class="btn btn-secondary" data-toggle="modal" data-target="#showGameModal">
                                 <span class="glyphicon glyphicon-search"></span>
                             </span>
                         </th>
                         <td>
-                            <c:if test="${game.gameName != null}">
-                                <strong>${game.gameName}</strong>
+                            <c:if test="${gameRelease.game.gameName != null}">
+                                <strong>${gameRelease.game.gameName}</strong>
                             </c:if>
                         </td>
                         <td>
                             <c:choose>
-                                <c:when test="${game.developers != null}">
-                                    <c:forEach var="developer" items="${game.developers}" varStatus="status">
+                                <c:when test="${gameRelease.game.developers != null}">
+                                    <c:forEach var="developer" items="${gameRelease.game.developers}" varStatus="status">
                                         ${developer.developerName}
                                         <c:if test="${!status.last}">,</c:if>
                                     </c:forEach>
                                 </c:when>
                                 <c:otherwise>
-                                    <em>Information MAJ ultérieurement...</em>
+                                    <em>Aucune donnée disponible...</em>
                                 </c:otherwise>
                             </c:choose>
                         </td>
                         <td>
-                            <c:if test="${game.releaseDate != null}">
-                                <fmt:parseDate value="${game.releaseDate}" type="date" pattern="yyyy-MM-dd HH:mm:ss" var="formatedDate"/>
+                            <c:choose>
+                                <c:when test="${gameRelease.platform.abbreviation != null}">
+                                    <div class="platform ${fn:toLowerCase(gameRelease.platform.abbreviation)}">
+                                        ${gameRelease.platform.abbreviation}
+                                    </div>
+                                </c:when>
+                                <c:otherwise>
+                                    <em>Aucune plateforme sélectionnée...</em>
+                                </c:otherwise>
+                            </c:choose>
+                        </td>
+                        <td>
+                            <c:if test="${gameRelease.game.releaseDate != null}">
+                                <fmt:parseDate value="${gameRelease.game.releaseDate}" type="date" pattern="yyyy-MM-dd HH:mm:ss" var="formatedDate"/>
                                 <fmt:formatDate value="${formatedDate}" type="date" pattern="yyyy"/>
                             </c:if>
                         </td>
@@ -227,7 +241,7 @@
                                         </div>
                                         <div class="modal-footer">
                                             <button type="button" class="btn btn-default" data-dismiss="modal">Annuler</button>
-                                            <a href="/game/${game.id}/delete">
+                                            <a href="/game/${gameRelease.game.id}/delete">
                                                 <button type="submit" value="Submit" class="btn btn-danger">Supprimer</button>
                                             </a>
                                         </div>

@@ -29,12 +29,11 @@ $(function () {
                    _.each(response.results, function (result) {
                        console.log(result);
                        $("#results").append(
-                           "<div class='col-lg-2'>" +
-                               "<img class='mb10' src='" + result.image.thumb_url + "' height='150' width='125'>" +
-                               "<br>" +
-                               "<button data-toggle='modal' data-target='#gameModal' id='"+result.id+"' class='addGame btn btn-success btn-xs mb20'>" +
-                                   "<span class='glyphicon glyphicon-plus'></span>" +
-                               "</button>" +
+                           "<div class='p10 col-lg-2'>" +
+                               "<div class='gameContainer'>" +
+                                   "<img data-toggle='modal' data-target='#gameModal' id='"+result.id+"' " +
+                                        "class='addGame mt20 mb20' src='" + result.image.thumb_url + "' height='150' width='125'>" +
+                               "</div>" +
                            "</div>"
                        );
                    });
@@ -67,7 +66,7 @@ $(function () {
         });
     });
 
-    $(document.body).on('click', 'button', function (element) {
+    $(document.body).on('click', $(".addGame"), function (element) {
         console.log(element);
         $("#myModalLabel").empty().append("Ajouter un jeu :");
         $("#saveButton").val("Ajouter");
@@ -75,7 +74,7 @@ $(function () {
         $.ajax({
             url: "/api/search",
             type: "POST",
-            data: { id: element.currentTarget.id },
+            data: { id: element.target.id },
             dataType: "json",
             success: function (response) {
                 var developersName = [];

@@ -26,19 +26,15 @@ public class Game {
     private String updatedAt;
 
     @JsonIgnore
-    @ManyToMany(cascade = {CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH})
+    @ManyToMany(fetch = FetchType.EAGER, cascade = {CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH})
     @JoinTable(name = "game_developer", joinColumns = @JoinColumn(name = "game_id"), inverseJoinColumns = @JoinColumn(name = "developer_id"))
     private List<Developer> developers;
 
     @JsonIgnore
     @OneToMany(mappedBy = "game", cascade = {CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH})
-    private List<Release> releases;
+    private List<GameRelease> gameReleases;
 
     public Game() {
-    }
-
-    public Game(String gameName) {
-        this.gameName = gameName;
     }
 
     public int getId() {
@@ -104,12 +100,12 @@ public class Game {
         developers.add(developer);
     }
 
-    public List<Release> getReleases() {
-        return releases;
+    public List<GameRelease> getGameReleases() {
+        return gameReleases;
     }
 
-    public void setReleases(List<Release> releases) {
-        this.releases = releases;
+    public void setGameReleases(List<GameRelease> gameReleases) {
+        this.gameReleases = gameReleases;
     }
 
     @Override

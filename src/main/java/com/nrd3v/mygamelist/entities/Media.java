@@ -26,7 +26,7 @@ public class Media {
 
     @JsonIgnore
     @OneToOne(mappedBy = "media", cascade = {CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH})
-    private Release release;
+    private GameRelease gameRelease;
 
     @JsonIgnore
     @OneToOne(mappedBy = "media", cascade = {CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH})
@@ -83,12 +83,12 @@ public class Media {
         this.mediaType = mediaType;
     }
 
-    public Release getRelease() {
-        return release;
+    public GameRelease getGameRelease() {
+        return gameRelease;
     }
 
-    public void setRelease(Release release) {
-        this.release = release;
+    public void setGameRelease(GameRelease gameRelease) {
+        this.gameRelease = gameRelease;
     }
 
     public Manufacturer getManufacturer() {

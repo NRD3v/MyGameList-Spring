@@ -1,15 +1,11 @@
 package com.nrd3v.mygamelist.controllers;
 
-import com.nrd3v.mygamelist.core.CoreRepository;
+import com.nrd3v.mygamelist.core.CoreSession;
 import com.nrd3v.mygamelist.entities.*;
-import com.nrd3v.mygamelist.repositories.IDeveloperRepository;
-import com.nrd3v.mygamelist.repositories.IGameRepository;
-import com.nrd3v.mygamelist.repositories.IPlatformRepository;
+import com.nrd3v.mygamelist.repositories.*;
 import com.nrd3v.mygamelist.services.GameService;
 import com.nrd3v.mygamelist.services.ToolService;
 import org.hibernate.Session;
-import org.hibernate.SessionFactory;
-import org.hibernate.cfg.Configuration;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -24,25 +20,38 @@ import java.util.List;
 @Controller
 public class MainController {
 
+    private CoreSession coreSession;
     private GameService gameService;
     private IDeveloperRepository developerRepository;
     private IGameRepository gameRepository;
+    private IGameReleaseRepository gameReleaseRepository;
     private IPlatformRepository platformRepository;
+    private IUserRepository userRepository;
 
     @Autowired
-    public MainController(GameService gameService,
+    public MainController(CoreSession coreSession,
+                          GameService gameService,
                           IDeveloperRepository developerRepository,
                           IGameRepository gameRepository,
-                          IPlatformRepository platformRepository) {
+                          IGameReleaseRepository gameReleaseRepository,
+                          IPlatformRepository platformRepository,
+                          IUserRepository userRepository) {
+        this.coreSession = coreSession;
         this.gameService = gameService;
         this.developerRepository = developerRepository;
         this.gameRepository = gameRepository;
+        this.gameReleaseRepository = gameReleaseRepository;
         this.platformRepository = platformRepository;
+        this.userRepository = userRepository;
     }
 
     @RequestMapping(value = "")
     public String index(Model model) throws IOException {
-        model.addAttribute("games", gameRepository.findAll(CoreRepository.ORDER_BY_NAME_ASC));
+        User user = userRepository.findByEmailAndPassword("test@test.com", "123123");
+//        User user = userRepository.findById(1);
+//        List<GameRelease> releases = user.getGameReleases();
+//        System.out.println(releases);
+        model.addAttribute("gameReleases", user.getGameReleases());
         model.addAttribute("newGame", new Game());
         model.addAttribute("newDeveloper", new Developer());
         return "index";
@@ -61,19 +70,12 @@ public class MainController {
             // TODO: Display error in front
         }
 
-        SessionFactory factory = new Configuration()
-                .configure()
-                .addAnnotatedClass(Developer.class)
-                .addAnnotatedClass(Game.class)
-                .addAnnotatedClass(User.class)
-                .buildSessionFactory();
-        Session session = factory.getCurrentSession();
-
+        Session session = coreSession.getSession();
         try {
             session.beginTransaction();
 
             String dateTime = ToolService.getTime();
-            Game existingGame = gameRepository.findByGiantbombId(game.getGameGiantbombId());
+            Game existingGame = gameRepository.findByGameGiantbombId(game.getGameGiantbombId());
             if (existingGame != null) {
                 game.setUpdatedAt(dateTime);
                 session.update(game);
@@ -86,10 +88,10 @@ public class MainController {
 //            Integer numberOfPlatformParams = platform.getPlatformGiantbombId().split(",").length;
 //            for (int i = 0; i < numberOfPlatformParams; i++) {
 //                String paramPlatformName = platform.getPlatformName().split(",")[i];
-//                Platform existingPlatform = platformRepository.findByGiantbombId((platform.getPlatformGiantbombId().split(",")[i]));
+//                Platform existingPlatform = platformRepository.findByPlatformGiantbombId((platform.getPlatformGiantbombId().split(",")[i]));
 //                if (existingPlatform != null) {
-//                    List<Release> mappedReleases = game.getReleases();
-//                    for (Release release: mappedReleases) {
+//                    List<GameRelease> mappedReleases = game.getGameReleases();
+//                    for (GameRelease release: mappedReleases) {
 //                        if (!release.getPlatform().getPlatformName().equals(existingPlatform.getPlatformName())) {
 //                            existingPlatform.setPlatformName(paramPlatformName);
 //                        }
@@ -115,7 +117,7 @@ public class MainController {
             Integer numberOfDeveloperParams = developer.getDeveloperGiantbombId().split(",").length;
             for (int i = 0; i < numberOfDeveloperParams; i++) {
                 String paramDeveloperName = developer.getDeveloperName().split(",")[i];
-                Developer existingDeveloper = developerRepository.findByGiantbombId((developer.getDeveloperGiantbombId().split(",")[i]));
+                Developer existingDeveloper = developerRepository.findByDeveloperGiantbombId((developer.getDeveloperGiantbombId().split(",")[i]));
                 if (existingDeveloper != null) {
                     List<Developer> mappedDevelopers = game.getDevelopers();
                     if (!existingDeveloper.getDeveloperName().equals(paramDeveloperName)) {
@@ -147,7 +149,7 @@ public class MainController {
             if (session.isOpen()) {
                 session.close();
             }
-            factory.close();
+            coreSession.getFactory().close();
         }
         return new RedirectView("/");
     }

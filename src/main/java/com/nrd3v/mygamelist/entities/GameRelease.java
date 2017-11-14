@@ -6,8 +6,8 @@ import javax.persistence.*;
 import java.util.List;
 
 @Entity
-@Table(name = "release")
-public class Release {
+@Table(name = "game_release")
+public class GameRelease {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -35,7 +35,7 @@ public class Release {
     @JoinTable(name = "user_release", joinColumns = @JoinColumn(name = "release_id"), inverseJoinColumns = @JoinColumn(name = "user_id"))
     private List<User> users;
 
-    public Release() {
+    public GameRelease() {
     }
 
     public int getId() {
@@ -96,7 +96,7 @@ public class Release {
 
     @Override
     public String toString() {
-        return "Release{" +
+        return "GameRelease{" +
                 "id=" + id +
                 ", createdAt='" + createdAt + '\'' +
                 ", updatedAt='" + updatedAt + '\'' +

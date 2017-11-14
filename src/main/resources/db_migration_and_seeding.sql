@@ -73,8 +73,6 @@ CREATE TABLE `mygamelist`.`developer` (
 CREATE TABLE `mygamelist`.`game_developer` (
 	`game_id` INT NOT NULL,
 	`developer_id` INT NOT NULL,
-	`created_at` DATETIME NULL DEFAULT NULL,
-	`updated_at` DATETIME NULL DEFAULT NULL,
 	PRIMARY KEY (`game_id`, `developer_id`),
 	CONSTRAINT `FK_GAME_DEVELOPER_GAME`
 		FOREIGN KEY (`game_id`) REFERENCES `mygamelist`.`game` (`id`) ON UPDATE NO ACTION ON DELETE NO ACTION,
@@ -99,7 +97,7 @@ CREATE TABLE `mygamelist`.`platform` (
 	`giantbomb_id` VARCHAR(50) NULL DEFAULT NULL,
 	`manufacturer_id` INT NULL DEFAULT NULL,
 	`name` VARCHAR(50) NULL DEFAULT NULL,
-	`css_id` VARCHAR(50) NULL DEFAULT NULL,
+	`abbreviation` VARCHAR(50) NULL DEFAULT NULL,
 	`media_id` INT NULL DEFAULT NULL,
 	`created_at` DATETIME NULL DEFAULT NULL,
 	`updated_at` DATETIME NULL DEFAULT NULL,
@@ -110,7 +108,7 @@ CREATE TABLE `mygamelist`.`platform` (
 		FOREIGN KEY (`media_id`) REFERENCES `mygamelist`.`media` (`id`) ON UPDATE NO ACTION ON DELETE NO ACTION
 ) COLLATE='utf8_general_ci' ENGINE=InnoDB;
 
-CREATE TABLE `mygamelist`.`release` (
+CREATE TABLE `mygamelist`.`game_release` (
 	`id` INT NOT NULL AUTO_INCREMENT,
 	`game_id` INT NOT NULL,
 	`platform_id` INT NOT NULL,
@@ -118,24 +116,22 @@ CREATE TABLE `mygamelist`.`release` (
 	`created_at` DATETIME NULL DEFAULT NULL,
 	`updated_at` DATETIME NULL DEFAULT NULL,
 	PRIMARY KEY (`id`),
-	CONSTRAINT `FK_RELEASE_GAME`
+	CONSTRAINT `FK_GAME_RELEASE_GAME`
 		FOREIGN KEY (`game_id`) REFERENCES `mygamelist`.`game` (`id`) ON UPDATE NO ACTION ON DELETE NO ACTION,
-	CONSTRAINT `FK_RELEASE_PLATFORM`
+	CONSTRAINT `FK_GAME_RELEASE_PLATFORM`
 		FOREIGN KEY (`platform_id`) REFERENCES `mygamelist`.`platform` (`id`) ON UPDATE NO ACTION ON DELETE NO ACTION,
-	CONSTRAINT `FK_RELEASE_MEDIA`
+	CONSTRAINT `FK_GAME_RELEASE_MEDIA`
 		FOREIGN KEY (`media_id`) REFERENCES `mygamelist`.`media` (`id`) ON UPDATE NO ACTION ON DELETE NO ACTION
 ) COLLATE='utf8_general_ci' ENGINE=InnoDB;
 
 CREATE TABLE `mygamelist`.`user_release` (
 	`user_id` INT NOT NULL,
 	`release_id` INT NOT NULL,
-	`created_at` DATETIME NULL DEFAULT NULL,
-	`updated_at` DATETIME NULL DEFAULT NULL,
 	PRIMARY KEY (`user_id`, `release_id`),
 	CONSTRAINT `FK_USER_RELEASE_USER`
 		FOREIGN KEY (`user_id`) REFERENCES `mygamelist`.`user` (`id`) ON UPDATE NO ACTION ON DELETE NO ACTION,
-	CONSTRAINT `FK_USER_RELEASE_RELEASE`
-		FOREIGN KEY (`release_id`) REFERENCES `mygamelist`.`release` (`id`) ON UPDATE NO ACTION ON DELETE NO ACTION
+	CONSTRAINT `FK_USER_RELEASE_GAME_RELEASE`
+		FOREIGN KEY (`release_id`) REFERENCES `mygamelist`.`game_release` (`id`) ON UPDATE NO ACTION ON DELETE NO ACTION
 ) COLLATE='utf8_general_ci' ENGINE=InnoDB;
 
 /* SEEDING */
@@ -161,4 +157,4 @@ INSERT INTO `mygamelist`.`media_type` (`id`,`name`,`created_at`,`updated_at`) VA
 INSERT INTO `mygamelist`.`media_type` (`id`,`name`,`created_at`,`updated_at`) VALUES ("developer", "Developer image", NOW(), NOW());
 INSERT INTO `mygamelist`.`media_type` (`id`,`name`,`created_at`,`updated_at`) VALUES ("manufacturer", "Manufacturer image", NOW(), NOW());
 INSERT INTO `mygamelist`.`media_type` (`id`,`name`,`created_at`,`updated_at`) VALUES ("platform", "Platform image", NOW(), NOW());
-INSERT INTO `mygamelist`.`media_type` (`id`,`name`,`created_at`,`updated_at`) VALUES ("release", "Release image", NOW(), NOW());
+INSERT INTO `mygamelist`.`media_type` (`id`,`name`,`created_at`,`updated_at`) VALUES ("game_release", "Release image", NOW(), NOW());
