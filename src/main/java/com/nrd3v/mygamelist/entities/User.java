@@ -79,7 +79,7 @@ public class User {
         this.gameReleases = gameReleases;
     }
 
-    public void addRelease(GameRelease gameRelease) {
+    public void addGameRelease(GameRelease gameRelease) {
         if (gameReleases == null) {
             gameReleases = new ArrayList<>();
         }

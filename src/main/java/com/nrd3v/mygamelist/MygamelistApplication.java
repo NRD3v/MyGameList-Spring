@@ -1,63 +1,31 @@
 package com.nrd3v.mygamelist;
 
+import com.nrd3v.mygamelist.core.CoreSession;
 import com.nrd3v.mygamelist.entities.*;
 import com.nrd3v.mygamelist.services.ToolService;
 import org.hibernate.Session;
-import org.hibernate.SessionFactory;
-import org.hibernate.cfg.Configuration;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
+import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 
 @SpringBootApplication
-public class MygamelistApplication {
+public class MygamelistApplication extends WebSecurityConfigurerAdapter {
+
+	@Override
+	protected void configure(AuthenticationManagerBuilder auth) throws Exception {
+		super.configure(auth);
+	}
 
 	public static void main(String[] args) {
-		SessionFactory factory = new Configuration()
-				.configure()
-				.addAnnotatedClass(Developer.class)
-				.addAnnotatedClass(Game.class)
-				.addAnnotatedClass(Manufacturer.class)
-				.addAnnotatedClass(Media.class)
-				.addAnnotatedClass(MediaType.class)
-				.addAnnotatedClass(Platform.class)
-				.addAnnotatedClass(GameRelease.class)
-				.addAnnotatedClass(User.class)
-				.buildSessionFactory();
-		Session session = factory.getCurrentSession();
-
+		CoreSession coreSession = new CoreSession();
+		Session session = coreSession.getSession();
 		try {
 			session.beginTransaction();
-
 
 			TestEntity test = new TestEntity();
 			test.setName("Test");
 			session.save(test);
-
-
-			/**************************\
-			 * ManyToMany test mapping *
-			\**************************/
-//			User user = new User("gears@war.com");
-//			session.save(user);
-//			Developer developer = new Developer("Epic");
-//			session.save(developer);
-//			Game game = new Game("Gears of War");
-//			developer.addGame(game);
-//			user.addGame(game);
-//			session.save(game);
-//			Game game = session.get(Game.class, 4);
-//			System.out.println(game.getUsers());
-//			User user = session.get(User.class, 4);
-//			System.out.println(user.getGames());
-
-			/*************************\
-			 * OneToMany test mapping *
-			\*************************/
-//			Developer developer = session.get(Developer.class, 11);
-//			Game game = new Game("Portal");
-//			developer.addGame(game);
-//			session.save(game);
-
 
 			session.getTransaction().commit();
 		}
@@ -68,7 +36,7 @@ public class MygamelistApplication {
 			if (session.isOpen()) {
 				session.close();
 			}
-			factory.close();
+			coreSession.getFactory().close();
 		}
 
 		/******************\

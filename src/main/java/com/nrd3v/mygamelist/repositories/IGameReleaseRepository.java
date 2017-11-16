@@ -7,4 +7,5 @@ import java.util.List;
 
 public interface IGameReleaseRepository extends JpaRepository<GameRelease,Integer> {
     List<GameRelease> findAll();
+    GameRelease findByGameIdAndPlatformId(int gameId, int platformId);
 }
